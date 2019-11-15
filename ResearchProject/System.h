@@ -2,6 +2,7 @@
 #define SYSTEM_HPP
 
 #include <SFML/Graphics.hpp>
+#include "NPC.h"
 
 class System
 {
@@ -26,6 +27,9 @@ private:
 	sf::Font m_ArialBlackfont; // font used by message
 
 	sf::Text m_temptext; // text used for message on screen
+
+	std::vector<NPC *> m_npcs;
+	
 
 	bool m_exit; // control exiting 
 

@@ -27,6 +27,18 @@
     <ClCompile Include="System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enviroment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">
@@ -40,6 +52,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enviroment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

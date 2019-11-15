@@ -1,6 +1,8 @@
 #include "System.h"
 #include <iostream>
-
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <time.h> 
 
 
 /// <summary>
@@ -10,10 +12,22 @@
 /// load and setup thne image
 /// </summary>
 System::System() :
-	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "GA" },
+	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
 	m_exit{false} //when true System will exit
 {
+	srand(time(0));
 	setupFontAndText(); // load font 
+
+	m_npcs.reserve(5);
+	m_npcs.push_back(new NPC(m_window));
+	m_npcs.push_back(new NPC(m_window));
+	m_npcs.push_back(new NPC(m_window));
+	m_npcs.push_back(new NPC(m_window));
+	m_npcs.push_back(new NPC(m_window));
+	m_npcs.push_back(new NPC(m_window));
+
+	for(int i = 0; i < m_npcs.size() ;i++) {m_npcs[i]->setUpNpc();}
+
 }
 
 /// <summary>
@@ -29,11 +43,12 @@ System::~System()
 /// update 60 times per second,
 /// </summary>
 void System::run()
-{	
+{
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	const float fps{ 60.0f };
 	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 60 fps
+
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
@@ -69,7 +84,6 @@ void System::processEvents()
 	}
 }
 
-
 /// <summary>
 /// deal with key presses from the user
 /// </summary>
@@ -92,6 +106,9 @@ void System::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+
+
+	for (int i = 0; i < m_npcs.size(); i++) { m_npcs[i]->Update(); }
 }
 
 /// <summary>
@@ -100,6 +117,11 @@ void System::update(sf::Time t_deltaTime)
 void System::render()
 {
 	m_window.clear(sf::Color::White);
+
+	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
+
+	m_npcs[0]->getPos();
+	
 	m_window.draw(m_temptext);
 	m_window.display();
 }
@@ -121,5 +143,4 @@ void System::setupFontAndText()
 	m_temptext.setOutlineColor(sf::Color::Red);
 	m_temptext.setFillColor(sf::Color::Black);
 	m_temptext.setOutlineThickness(3.0f);
-
 }
