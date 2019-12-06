@@ -19,10 +19,16 @@
 /// main enrtry point
 /// </summary>
 /// <returns>success or failure</returns>
+
+
+
+
 int main()
 {
+	srand(time(NULL));
 	System System;
 	System.run();
+
 
 	return 1; // success
 }

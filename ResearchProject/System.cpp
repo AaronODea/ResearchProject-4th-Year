@@ -12,22 +12,28 @@
 /// load and setup thne image
 /// </summary>
 System::System() :
-	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
+	m_window{ sf::VideoMode{ 2000, 1000, 32 }, "GA" },
 	m_exit{false} //when true System will exit
 {
-	srand(time(0));
 	setupFontAndText(); // load font 
 
-	m_npcs.reserve(5);
-	m_npcs.push_back(new NPC(m_window));
-	m_npcs.push_back(new NPC(m_window));
-	m_npcs.push_back(new NPC(m_window));
-	m_npcs.push_back(new NPC(m_window));
-	m_npcs.push_back(new NPC(m_window));
-	m_npcs.push_back(new NPC(m_window));
+ 	m_npcs.reserve(10);
+	for (int i = 0; i < 10; i++)
+	{
+		m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		m_npcs[i]->setGender(1);
+	}
 
-	for(int i = 0; i < m_npcs.size() ;i++) {m_npcs[i]->setUpNpc();}
 
+
+	for (int i = 0; i < m_npcs.size(); i++) 
+	{ 
+		m_npcs[i]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
+		m_npcs[i]->setUpNpcStart(m_IDCount); m_IDCount++; 
+	}
 }
 
 /// <summary>
@@ -36,7 +42,6 @@ System::System() :
 System::~System()
 {
 }
-
 
 /// <summary>
 /// main System loop
@@ -103,12 +108,20 @@ void System::processKeys(sf::Event t_event)
 void System::update(sf::Time t_deltaTime)
 {
 	if (m_exit)
-	{
-		m_window.close();
+	{m_window.close();}
+
+
+	for (int i = 0; i < m_npcs.size(); i++)  
+	{ 
+		m_npcs[i]->Update(); 
+		if (m_npcs[i]->isAlive() == false) {m_npcs.erase(m_npcs.begin() + i);}
 	}
 
 
-	for (int i = 0; i < m_npcs.size(); i++) { m_npcs[i]->Update(); }
+	GAReproduction();
+
+
+	std::cout << m_npcs.size() << std::endl;
 }
 
 /// <summary>
@@ -120,9 +133,6 @@ void System::render()
 
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
 
-	m_npcs[0]->getPos();
-	
-	m_window.draw(m_temptext);
 	m_window.display();
 }
 
@@ -135,12 +145,116 @@ void System::setupFontAndText()
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
-	m_temptext.setFont(m_ArialBlackfont);
-	m_temptext.setString("test");
-	m_temptext.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_temptext.setPosition(40.0f, 40.0f);
-	m_temptext.setCharacterSize(80U);
-	m_temptext.setOutlineColor(sf::Color::Red);
-	m_temptext.setFillColor(sf::Color::Black);
-	m_temptext.setOutlineThickness(3.0f);
+}
+
+void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
+{
+	std::string DNA_ONE = t_npcOne->getDNA();
+	std::string DNA_TWO = t_npcTwo->getDNA();
+	std::string DNA_THREE = "";
+
+
+
+	int DNA_arry_ONE[4];
+	int DNA_arry_TWO[4];
+	int DNA_arry_THREE[4];
+
+
+	for (int i = 0; i < DNA_ONE.size(); i++)
+	{
+		DNA_arry_ONE[i] = (int)(DNA_ONE.at(i)-48);
+		DNA_arry_TWO[i] = (int)(DNA_TWO.at(i) - 48);
+	}
+
+	float  mutation_speed =(mutationArray[0]/100)*(rand()% 2);
+	//float  mutation_str = mutationArray[1]/100 * (rand() % 2) - 1;
+	//float mutation_int = mutationArray[2]/100 * (rand() % 2) - 1;
+	//float  mutation_size = mutationArray[3]/100 * (rand() % 2) - 1;
+	float  mutation_str = 0;
+	float mutation_int = 0;
+	float  mutation_size = 0;
+
+
+
+
+	DNA_arry_THREE[0] = DNA_arry_ONE[0] + mutation_speed;
+	DNA_arry_THREE[1] = DNA_arry_ONE[1] + mutation_str;
+	DNA_arry_THREE[2] = DNA_arry_TWO[2] + mutation_int;
+	DNA_arry_THREE[3] = DNA_arry_TWO[3] + mutation_size;
+
+
+
+
+	for (int i = 0; i <=  3; i++)
+	{
+		if (DNA_arry_THREE[i] < 0) {DNA_arry_THREE[i] = 0;}
+		DNA_THREE += std::to_string(DNA_arry_THREE[i]);
+	}
+
+	m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));
+
+
+	if (t_npcOne->getGenertaion() > t_npcTwo->getGenertaion() || t_npcOne->getGenertaion() == t_npcTwo->getGenertaion())
+	{m_npcs[m_npcs.size() - 1]->setGenertaion((t_npcOne->getGenertaion()+1));}
+	else {m_npcs[m_npcs.size() - 1]->setGenertaion((t_npcTwo->getGenertaion() + 1));}
+
+	m_npcs[m_npcs.size() - 1]->setDNA(DNA_THREE);
+	m_npcs[m_npcs.size() - 1]->setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
+	m_npcs[m_npcs.size() - 1]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
+	m_npcs[m_npcs.size() - 1]->setUpNpc(m_IDCount);
+	m_IDCount++;
+
+	t_npcOne->resetReproductionTimer();
+	t_npcTwo->resetReproductionTimer();
+}
+
+
+void System::GAReproduction()
+{
+	int distanceBetweenNPC = 0;
+
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3))
+		{
+
+			if (m_npcs[i]->getReproductionCooldown() <= 0)
+			{
+				for (int j = 0; j < m_npcs.size(); j++)
+				{
+					if (m_npcs[i] != m_npcs[j])
+					{
+						if (m_npcs[j]->getAge() >= (AGE_CAP / 4) && m_npcs[j]->getAge() <= ((AGE_CAP / 4) * 3))
+						{
+							if (m_npcs[i]->getGender() != m_npcs[j]->getGender())
+							{
+								if (m_npcs[j]->getReproductionCooldown() <= 0)
+								{
+
+									distanceBetweenNPC =
+										sqrt((pow((m_npcs[j]->getPos().x - m_npcs[i]->getPos().x), 2)) +
+										(pow((m_npcs[j]->getPos().y - m_npcs[i]->getPos().y), 2)));
+
+									if (distanceBetweenNPC <= 400)
+									{
+										if (rand() % REPRODUCTION_CHANCE == 0)
+										{
+
+											GAReproduce(m_npcs[i], m_npcs[j]);
+										}
+										else
+										{
+											m_npcs[i]->resetReproductionTimer();
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 }

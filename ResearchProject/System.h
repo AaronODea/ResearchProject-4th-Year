@@ -21,12 +21,27 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	
+
 	void setupFontAndText();
+
+	//GA
+	void GAReproduction();
+	void GAReproduce(NPC* t_npcOne, NPC* t_npcTwo);
+
+
+	//vars for global
+	int REPRODUCTION_CHANCE = 3;   // 4 = 1/4 
+	int REPRODUCTION_TIME = 450;
+	int AGE_CAP = 5000;
+
+	int mutationArray[4] = { 2,0,0,0 };
+
+
+	int m_IDCount = 0;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 
-	sf::Text m_temptext; // text used for message on screen
 
 	std::vector<NPC *> m_npcs;
 	
