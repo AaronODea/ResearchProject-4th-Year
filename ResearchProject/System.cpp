@@ -99,6 +99,25 @@ void System::processKeys(sf::Event t_event)
 	{
 		m_exit = true;
 	}
+	if (sf::Keyboard::Space == t_event.key.code)
+	{
+
+		for (int i = 0; i < m_npcs.size()/2; i++)
+		{
+			m_npcs.erase(m_npcs.begin() + i);
+		}
+	}
+	if (sf::Keyboard::S == t_event.key.code)
+	{
+
+		for (int i = 0; i < m_npcs.size(); i++)
+		{
+			if (m_npcs[i]->getSize() >2)
+			{
+				m_npcs.erase(m_npcs.begin() + i);
+			}			
+		}
+	}
 }
 
 /// <summary>
@@ -117,11 +136,10 @@ void System::update(sf::Time t_deltaTime)
 		if (m_npcs[i]->isAlive() == false) {m_npcs.erase(m_npcs.begin() + i);}
 	}
 
-
 	GAReproduction();
 
 
-	std::cout << m_npcs.size() << std::endl;
+	m_totalNPC.setString("Total NPC's : " + std::to_string(m_npcs.size()));
 }
 
 /// <summary>
@@ -132,7 +150,9 @@ void System::render()
 	m_window.clear(sf::Color::White);
 
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
-
+	
+	m_window.draw(m_heartSprite);
+	m_window.draw(m_totalNPC);
 	m_window.display();
 }
 
@@ -145,6 +165,19 @@ void System::setupFontAndText()
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
+
+	if (!m_heartTexture.loadFromFile("ASSETS\\IMAGES\\Heart.png"))
+	{
+		std::cout << "problem loading heart Texture" << std::endl;
+	}
+	m_heartSprite.setTexture(m_heartTexture);
+	m_heartSprite.setPosition(-100, -100);
+	m_heartSprite.setScale(3,3);
+
+	m_totalNPC.setFont(m_ArialBlackfont);
+	m_totalNPC.setFillColor(sf::Color::Black);
+	
+	
 }
 
 void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
@@ -153,43 +186,65 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	std::string DNA_TWO = t_npcTwo->getDNA();
 	std::string DNA_THREE = "";
 
+	t_npcOne->setEndPosition(t_npcTwo->getPos());
+	t_npcTwo->setEndPosition(t_npcOne->getPos());
+	m_heartSprite.setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
 
 
 	int DNA_arry_ONE[4];
 	int DNA_arry_TWO[4];
 	int DNA_arry_THREE[4];
-
-
+	int Mutations[4] ;
+	Mutations[0] = 0;
+	Mutations[1] = 0;
+	Mutations[2] = 0;
+	Mutations[3] = 0;
 	for (int i = 0; i < DNA_ONE.size(); i++)
 	{
 		DNA_arry_ONE[i] = (int)(DNA_ONE.at(i)-48);
 		DNA_arry_TWO[i] = (int)(DNA_TWO.at(i) - 48);
 	}
 
-	float  mutation_speed =(mutationArray[0]/100)*(rand()% 2);
-	//float  mutation_str = mutationArray[1]/100 * (rand() % 2) - 1;
-	//float mutation_int = mutationArray[2]/100 * (rand() % 2) - 1;
-	//float  mutation_size = mutationArray[3]/100 * (rand() % 2) - 1;
-	float  mutation_str = 0;
-	float mutation_int = 0;
-	float  mutation_size = 0;
 
+	
 
-
-
-	DNA_arry_THREE[0] = DNA_arry_ONE[0] + mutation_speed;
-	DNA_arry_THREE[1] = DNA_arry_ONE[1] + mutation_str;
-	DNA_arry_THREE[2] = DNA_arry_TWO[2] + mutation_int;
-	DNA_arry_THREE[3] = DNA_arry_TWO[3] + mutation_size;
-
-
-
-
-	for (int i = 0; i <=  3; i++)
+	int mutationChance;
+	for (int i = 0; i < 4; i++)
 	{
+		mutationChance = (rand() % 3);
+
+		if (mutationChance == 0)
+		{
+			Mutations[i] = -mutationArray[i];
+		}
+		else if(mutationChance == 1)
+		{
+			Mutations[i] = mutationArray[i];
+		}
+		else if (mutationChance == 2)
+		{
+			Mutations[i] = 0;
+		}
+
+
+	}
+
+	DNA_arry_THREE[0] = DNA_arry_ONE[0];
+	DNA_arry_THREE[1] = DNA_arry_ONE[1];
+	DNA_arry_THREE[2] = DNA_arry_TWO[2];
+	DNA_arry_THREE[3] = DNA_arry_TWO[3];
+
+	for (int i = 0; i < 4; i++)
+	{
+		DNA_arry_THREE[i] += Mutations[i];
 		if (DNA_arry_THREE[i] < 0) {DNA_arry_THREE[i] = 0;}
+		if (DNA_arry_THREE[i] > 9) { DNA_arry_THREE[i] = 9; }
+
+
+
 		DNA_THREE += std::to_string(DNA_arry_THREE[i]);
 	}
+
 
 	m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));
 
@@ -197,6 +252,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	if (t_npcOne->getGenertaion() > t_npcTwo->getGenertaion() || t_npcOne->getGenertaion() == t_npcTwo->getGenertaion())
 	{m_npcs[m_npcs.size() - 1]->setGenertaion((t_npcOne->getGenertaion()+1));}
 	else {m_npcs[m_npcs.size() - 1]->setGenertaion((t_npcTwo->getGenertaion() + 1));}
+
 
 	m_npcs[m_npcs.size() - 1]->setDNA(DNA_THREE);
 	m_npcs[m_npcs.size() - 1]->setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
@@ -206,6 +262,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 
 	t_npcOne->resetReproductionTimer();
 	t_npcTwo->resetReproductionTimer();
+
 }
 
 

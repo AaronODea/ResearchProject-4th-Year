@@ -96,6 +96,11 @@ void NPC::setPosition(sf::Vector2f t_pos)
 	m_position = t_pos;
 }
 
+void NPC::setEndPosition(sf::Vector2f t_pos)
+{
+	m_endPosition = t_pos;
+}
+
 void NPC::setGenertaion(int t_gen)
 {
 	m_generation = t_gen;
@@ -159,8 +164,6 @@ void NPC::setUpNpcStart(int t_ID)
 
 	m_sprite.setScale(m_size, m_size);
 	m_sprite.setOrigin(m_texture.getSize().x / 2,m_texture.getSize().y / 2);
-
-	//m_position = sf::Vector2f((rand() % m_window.getSize().x), (rand() % m_window.getSize().y));
 	m_position = sf::Vector2f(800,800);
 
 
@@ -216,6 +219,7 @@ void NPC::setUpNpcStart(int t_ID)
 	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
 	std::cout << "DNA:" + m_DNA << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
+	resetReproductionTimer();
 }
 
 void NPC::setUpNpc(int t_ID)

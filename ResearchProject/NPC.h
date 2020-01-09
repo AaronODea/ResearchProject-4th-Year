@@ -30,6 +30,9 @@ public:
 	
 	void setDNA(std::string t_DNA);
 	void setPosition(sf::Vector2f t_pos);
+	void setEndPosition(sf::Vector2f t_pos);
+
+
 	void setGenertaion(int t_gen);
 	void setGender(int t_gender);
 
@@ -63,7 +66,7 @@ private:
 
 
 	//variables for genetic algorithm
-	int m_ReproductionTimer = REPRODUCTION_TIME; //1 = 1 cycle
+	int m_ReproductionTimer = 0; //1 = 1 cycle
 
 	int m_speed = (rand() % 5)+1;
 	int m_strength = (rand() % 8) + 1;
