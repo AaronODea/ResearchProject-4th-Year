@@ -12,10 +12,22 @@
 /// load and setup thne image
 /// </summary>
 System::System() :
-	m_window{ sf::VideoMode{ 2000, 1000, 32 }, "GA" },
+	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
 	m_exit{false} //when true System will exit
 {
 	setupFontAndText(); // load font 
+
+	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\Background.png"))
+	{
+		std::cout << "problem loading background Texture" << std::endl;
+	}
+	m_backgroundSprite.setTexture(m_backgroundTexture);
+
+	if (!m_foregroundTexture.loadFromFile("ASSETS\\IMAGES\\Foreground.png"))
+	{
+		std::cout << "problem loading Foreground Texture" << std::endl;
+	}
+	m_foregroundSprite.setTexture(m_foregroundTexture);
 
  	m_npcs.reserve(10);
 	for (int i = 0; i < 10; i++)
@@ -26,8 +38,6 @@ System::System() :
 	{
 		m_npcs[i]->setGender(1);
 	}
-
-
 
 	for (int i = 0; i < m_npcs.size(); i++) 
 	{ 
@@ -130,16 +140,36 @@ void System::update(sf::Time t_deltaTime)
 	{m_window.close();}
 
 
-	for (int i = 0; i < m_npcs.size(); i++)  
-	{ 
-		m_npcs[i]->Update(); 
-		if (m_npcs[i]->isAlive() == false) {m_npcs.erase(m_npcs.begin() + i);}
-	}
+	m_maleCount = 0;
+	m_femaleCount = 0;
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		m_npcs[i]->Update();
+		if (m_npcs[i]->isAlive() == false) { m_npcs.erase(m_npcs.begin() + i); }
 
+		if (i != 0)
+		{
+			if (m_npcs[i]->getGender() == 1)
+			{
+				m_maleCount++;
+			}
+			else { m_femaleCount++; }
+		}
+	}
 	GAReproduction();
 
+	if (m_highestPopulation < m_npcs.size())
+	{
+		m_highestPopulation = m_npcs.size();
+		m_totalNPCAlltime.setString("Highest Population: " + std::to_string(m_highestPopulation));
+	}
+	m_totalNPC.setString("Total NPC's: " + std::to_string(m_npcs.size()));
 
-	m_totalNPC.setString("Total NPC's : " + std::to_string(m_npcs.size()));
+	m_maleCountText.setString("Total males: " + std::to_string(m_maleCount));
+	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
+	
+
+
 }
 
 /// <summary>
@@ -148,12 +178,29 @@ void System::update(sf::Time t_deltaTime)
 void System::render()
 {
 	m_window.clear(sf::Color::White);
+	m_window.draw(m_backgroundSprite);
 
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
 	
 	m_window.draw(m_heartSprite);
 	m_window.draw(m_totalNPC);
+	m_window.draw(m_totalNPCAlltime);
+	m_window.draw(m_maleCountText);
+	m_window.draw(m_femaleCountText);
+
+
+
+	m_window.draw(m_foregroundSprite);
 	m_window.display();
+}
+
+int System::randomNumber(int t_max, int t_min)
+{
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(t_min, t_max); 
+
+	return dist(rng);
 }
 
 /// <summary>
@@ -176,34 +223,38 @@ void System::setupFontAndText()
 
 	m_totalNPC.setFont(m_ArialBlackfont);
 	m_totalNPC.setFillColor(sf::Color::Black);
+	m_totalNPC.setPosition(sf::Vector2f(2050,0));
 	
-	
+	m_totalNPCAlltime.setFont(m_ArialBlackfont);
+	m_totalNPCAlltime.setFillColor(sf::Color::Black);
+	m_totalNPCAlltime.setPosition(sf::Vector2f(2050, 30));
+
+	m_maleCountText.setFont(m_ArialBlackfont);
+	m_maleCountText.setFillColor(sf::Color::Black);
+	m_maleCountText.setPosition(sf::Vector2f(2050, 60));
+
+	m_femaleCountText.setFont(m_ArialBlackfont);
+	m_femaleCountText.setFillColor(sf::Color::Black);
+	m_femaleCountText.setPosition(sf::Vector2f(2050, 90));
+
 }
 
 void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 {
-	std::string DNA_ONE = t_npcOne->getDNA();
-	std::string DNA_TWO = t_npcTwo->getDNA();
-	std::string DNA_THREE = "";
+	std::array<float, 4> DNA_ONE = t_npcOne->getDNA();
+	std::array<float, 4> DNA_TWO = t_npcTwo->getDNA();
+	std::array<float, 4> DNA_THREE;
 
 	t_npcOne->setEndPosition(t_npcTwo->getPos());
 	t_npcTwo->setEndPosition(t_npcOne->getPos());
 	m_heartSprite.setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
 
 
-	int DNA_arry_ONE[4];
-	int DNA_arry_TWO[4];
-	int DNA_arry_THREE[4];
-	int Mutations[4] ;
+	float Mutations[4] ;
 	Mutations[0] = 0;
 	Mutations[1] = 0;
 	Mutations[2] = 0;
 	Mutations[3] = 0;
-	for (int i = 0; i < DNA_ONE.size(); i++)
-	{
-		DNA_arry_ONE[i] = (int)(DNA_ONE.at(i)-48);
-		DNA_arry_TWO[i] = (int)(DNA_TWO.at(i) - 48);
-	}
 
 
 	
@@ -211,7 +262,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	int mutationChance;
 	for (int i = 0; i < 4; i++)
 	{
-		mutationChance = (rand() % 3);
+		mutationChance = randomNumber(3,0);
 
 		if (mutationChance == 0)
 		{
@@ -229,20 +280,20 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 
 	}
 
-	DNA_arry_THREE[0] = DNA_arry_ONE[0];
-	DNA_arry_THREE[1] = DNA_arry_ONE[1];
-	DNA_arry_THREE[2] = DNA_arry_TWO[2];
-	DNA_arry_THREE[3] = DNA_arry_TWO[3];
+	DNA_THREE[0] = DNA_ONE[0];
+	DNA_THREE[1] = DNA_ONE[1];
+	DNA_THREE[2] = DNA_TWO[2];
+	DNA_THREE[3] = DNA_TWO[3];
 
 	for (int i = 0; i < 4; i++)
 	{
-		DNA_arry_THREE[i] += Mutations[i];
-		if (DNA_arry_THREE[i] < 0) {DNA_arry_THREE[i] = 0;}
-		if (DNA_arry_THREE[i] > 9) { DNA_arry_THREE[i] = 9; }
+		DNA_THREE[i] += Mutations[i];
+		if (DNA_THREE[i] < 0) { DNA_THREE[i] = 0;}
+		if (DNA_THREE[i] > 9) { DNA_THREE[i] = 9; }
 
 
 
-		DNA_THREE += std::to_string(DNA_arry_THREE[i]);
+		DNA_THREE[i] += DNA_THREE[i];
 	}
 
 
@@ -294,7 +345,7 @@ void System::GAReproduction()
 
 									if (distanceBetweenNPC <= 400)
 									{
-										if (rand() % REPRODUCTION_CHANCE == 0)
+										if (randomNumber(REPRODUCTION_CHANCE,0) == 0)
 										{
 
 											GAReproduce(m_npcs[i], m_npcs[j]);

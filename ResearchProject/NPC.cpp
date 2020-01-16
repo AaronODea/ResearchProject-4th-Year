@@ -27,11 +27,13 @@ void NPC::Update()
 {
 	
 	if (m_ReproductionTimer >= 0) { m_ReproductionTimer--; }
-	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age)); }
+	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age/100)); }
 	else {m_alive = false;}
 
 
 	wander();
+
+
 	m_mateingrandTemp.setPosition(m_position);
 	
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - m_size*15));
@@ -40,11 +42,10 @@ void NPC::Update()
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x-50, m_healthBarBase.getPosition().y - 30));
 	m_GenerationText.setPosition(m_position);
 	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - 20));
-
-
-
 }
 
+
+//++++++++++GET FUNCTIONS +++++++++
 sf::Vector2f NPC::getPos()
 {
 	return m_position;
@@ -80,12 +81,14 @@ int NPC::getReproductionCooldown()
 	return m_ReproductionTimer;
 }
 
-std::string NPC::getDNA()
+std::array<float, 4> NPC::getDNA()
 {
 	return m_DNA;
 }
 
-void NPC::setDNA(std::string t_DNA)
+
+//++++++++++SET FUNCTIONS ++++++++++
+void NPC::setDNA(std::array<float, 4> t_DNA)
 {
 
 	m_DNA = t_DNA;
@@ -111,6 +114,9 @@ void NPC::setGender(int t_gender)
 	m_gender = t_gender;
 }
 
+
+
+//++++++++++FUNCTIONS ++++++++++
 void NPC::resetReproductionTimer()
 {
  m_ReproductionTimer = REPRODUCTION_TIME;
@@ -121,56 +127,106 @@ bool NPC::isAlive ()
 	return m_alive;
 }
 
-void NPC::setUpGeneticAlg()
-{
-}
-
 void NPC::wander()
 {
 	if ((std::sqrt((m_endPosition.x - m_position.x) * (m_endPosition.x - m_position.x)+(m_endPosition.y - m_position.y) * (m_endPosition.y - m_position.y)))  <= 20)
 	{
-		m_endPosition = sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y);
+		m_penSize.x =randomNumber(m_window.getSize().x,0);
+		m_penSize.y = randomNumber(m_window.getSize().y, 0);
+
+		if (m_penSize.x > 1950){m_penSize.x = 1950;}
+		if (m_penSize.y > 950){ m_penSize.y = 950; }
+
+		m_endPosition = m_penSize;
 	}
 
-	if (m_position.x >= m_endPosition.x) { m_position.x -= m_speed; }
-	if(m_position.x <= m_endPosition.x) { m_position.x += m_speed; }
-	if (m_position.y > m_endPosition.y) { m_position.y -= m_speed; }
-	if (m_position.y <= m_endPosition.y) { m_position.y += m_speed; }
+	if (m_position.x >= m_endPosition.x) { m_position.x -= m_speed / (m_size * .7); }
+	if(m_position.x <= m_endPosition.x) { m_position.x += m_speed / (m_size * .7); }
+	if (m_position.y > m_endPosition.y) { m_position.y -= m_speed / (m_size * .7); }
+	if (m_position.y <= m_endPosition.y) { m_position.y += m_speed / (m_size*.7); }
 
 	m_sprite.setPosition(m_position);
 
 	
 }
 
+int NPC::randomNumber(int t_max, int t_min)
+{
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist(t_min, t_max);
+
+	return dist(rng);
+}
+
+//++++++++++SET UP FUNCTIONS ++++++++++
+
 void NPC::setUpNpcStart(int t_ID)
 {
+
+	//randomise the starters DNA
+	m_speed = (randomNumber(9, 1));
+	m_strength = (randomNumber(9, 1));
+	m_intelligence = (randomNumber(9, 1));
+	m_size = (randomNumber(9, 1));
+
+	//DNA sequence 
+	m_DNA[0] = m_speed;
+	m_DNA[1] = m_strength;
+	m_DNA[2] = m_intelligence;
+	m_DNA[3] = m_size;
+
+	//set all of the streams to 2 decimals points 
+	m_speedStream << std::fixed << std::setprecision(1) << m_speed;
+	m_strengthStream << std::fixed << std::setprecision(1) << m_strength;
+	m_intelligenceStream << std::fixed << std::setprecision(1) << m_intelligence;
+	m_sizeStream << std::fixed << std::setprecision(1) << m_size;
+
+	//make the Dna String for display
+	m_DNADisplay =
+		m_speedStream.str()+ "," +
+		m_strengthStream.str() + "," +
+		m_intelligenceStream.str() + "," +
+		m_sizeStream.str();
+
+	//set the ID of the NPC
 	m_ID = t_ID;
+	
+	//Set the NPC Texture
 	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png"))
 	{
 		std::cout << "problem loading Npc Texture" << std::endl;
 	}
 	m_sprite.setTexture(m_texture);
 
+	//set gender
 	if (m_gender == 0)
 	{
 		m_gender = 0;
-		m_sprite.setColor(sf::Color::Yellow);
+		m_sprite.setColor(sf::Color(255, 255, 0,200));
 	}
 	else
 	{
 		m_gender = 1;
-		m_sprite.setColor(sf::Color::Cyan);
+		m_sprite.setColor(sf::Color(0, 255, 255,200));
 	}
 
-	m_sprite.setScale(m_size, m_size);
+	//set size,origin and scale 
+	if (m_size > 4){m_sprite.setScale(4 + (m_size * .1), 4 + (m_size * .1));}
+	else{m_sprite.setScale(m_size, m_size);}
 	m_sprite.setOrigin(m_texture.getSize().x / 2,m_texture.getSize().y / 2);
+
+	//set the starting position of the NPCs
 	m_position = sf::Vector2f(800,800);
-
-
 	m_sprite.setPosition(m_position);
 
-	m_endPosition = sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y);
+	//Set a random postion within the Pen for the NPCS to walk to0
+	m_penSize.x = randomNumber(m_window.getSize().x,0);
+	m_penSize.y = randomNumber(m_window.getSize().y, 0);
 
+	if (m_penSize.x > 1950) { m_penSize.x = 1950; }	//size of pen for npcs 
+	if (m_penSize.y > 950) { m_penSize.y = 950; }
+	m_endPosition = m_penSize;
 
 	//circle for reproduction
 	m_mateingrandTemp.setRadius(m_mateingRange);
@@ -180,58 +236,81 @@ void NPC::setUpNpcStart(int t_ID)
 	m_mateingrandTemp.setPosition(m_position);
 	m_mateingrandTemp.setOrigin(m_mateingRange, m_mateingRange);
 
-
+	//++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
 	//Health Bar.
 	m_healthBarBase.setFillColor(sf::Color(169, 169, 169));
 	m_healthBarBase.setOutlineColor(sf::Color::Black);
 	m_healthBarBase.setSize(sf::Vector2f(100, 10));
 	m_healthBarBase.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 2));
-
+	//front of health bar
 	m_healthBarFront.setFillColor(sf::Color::Red);
 	m_healthBarFront.setSize(sf::Vector2f(100, 10));
 	m_healthBarFront.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 10));
-
-
-
 	//DNA text 
-	m_DNAText.setString("DNA: "+m_DNA);
+	m_DNAText.setString("DNA: "+ m_DNADisplay);
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
 	m_DNAText.setFont(m_font);
 	m_DNAText.setFillColor(sf::Color::Black);
 	m_DNAText.setCharacterSize(20);
-
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
 	m_GenerationText.setPosition(m_position);
 	m_GenerationText.setFont(m_font);
 	m_GenerationText.setFillColor(sf::Color::Black);
 	m_GenerationText.setCharacterSize(10);
-
 	//age text 
-	m_AgeText.setString("Age: " + std::to_string(m_age));
+	m_AgeText.setString("Age: " + std::to_string((m_age)));
 	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - 20));
 	m_AgeText.setFont(m_font);
 	m_AgeText.setFillColor(sf::Color::Black);
 	m_AgeText.setCharacterSize(20);
-
+	//cmd out of inital ID's
 	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
-	std::cout << "DNA:" + m_DNA << std::endl;
+	std::cout << "DNA: " + m_DNADisplay << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
 	resetReproductionTimer();
 }
-
 void NPC::setUpNpc(int t_ID)
 {
+	//randomise the starters DNA
+	m_speed = (randomNumber(9, 1));
+	m_strength = (randomNumber(9, 1));
+	m_intelligence = (randomNumber(9, 1));
+	m_size = (randomNumber(9, 1));
+
+	//DNA sequence 
+	m_DNA[0] = m_speed;
+	m_DNA[1] = m_strength;
+	m_DNA[2] = m_intelligence;
+	m_DNA[3] = m_size;
+
+	//set all of the streams to 2 decimals points 
+	m_speedStream << std::fixed << std::setprecision(1) << m_speed;
+	m_strengthStream << std::fixed << std::setprecision(1) << m_strength;
+	m_intelligenceStream << std::fixed << std::setprecision(1) << m_intelligence;
+	m_sizeStream << std::fixed << std::setprecision(1) << m_size;
+
+	//make the Dna String for display
+	m_DNADisplay =
+		m_speedStream.str() + "," +
+		m_strengthStream.str() + "," +
+		m_intelligenceStream.str() + "," +
+		m_sizeStream.str();
+
+	//set the ID of the NPC
 	m_ID = t_ID;
+
+	//Set the NPC Texture
 	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png"))
 	{
 		std::cout << "problem loading Npc Texture" << std::endl;
 	}
 	m_sprite.setTexture(m_texture);
 
-	if ((rand() % 2) == 0)
+	//set gender
+	if (randomNumber(1,0) == 0)
 	{
 		m_gender = 0;
 		m_sprite.setColor(sf::Color::Yellow);
@@ -242,12 +321,25 @@ void NPC::setUpNpc(int t_ID)
 		m_sprite.setColor(sf::Color::Cyan);
 	}
 
-	m_sprite.setScale(m_size, m_size);
+
+	//set size,origin and scale 
+	if (m_size > 4) { m_sprite.setScale(4 + (m_size * .1), 4 + (m_size * .1)); }
+	else { m_sprite.setScale(m_size, m_size); }
 	m_sprite.setOrigin( m_texture.getSize().x /2,m_texture.getSize().y /2);
+
+	//set the starting position of the NPCs
 	m_sprite.setPosition(m_position);
 	
-	m_endPosition = sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y);
-	
+	//Set a random postion within the Pen for the NPCS to walk to0
+	m_penSize.x = randomNumber(m_window.getSize().x, 0);
+	m_penSize.y = randomNumber(m_window.getSize().y, 0);
+
+	if (m_penSize.x > 1950) { m_penSize.x = 1950; }//size of pen for npcs 
+	if (m_penSize.y > 950) { m_penSize.y = 950; }
+	m_endPosition = m_penSize;
+
+
+	//++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
 	//circle for reproduction
 	m_mateingrandTemp.setRadius(m_mateingRange);
 	m_mateingrandTemp.setOutlineColor(sf::Color::Red);
@@ -255,33 +347,29 @@ void NPC::setUpNpc(int t_ID)
 	m_mateingrandTemp.setFillColor(sf::Color::Transparent);
 	m_mateingrandTemp.setPosition(m_position);
 	m_mateingrandTemp.setOrigin(m_mateingRange, m_mateingRange);	
-
 	//Health Bar.
 	m_healthBarBase.setFillColor(sf::Color(169, 169, 169));
 	m_healthBarBase.setOutlineColor(sf::Color::Black);
 	m_healthBarBase.setSize(sf::Vector2f(100, 10));
 	m_healthBarBase.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 2));
-
+	//front of health bar
 	m_healthBarFront.setFillColor(sf::Color::Red);
 	m_healthBarFront.setSize(sf::Vector2f(100, 10));
 	m_healthBarFront.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 10));
-
 	//DNA text 
-	m_DNAText.setString("DNA: " + m_DNA);
+	m_DNAText.setString("DNA: " + m_DNADisplay);
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
 	m_DNAText.setFont(m_font);
 	m_DNAText.setFillColor(sf::Color::Black);
 	m_DNAText.setCharacterSize(20);
-
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
 	m_GenerationText.setPosition(m_position);
 	m_GenerationText.setFont(m_font);
 	m_GenerationText.setFillColor(sf::Color::Black);
 	m_GenerationText.setCharacterSize(10);
-
 	//age text 
 	m_AgeText.setString("Age: " + std::to_string(m_age));
 	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - 20));
