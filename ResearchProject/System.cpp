@@ -13,8 +13,15 @@
 /// </summary>
 System::System() :
 	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
-	m_exit{false} //when true System will exit
+	m_exit{false}, //when true System will exit
+	m_gui(m_window)//set up GUI
 {
+	
+	
+
+
+
+
 	setupFontAndText(); // load font 
 
 	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\Background.png"))
@@ -188,9 +195,11 @@ void System::render()
 	m_window.draw(m_maleCountText);
 	m_window.draw(m_femaleCountText);
 
-
-
 	m_window.draw(m_foregroundSprite);
+
+	m_gui.Draw();
+
+	
 	m_window.display();
 }
 

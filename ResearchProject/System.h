@@ -5,6 +5,7 @@
 #include <random>
 #include <array>
 #include "NPC.h"
+#include "Gui.h"
 
 class System
 {
@@ -17,6 +18,8 @@ public:
 	void run();
 
 private:
+
+
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -78,6 +81,11 @@ private:
 
 	sf::Sprite m_heartSprite;
 	sf::Texture m_heartTexture;
+
+
+	//++++++++++GUI++++++++++
+	GUI m_gui;
+
 };
 
 #endif // !SYSTEM_HPP
