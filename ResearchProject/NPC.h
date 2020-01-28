@@ -33,6 +33,12 @@ public:
 	std::array<float, 4> getDNA();
 	bool isAlive();
 
+	float GetSpeedStatistic();
+	float GetStrStatistic();
+	float GetIntStatistic();
+	float GetSizeStatistic();
+
+
 	//++++++++++SET FUNCTIONS ++++++++++
 	void setPosition(sf::Vector2f t_pos);
 	void setEndPosition(sf::Vector2f t_pos);

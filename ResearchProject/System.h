@@ -41,13 +41,21 @@ private:
 	void GAReproduction();
 	void GAReproduce(NPC* t_npcOne, NPC* t_npcTwo);
 
+	//++++++++++Get Statistics ++++++++++
+	float GetAvgSpeed();
+	float GetAvgStr();
+	float GetAvgInt();
+	float GetAvgSize();
+
+	float m_avgStatistic = 0;
+
 
 	//++++++++++GLOBAL VARIABLE ++++++++++
 	int REPRODUCTION_CHANCE = 3;   // 4 = 1/4 
-	int REPRODUCTION_TIME = 400; //450
-	int AGE_CAP = 5000;
+	int REPRODUCTION_TIME = 150; //450
+	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	std::array<float, 4> mutationArray = { 1,0,0,0 };
+	std::array<float, 4> mutationArray = { 2,0,0,0 };
 
 
 

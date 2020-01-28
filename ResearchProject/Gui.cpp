@@ -2,7 +2,7 @@
 
 GUI::GUI(sf::RenderWindow& t_window) :
 	m_window(t_window),
-	m_lines(sf::LinesStrip, 4)
+	m_lines(sf::LinesStrip, 1)
 {
 	SetUpLineGraph();
 }
@@ -20,6 +20,12 @@ void GUI::Draw()
 
 }
 
+void GUI::update(float t_AvgStatistic, int t_highestGen)
+{
+	updateGraph(t_AvgStatistic,t_highestGen);
+
+}
+
 void GUI::SetUpLineGraph()
 {
 
@@ -33,11 +39,8 @@ void GUI::SetUpLineGraph()
 
 
 	m_lines[0].position = sf::Vector2f(50, 1450);
-	m_lines[1].position = sf::Vector2f(1000, 1300);
-	m_lines[2].position = sf::Vector2f(1200, 1200);
-	m_lines[3].position = sf::Vector2f(2000, 1050);
+	
 
-	m_lines.append(sf::Vector2f(2400, 1050));
 	for (int i = 0; i < m_lines.getVertexCount(); i++)
 	{
 		m_lines[i].color = sf::Color::Black;
@@ -49,5 +52,24 @@ void GUI::SetUpLineGraph()
 
 
 	
+
+}
+
+void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
+{
+
+	if (m_currentGenerationHeld < t_highestGen)
+	{
+		m_currentGenerationHeld = t_highestGen;
+		m_lines.append(sf::Vector2f(tempXvalueGraph += 100, tempYvalueGraph - (t_AvgStatistic*2)));
+	}
+
+	for (int i = 0; i < m_lines.getVertexCount(); i++)
+	{
+		m_lines[i].color = sf::Color::Black;
+
+	}
+
+	std::cout << t_AvgStatistic << std::endl;
 
 }

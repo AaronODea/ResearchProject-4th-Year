@@ -127,6 +127,26 @@ bool NPC::isAlive ()
 	return m_alive;
 }
 
+float NPC::GetSpeedStatistic()
+{
+	return m_speed;
+}
+
+float NPC::GetStrStatistic()
+{
+	return m_speed;
+}
+
+float NPC::GetIntStatistic()
+{
+	return m_intelligence;
+}
+
+float NPC::GetSizeStatistic()
+{
+	return m_size;
+}
+
 void NPC::wander()
 {
 	if ((std::sqrt((m_endPosition.x - m_position.x) * (m_endPosition.x - m_position.x)+(m_endPosition.y - m_position.y) * (m_endPosition.y - m_position.y)))  <= 20)

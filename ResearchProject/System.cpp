@@ -175,8 +175,12 @@ void System::update(sf::Time t_deltaTime)
 	m_maleCountText.setString("Total males: " + std::to_string(m_maleCount));
 	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
 	
+	//temp hold for statistic choice make into a chioce by user ---------------------------------------------------------------------------------
+	GetAvgSpeed();
 
 
+
+	m_gui.update(m_avgStatistic, m_highestGen);
 }
 
 /// <summary>
@@ -271,7 +275,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	int mutationChance;
 	for (int i = 0; i < 4; i++)
 	{
-		mutationChance = randomNumber(3,0);
+		mutationChance = randomNumber(4,0);
 
 		if (mutationChance == 0)
 		{
@@ -285,7 +289,10 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 		{
 			Mutations[i] = 0;
 		}
-
+		else if (mutationChance == 3)
+		{
+			Mutations[i] = mutationArray[i];
+		}
 
 	}
 
@@ -323,6 +330,57 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	t_npcOne->resetReproductionTimer();
 	t_npcTwo->resetReproductionTimer();
 
+
+	if (m_npcs[m_npcs.size() - 1]->getGenertaion() > m_highestGen)
+	{
+		m_highestGen = m_npcs[m_npcs.size() - 1]->getGenertaion();
+	}
+}
+
+float System::GetAvgSpeed()
+{
+
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		m_avgStatistic += m_npcs[i]->GetSpeedStatistic();
+	}
+
+	m_avgStatistic = m_avgStatistic / m_npcs.size();
+	return m_avgStatistic;
+}
+
+float System::GetAvgStr()
+{
+
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		m_avgStatistic += m_npcs[i]->GetSizeStatistic();
+	}
+	m_avgStatistic = m_avgStatistic / m_npcs.size();
+	return m_avgStatistic;
+}
+
+float System::GetAvgInt()
+{
+
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		m_avgStatistic += m_npcs[i]->GetIntStatistic();
+
+	}
+	m_avgStatistic = m_avgStatistic / m_npcs.size();
+	return m_avgStatistic;
+}
+
+float System::GetAvgSize()
+{
+
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		m_avgStatistic += m_npcs[i]->GetIntStatistic();
+	}
+	m_avgStatistic = m_avgStatistic / m_npcs.size();
+	return m_avgStatistic;
 }
 
 
