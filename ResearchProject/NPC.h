@@ -38,7 +38,6 @@ public:
 	float GetIntStatistic();
 	float GetSizeStatistic();
 
-
 	//++++++++++SET FUNCTIONS ++++++++++
 	void setPosition(sf::Vector2f t_pos);
 	void setEndPosition(sf::Vector2f t_pos);
@@ -52,14 +51,10 @@ public:
 	int randomNumber(int t_max, int t_min);//make a random number 
 	void resetReproductionTimer();
 
-
 	//  put into main system or set up gn Function_-------------------------------------------------------------------------
 	int REPRODUCTION_TIME;
 	int AGE_CAP;
-	int m_mateingRange = 200;
-	int m_ReproductionTimer = 0; //1 = 1 cycle
-	float m_rateOfMutation = 25;
-
+	int m_ReproductionTimer = 0;
 
 private:
 	//text and displays;
@@ -84,6 +79,8 @@ private:
 	float m_strength;
 	float m_intelligence;
 	float m_size;
+
+
 	bool m_SequenceComplete = false; // when the end goal has been reached 
 
 
@@ -95,6 +92,9 @@ private:
 	std::stringstream m_sizeStream;
 
 	std::array<float, 4>  m_DNA;
+
+	float m_Statistic_cap = 100;
+
 
 	//++++++++++++++++++++++++TEXT+++++++++++++++++++++
 	sf::Text m_DNAText;
@@ -110,7 +110,7 @@ private:
 	sf::Sprite m_sprite;
 	sf::Texture m_texture;
 
-
+	//+++++++++++++++++++NPC AREA+++++++++++++++++++++
 	//positions 
 	sf::Vector2f m_position;
 	sf::Vector2f m_endPosition;

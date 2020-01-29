@@ -15,12 +15,7 @@ System::System() :
 	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
 	m_exit{false}, //when true System will exit
 	m_gui(m_window)//set up GUI
-{
-	
-	
-
-
-
+{	
 
 	setupFontAndText(); // load font 
 
@@ -180,7 +175,9 @@ void System::update(sf::Time t_deltaTime)
 
 
 
-	m_gui.update(m_avgStatistic, m_highestGen);
+//	m_gui.update(m_avgStatistic, m_highestGen);
+	m_gui.update(m_avgStatistic, m_highestPopulation);
+
 }
 
 /// <summary>
@@ -262,7 +259,6 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	t_npcTwo->setEndPosition(t_npcOne->getPos());
 	m_heartSprite.setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
 
-
 	float Mutations[4] ;
 	Mutations[0] = 0;
 	Mutations[1] = 0;
@@ -275,7 +271,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	int mutationChance;
 	for (int i = 0; i < 4; i++)
 	{
-		mutationChance = randomNumber(4,0);
+		mutationChance = randomNumber(3,0);
 
 		if (mutationChance == 0)
 		{
@@ -289,27 +285,37 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 		{
 			Mutations[i] = 0;
 		}
-		else if (mutationChance == 3)
-		{
-			Mutations[i] = mutationArray[i];
-		}
+
+
 
 	}
 
-	DNA_THREE[0] = DNA_ONE[0];
-	DNA_THREE[1] = DNA_ONE[1];
-	DNA_THREE[2] = DNA_TWO[2];
-	DNA_THREE[3] = DNA_TWO[3];
 
-	for (int i = 0; i < 4; i++)
+
+
+
+
+	//++++++++++1/2 split DNA++++++++++
+
+	//DNA_THREE[0] = DNA_ONE[0];
+	//DNA_THREE[1] = DNA_ONE[1];
+	//DNA_THREE[2] = DNA_TWO[2];
+	//DNA_THREE[3] = DNA_TWO[3];
+
+
+	DNA_THREE[0] = (DNA_ONE[0] + DNA_TWO[0]) / 2;
+	DNA_THREE[1] = (DNA_ONE[1] + DNA_TWO[1]) / 2;
+	DNA_THREE[2] = (DNA_ONE[2] + DNA_TWO[2]) / 2;
+	DNA_THREE[3] = (DNA_ONE[3] + DNA_TWO[3]) / 2;
+
+
+
+	for (int i = 0; i < 3; i++)
 	{
+		 
 		DNA_THREE[i] += Mutations[i];
-		if (DNA_THREE[i] < 0) { DNA_THREE[i] = 0;}
-		if (DNA_THREE[i] > 9) { DNA_THREE[i] = 9; }
-
-
-
-		DNA_THREE[i] += DNA_THREE[i];
+		if (DNA_THREE[i] < 1) { DNA_THREE[i] = 1;}
+		if (DNA_THREE[i] > 100) { DNA_THREE[i] = 100; }
 	}
 
 
@@ -337,6 +343,12 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	}
 }
 
+
+//++++++++++ Getters for average Statistics ++++++++++
+
+/// <summary>
+/// Get Average NPC SPEED
+/// </summary>
 float System::GetAvgSpeed()
 {
 
@@ -348,7 +360,9 @@ float System::GetAvgSpeed()
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
-
+/// <summary>
+/// Get Average NPC Strenght 
+/// </summary>
 float System::GetAvgStr()
 {
 
@@ -359,7 +373,9 @@ float System::GetAvgStr()
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
-
+/// <summary>
+/// Get Average NPC intelegnece 
+/// </summary>
 float System::GetAvgInt()
 {
 
@@ -371,7 +387,9 @@ float System::GetAvgInt()
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
-
+/// <summary>
+/// Get Average NPC size 
+/// </summary>
 float System::GetAvgSize()
 {
 
@@ -386,41 +404,65 @@ float System::GetAvgSize()
 
 void System::GAReproduction()
 {
-	int distanceBetweenNPC = 0;
 
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
-		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3))
+		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3)) //check if the first npc is within the corect age range 
 		{
 
-			if (m_npcs[i]->getReproductionCooldown() <= 0)
+			if (m_npcs[i]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
 			{
 				for (int j = 0; j < m_npcs.size(); j++)
 				{
-					if (m_npcs[i] != m_npcs[j])
+					if (m_npcs[i] != m_npcs[j])//is the npc's the same npc
 					{
-						if (m_npcs[j]->getAge() >= (AGE_CAP / 4) && m_npcs[j]->getAge() <= ((AGE_CAP / 4) * 3))
+						if (m_npcs[j]->getAge() >= (AGE_CAP / 4) && m_npcs[j]->getAge() <= ((AGE_CAP / 4) * 3))//check if the second npc is within the corect age range 
 						{
-							if (m_npcs[i]->getGender() != m_npcs[j]->getGender())
+							if (m_npcs[i]->getGender() != m_npcs[j]->getGender()) //check if the genders are opposite 
 							{
-								if (m_npcs[j]->getReproductionCooldown() <= 0)
+								if (m_npcs[j]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
 								{
 
-									distanceBetweenNPC =
+									m_distanceBetweenNPC =
 										sqrt((pow((m_npcs[j]->getPos().x - m_npcs[i]->getPos().x), 2)) +
 										(pow((m_npcs[j]->getPos().y - m_npcs[i]->getPos().y), 2)));
 
-									if (distanceBetweenNPC <= 400)
+									if (m_distanceBetweenNPC <= BREEDING_DISTANCE)
 									{
-										if (randomNumber(REPRODUCTION_CHANCE,0) == 0)
+
+										if(m_wantedStatistics[0] == 1)//speed wanted 
+										{
+											if (m_npcs[j]->GetSpeedStatistic() >= m_npcs[i]->GetSpeedStatistic()) {m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
+										}
+										if (m_wantedStatistics[1] == 1)//strenght wanted
+										{
+											if (m_npcs[j]->GetStrStatistic() >= m_npcs[i]->GetStrStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
+										}
+										if (m_wantedStatistics[2] == 1)//intelegence wanted
+										{
+											if (m_npcs[j]->GetIntStatistic() >= m_npcs[i]->GetIntStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
+										}
+										if (m_wantedStatistics[3] == 1)//size wanted
+										{
+											if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;} //increase the chance of reproduction
+										}
+
+										std::cout << m_runningReproductionChance << std::endl;
+										if (randomNumber(m_runningReproductionChance,0) <= REPRODUCTION_CHANCE_THRESHOLD)
 										{
 
-											GAReproduce(m_npcs[i], m_npcs[j]);
+
+											GAReproduce(m_npcs[i], m_npcs[j]);										
+											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}
 										else
 										{
-											m_npcs[i]->resetReproductionTimer();
+											m_npcs[i]->resetReproductionTimer();//failed reproduction wait till try again rest 
+											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}
+
+
+
 									}
 								}
 							}

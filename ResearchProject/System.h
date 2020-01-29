@@ -50,18 +50,30 @@ private:
 	float m_avgStatistic = 0;
 
 
+	//++++++++++CONST VARIABLE ++++++++++
+	const int BREEDING_DISTANCE = 400;
+	const int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
+	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
+	
 	//++++++++++GLOBAL VARIABLE ++++++++++
-	int REPRODUCTION_CHANCE = 3;   // 4 = 1/4 
-	int REPRODUCTION_TIME = 150; //450
-	int AGE_CAP = 5000;  // 5000 = 50 years 
+	int REPRODUCTION_INCREASE = 20; //increase in reproduction chance when a wanted trait is found 
+
+	int REPRODUCTION_TIME = 200; // 300 = 3 years
+	int AGE_CAP = 10000;  // 5000 = 50 years 
 
 	std::array<float, 4> mutationArray = { 2,0,0,0 };
+
+	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
+
 
 
 
 	//++++++++++NPCS VARIABLES ++++++++++
 	int m_IDCount = 0;
 	std::vector<NPC*> m_npcs;
+
+	int m_distanceBetweenNPC = 0;
+	int m_runningReproductionChance = REPRODUCTION_CHANCE;
 
 	//++++++++++TEXT++++++++++
 	//gender stat 
