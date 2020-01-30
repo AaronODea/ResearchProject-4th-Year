@@ -175,8 +175,8 @@ void System::update(sf::Time t_deltaTime)
 
 
 
-//	m_gui.update(m_avgStatistic, m_highestGen);
-	m_gui.update(m_avgStatistic, m_highestPopulation);
+	m_gui.update(m_avgStatistic, m_npcs.size());
+	
 
 }
 
@@ -212,6 +212,7 @@ int System::randomNumber(int t_max, int t_min)
 
 	return dist(rng);
 }
+
 
 /// <summary>
 /// load the font and setup the text message for screen
@@ -269,26 +270,50 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	
 
 	int mutationChance;
+	float number;
 	for (int i = 0; i < 4; i++)
 	{
-		mutationChance = randomNumber(3,0);
-
-		if (mutationChance == 0)
+		if (m_wantedStatistics[i] == 1)
 		{
-			Mutations[i] = -mutationArray[i];
+			mutationChance = randomNumber(100, 0);
+			if (mutationChance <= 25 )
+			{
+				Mutations[i] = -mutationArray[i];
+			}
+			else if (mutationChance >=40)
+			{
+				Mutations[i] = mutationArray[i];
+			}
+			else
+			{
+				Mutations[i] = 0;
+			}
+
 		}
-		else if(mutationChance == 1)
+		else
 		{
-			Mutations[i] = mutationArray[i];
+			mutationChance = randomNumber(100,0);
+			if (mutationChance <= 33)
+			{
+				number = mutationArray[i];
+				Mutations[i] = -mutationArray[i];
+			}
+			else if(mutationChance >= 66)
+			{
+				number = mutationArray[i];
+				Mutations[i] = mutationArray[i];
+			}
+			else
+			{
+				Mutations[i] = 0;
+			}
 		}
-		else if (mutationChance == 2)
-		{
-			Mutations[i] = 0;
-		}
-
-
-
 	}
+
+
+
+
+
 
 
 
@@ -310,7 +335,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 
 
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		 
 		DNA_THREE[i] += Mutations[i];
@@ -351,7 +376,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 /// </summary>
 float System::GetAvgSpeed()
 {
-
+	m_avgStatistic = 0;
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 		m_avgStatistic += m_npcs[i]->GetSpeedStatistic();
@@ -447,11 +472,8 @@ void System::GAReproduction()
 											if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;} //increase the chance of reproduction
 										}
 
-										std::cout << m_runningReproductionChance << std::endl;
 										if (randomNumber(m_runningReproductionChance,0) <= REPRODUCTION_CHANCE_THRESHOLD)
 										{
-
-
 											GAReproduce(m_npcs[i], m_npcs[j]);										
 											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}

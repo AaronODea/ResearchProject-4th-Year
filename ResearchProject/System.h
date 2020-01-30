@@ -34,6 +34,7 @@ private:
 	//++++++++++FUNCTION++++++++++
 	int randomNumber(int t_max, int t_min);
 
+
 	//++++++++++SET UP++++++++++
 	void setupFontAndText();
 
@@ -56,12 +57,12 @@ private:
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
 	
 	//++++++++++GLOBAL VARIABLE ++++++++++
-	int REPRODUCTION_INCREASE = 20; //increase in reproduction chance when a wanted trait is found 
+	int REPRODUCTION_INCREASE = 30; //increase in reproduction chance when a wanted trait is found 
 
-	int REPRODUCTION_TIME = 200; // 300 = 3 years
-	int AGE_CAP = 10000;  // 5000 = 50 years 
+	int REPRODUCTION_TIME = 300; // 300 = 3 years
+	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	std::array<float, 4> mutationArray = { 2,0,0,0 };
+	std::array<float, 4> mutationArray = { 30,0,0,0 };
 
 	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
 

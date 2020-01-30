@@ -330,7 +330,7 @@ void NPC::setUpNpc(int t_ID)
 	m_sprite.setTexture(m_texture);
 
 	//set gender
-	if (randomNumber(1,0) == 0)
+	if (randomNumber(1, 0) == 0)
 	{
 		m_gender = 0;
 		m_sprite.setColor(sf::Color::Yellow);
@@ -356,7 +356,7 @@ void NPC::setUpNpc(int t_ID)
 
 	//set the starting position of the NPCs
 	m_sprite.setPosition(m_position);
-	
+
 	//Set a random postion within the Pen for the NPCS to walk to0
 	m_penSize.x = randomNumber(m_window.getSize().x, 0);
 	m_penSize.y = randomNumber(m_window.getSize().y, 0);
@@ -367,31 +367,38 @@ void NPC::setUpNpc(int t_ID)
 
 
 	//++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
-	//Health Bar.
+	////Health Bar.
 	m_healthBarBase.setFillColor(sf::Color(169, 169, 169));
 	m_healthBarBase.setOutlineColor(sf::Color::Black);
 	m_healthBarBase.setSize(sf::Vector2f(100, 10));
-	m_healthBarBase.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
-	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 2));
-	//front of health bar
+	m_healthBarBase.setOrigin(m_sprite.getOrigin());
+	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
+
+
+	////front of health bar
 	m_healthBarFront.setFillColor(sf::Color::Red);
 	m_healthBarFront.setSize(sf::Vector2f(100, 10));
-	m_healthBarFront.setOrigin(m_healthBarBase.getSize().x / 2, m_healthBarBase.getSize().y / 2);
-	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y + m_size * 10));
+	m_healthBarFront.setOrigin(m_sprite.getOrigin());
+	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
+
+
 	//DNA text 
 	m_DNAText.setString("DNA: " + m_DNADisplay);
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
 	m_DNAText.setFont(m_font);
 	m_DNAText.setFillColor(sf::Color::Black);
 	m_DNAText.setCharacterSize(20);
+
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
-	m_GenerationText.setPosition(m_position);
+	m_GenerationText.setOrigin(m_sprite.getOrigin());
+	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * .5, m_position.y + (m_texture.getSize().y) * .5));
 	m_GenerationText.setFont(m_font);
 	m_GenerationText.setFillColor(sf::Color::Black);
-	m_GenerationText.setCharacterSize(10);
+	m_GenerationText.setCharacterSize(20);
+
 	//age text 
-	m_AgeText.setString("Age: " + std::to_string(m_age));
+	m_AgeText.setString("Age: " + std::to_string((m_age)));
 	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - 20));
 	m_AgeText.setFont(m_font);
 	m_AgeText.setFillColor(sf::Color::Black);

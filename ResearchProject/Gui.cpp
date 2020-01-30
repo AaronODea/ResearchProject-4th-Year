@@ -46,22 +46,16 @@ void GUI::SetUpLineGraph()
 		m_lines[i].color = sf::Color::Black;
 
 	}
-	
-
-	
-
-
-	
 
 }
 
 void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 {
 
-	if (m_currentGenerationHeld < t_highestGen)
+	if (m_currentGenerationHeld != t_highestGen)
 	{
 		m_currentGenerationHeld = t_highestGen;
-		m_lines.append(sf::Vector2f(tempXvalueGraph += 10, tempYvalueGraph - (t_AvgStatistic)));
+		m_lines.append(sf::Vector2f(tempXvalueGraph += 5, tempYvalueGraph - (t_AvgStatistic)*4));
 	}
 
 	for (int i = 0; i < m_lines.getVertexCount(); i++)
@@ -70,6 +64,6 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 
 	}
 
-//	std::cout << t_AvgStatistic << std::endl;
+	std::cout << t_AvgStatistic << std::endl;
 
 }
