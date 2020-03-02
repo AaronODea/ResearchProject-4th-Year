@@ -140,10 +140,10 @@ void NPC::wander()
 		m_endPosition = m_penSize;
 	}
 
-	if (m_position.x >= m_endPosition.x && m_speed < 80) { m_position.x -= m_speed / (m_size * .9); }
-	if(m_position.x <= m_endPosition.x && m_speed < 80) { m_position.x += m_speed / (m_size * .9); }
-	if (m_position.y > m_endPosition.y && m_speed < 80) { m_position.y -= m_speed / (m_size * .9); }
-	if (m_position.y <= m_endPosition.y && m_speed < 80) { m_position.y += m_speed / (m_size*.9); }
+	if (m_position.x >= m_endPosition.x ) { m_position.x -= m_speed / (m_size * .9); }
+	if(m_position.x <= m_endPosition.x) { m_position.x += m_speed / (m_size * .9); }
+	if (m_position.y > m_endPosition.y ) { m_position.y -= m_speed / (m_size * .9); }
+	if (m_position.y <= m_endPosition.y ) { m_position.y += m_speed / (m_size*.9); }
 
 	m_sprite.setPosition(m_position);
 

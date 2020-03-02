@@ -14,7 +14,7 @@
 System::System() :
 	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
 	m_exit{false}, //when true System will exit
-	m_gui(m_window)//set up GUI
+	m_gui(m_window, m_ArialBlackfont)//set up GUI
 {	
 
 	setupFontAndText(); // load font 

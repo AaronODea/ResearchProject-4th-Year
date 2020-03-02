@@ -1,11 +1,14 @@
 #include "Gui.h"
 
-GUI::GUI(sf::RenderWindow& t_window) :
+GUI::GUI(sf::RenderWindow& t_window, sf::Font& t_font) :
 	m_window(t_window),
-	m_lines(sf::LinesStrip, 1)
+	m_font(t_font),
+	m_lines(sf::TriangleFan, 2)
 {
 	SetUpLineGraph();
 }
+
+
 
 GUI::~GUI()
 {
@@ -29,16 +32,27 @@ void GUI::update(float t_AvgStatistic, int t_highestGen)
 void GUI::SetUpLineGraph()
 {
 
-	m_YaxisGraph.setFillColor(sf::Color::Black);
-	m_YaxisGraph.setSize(sf::Vector2f(10, 400));
+	m_YaxisGraph.setFillColor(sf::Color::White);
+	m_YaxisGraph.setOutlineColor(sf::Color::Black);
+	m_YaxisGraph.setOutlineThickness(5);
+	m_YaxisGraph.setSize(sf::Vector2f(10, 410));
 	m_YaxisGraph.setPosition(sf::Vector2f(50, 1050) );
 
-	m_XaxisGraph.setFillColor(sf::Color::Black);
-	m_XaxisGraph.setSize(sf::Vector2f(2000, 10));
+	m_XaxisGraph.setFillColor(sf::Color::White);
+	m_XaxisGraph.setOutlineColor(sf::Color::Black);
+	m_XaxisGraph.setOutlineThickness(5);
+	m_XaxisGraph.setSize(sf::Vector2f(1000, 10));
 	m_XaxisGraph.setPosition(sf::Vector2f(50, 1450));
 
 
-	m_lines[0].position = sf::Vector2f(50, 1450);
+	m_averageGraphTextX.setFont(m_font);
+	m_averageGraphTextY.setFont(m_font);
+
+	//m_averageGraphTextX
+	//m_averageGraphTextY
+
+	m_lines[0].position = sf::Vector2f(60, 1450);
+
 	
 
 	for (int i = 0; i < m_lines.getVertexCount(); i++)
@@ -54,16 +68,22 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 
 	if (m_currentGenerationHeld != t_highestGen)
 	{
-		m_currentGenerationHeld = t_highestGen;
-		m_lines.append(sf::Vector2f(tempXvalueGraph += 5, tempYvalueGraph - (t_AvgStatistic)*4));
-	}
+		if (m_AverageGraphX >= 1000)
+		{
+			m_lines.clear();
+			m_AverageGraphX = 60;
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * 4));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * 4));
+		}
 
+		m_currentGenerationHeld = t_highestGen;	
+		m_lines.resize(m_lines.getVertexCount()-1);
+		m_lines.append(sf::Vector2f(m_AverageGraphX += 20, m_AverageGraphY - (t_AvgStatistic)*4));
+		m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
+	}
 	for (int i = 0; i < m_lines.getVertexCount(); i++)
 	{
-		m_lines[i].color = sf::Color::Black;
-
+		m_lines[i].color = sf::Color::Black; 
 	}
-
-	std::cout << t_AvgStatistic << std::endl;
-
 }

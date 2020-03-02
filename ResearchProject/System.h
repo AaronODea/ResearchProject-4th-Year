@@ -51,7 +51,7 @@ private:
 	float m_avgStatistic = 0;
 
 
-	//++++++++++CONST VARIABLE ++++++++++
+	//++++++++++CONST VARIABLE ++++++++++ 
 	const int BREEDING_DISTANCE = 400;
 	const int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
