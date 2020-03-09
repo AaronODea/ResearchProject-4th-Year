@@ -11,11 +11,15 @@
 
 
 
+
 class NPC
 {
 public:
 	NPC(sf::RenderWindow& t_window ,sf::Font& t_font);
 	~NPC();
+
+	int WIDTH = 1920;
+	int HEIGHT = 1080;
 
 	//++++++++++SET UP FUNCTIONS ++++++++++
 	void setUpNpcStart(int t_ID);

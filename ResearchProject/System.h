@@ -7,6 +7,9 @@
 #include "NPC.h"
 #include "Gui.h"
 
+
+
+
 class System
 {
 public:
@@ -19,7 +22,8 @@ public:
 
 private:
 
-
+	int WIDTH = 1920;
+	int HEIGHT = 1080;
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message

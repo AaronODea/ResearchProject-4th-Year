@@ -35,14 +35,14 @@ void GUI::SetUpLineGraph()
 	m_YaxisGraph.setFillColor(sf::Color::White);
 	m_YaxisGraph.setOutlineColor(sf::Color::Black);
 	m_YaxisGraph.setOutlineThickness(5);
-	m_YaxisGraph.setSize(sf::Vector2f(10, 410));
-	m_YaxisGraph.setPosition(sf::Vector2f(50, 1050) );
+	m_YaxisGraph.setSize(sf::Vector2f(WIDTH/250, HEIGHT/3.658f));
+	m_YaxisGraph.setPosition(sf::Vector2f(WIDTH/50, HEIGHT) );
 
 	m_XaxisGraph.setFillColor(sf::Color::White);
 	m_XaxisGraph.setOutlineColor(sf::Color::Black);
 	m_XaxisGraph.setOutlineThickness(5);
-	m_XaxisGraph.setSize(sf::Vector2f(1000, 10));
-	m_XaxisGraph.setPosition(sf::Vector2f(50, 1450));
+	m_XaxisGraph.setSize(sf::Vector2f(WIDTH/2.5f, HEIGHT/150));
+	m_XaxisGraph.setPosition(sf::Vector2f(WIDTH / 50, HEIGHT/1.0344f));
 
 
 	m_averageGraphTextX.setFont(m_font);
@@ -51,7 +51,7 @@ void GUI::SetUpLineGraph()
 	//m_averageGraphTextX
 	//m_averageGraphTextY
 
-	m_lines[0].position = sf::Vector2f(60, 1450);
+	m_lines[0].position = sf::Vector2f(WIDTH/31.667f, HEIGHT / 1.0344f);
 
 	
 
@@ -68,18 +68,18 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 
 	if (m_currentGenerationHeld != t_highestGen)
 	{
-		if (m_AverageGraphX >= 1000)
+		if (m_AverageGraphX >= WIDTH/2.5)
 		{
 			m_lines.clear();
-			m_AverageGraphX = 60;
+			m_AverageGraphX = WIDTH/41.667f;
 			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
-			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * 4));
-			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * 4));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * ((WIDTH/HEIGHT)*4)));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) *( (WIDTH / HEIGHT) * 4)));
 		}
 
 		m_currentGenerationHeld = t_highestGen;	
 		m_lines.resize(m_lines.getVertexCount()-1);
-		m_lines.append(sf::Vector2f(m_AverageGraphX += 20, m_AverageGraphY - (t_AvgStatistic)*4));
+		m_lines.append(sf::Vector2f(m_AverageGraphX += WIDTH/125, m_AverageGraphY - (t_AvgStatistic)* ((WIDTH / HEIGHT) * 4)));
 		m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
 	}
 	for (int i = 0; i < m_lines.getVertexCount(); i++)

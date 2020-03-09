@@ -5,6 +5,8 @@
 #include <time.h> 
 
 
+
+
 /// <summary>
 /// default constructor
 /// setup the window properties
@@ -12,7 +14,7 @@
 /// load and setup thne image
 /// </summary>
 System::System() :
-	m_window{ sf::VideoMode{ 2500, 1500, 32 }, "GA" },
+	m_window{ sf::VideoMode{ 1920, 1080, 32 }, "GA" },
 	m_exit{false}, //when true System will exit
 	m_gui(m_window, m_ArialBlackfont)//set up GUI
 {	
@@ -24,12 +26,15 @@ System::System() :
 		std::cout << "problem loading background Texture" << std::endl;
 	}
 	m_backgroundSprite.setTexture(m_backgroundTexture);
+	m_backgroundSprite.setScale(0.8f, 0.8f);
+
 
 	if (!m_foregroundTexture.loadFromFile("ASSETS\\IMAGES\\Foreground.png"))
 	{
 		std::cout << "problem loading Foreground Texture" << std::endl;
 	}
 	m_foregroundSprite.setTexture(m_foregroundTexture);
+	m_foregroundSprite.setScale(0.8f, 0.8f);
 
  	m_npcs.reserve(10);
 	for (int i = 0; i < 10; i++)
@@ -187,7 +192,6 @@ void System::render()
 {
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_backgroundSprite);
-
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
 	
 	m_window.draw(m_heartSprite);
@@ -229,24 +233,24 @@ void System::setupFontAndText()
 		std::cout << "problem loading heart Texture" << std::endl;
 	}
 	m_heartSprite.setTexture(m_heartTexture);
-	m_heartSprite.setPosition(-100, -100);
-	m_heartSprite.setScale(3,3);
+	m_heartSprite.setPosition(-WIDTH/25, -HEIGHT/15);
+	m_heartSprite.setScale((WIDTH / HEIGHT) * 3, (WIDTH / HEIGHT) * 3);
 
 	m_totalNPC.setFont(m_ArialBlackfont);
 	m_totalNPC.setFillColor(sf::Color::Black);
-	m_totalNPC.setPosition(sf::Vector2f(2050,0));
+	m_totalNPC.setPosition(sf::Vector2f(WIDTH/1.219f,0));
 	
 	m_totalNPCAlltime.setFont(m_ArialBlackfont);
 	m_totalNPCAlltime.setFillColor(sf::Color::Black);
-	m_totalNPCAlltime.setPosition(sf::Vector2f(2050, 30));
+	m_totalNPCAlltime.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT/50));
 
 	m_maleCountText.setFont(m_ArialBlackfont);
 	m_maleCountText.setFillColor(sf::Color::Black);
-	m_maleCountText.setPosition(sf::Vector2f(2050, 60));
+	m_maleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 25));
 
 	m_femaleCountText.setFont(m_ArialBlackfont);
 	m_femaleCountText.setFillColor(sf::Color::Black);
-	m_femaleCountText.setPosition(sf::Vector2f(2050, 90));
+	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 16.667f));
 
 }
 
@@ -482,8 +486,6 @@ void System::GAReproduction()
 											m_npcs[i]->resetReproductionTimer();//failed reproduction wait till try again rest 
 											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}
-
-
 
 									}
 								}
