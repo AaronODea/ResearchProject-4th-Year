@@ -18,33 +18,24 @@ System::System() :
 	m_exit{false}, //when true System will exit
 	m_gui(m_window, m_ArialBlackfont)//set up GUI
 {	
+	WIDTH = m_window.getSize().x;
+	HEIGHT = m_window.getSize().y;
+	m_penSize.x = (WIDTH*.0004);
+	m_penSize.y = (HEIGHT * .0007);
 
 	setupFontAndText(); // load font 
 
-	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\Background.png"))
-	{
-		std::cout << "problem loading background Texture" << std::endl;
-	}
+	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\Background.png")){std::cout << "problem loading background Texture" << std::endl;}
 	m_backgroundSprite.setTexture(m_backgroundTexture);
-	m_backgroundSprite.setScale(0.78f, 0.78f);
+	m_backgroundSprite.setScale(m_penSize.x, m_penSize.y);
 
-
-	if (!m_foregroundTexture.loadFromFile("ASSETS\\IMAGES\\Foreground.png"))
-	{
-		std::cout << "problem loading Foreground Texture" << std::endl;
-	}
+	if (!m_foregroundTexture.loadFromFile("ASSETS\\IMAGES\\Foreground.png")) {std::cout << "problem loading Foreground Texture" << std::endl;}
 	m_foregroundSprite.setTexture(m_foregroundTexture);
-	m_foregroundSprite.setScale(0.78f, 0.78f);
+	m_foregroundSprite.setScale(m_penSize.x, m_penSize.y);
 
- 	m_npcs.reserve(10);
-	for (int i = 0; i < 10; i++)
-	{
-		m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));
-	}
-	for (int i = 0; i < 5; i++)
-	{
-		m_npcs[i]->setGender(1);
-	}
+ 	m_npcs.reserve(STARTER_AMOUNT);
+	for (int i = 0; i < STARTER_AMOUNT; i++) {m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));}
+	for (int i = 0; i < STARTER_AMOUNT/2; i++) {m_npcs[i]->setGender(1);}
 
 	for (int i = 0; i < m_npcs.size(); i++) 
 	{ 
@@ -112,29 +103,10 @@ void System::processEvents()
 /// <param name="t_event">key press event</param>
 void System::processKeys(sf::Event t_event)
 {
-	if (sf::Keyboard::Escape == t_event.key.code)
-	{
-		m_exit = true;
-	}
-	if (sf::Keyboard::Space == t_event.key.code)
-	{
-
-		for (int i = 0; i < m_npcs.size()/2; i++)
-		{
-			m_npcs.erase(m_npcs.begin() + i);
-		}
-	}
-	if (sf::Keyboard::S == t_event.key.code)
-	{
-
-		for (int i = 0; i < m_npcs.size(); i++)
-		{
-			if (m_npcs[i]->getSize() >2)
-			{
-				m_npcs.erase(m_npcs.begin() + i);
-			}			
-		}
-	}
+	if (sf::Keyboard::Escape == t_event.key.code){m_exit = true;}
+	if (sf::Keyboard::Space == t_event.key.code) {for (int i = 0; i < m_npcs.size()/2; i++) {m_npcs.erase(m_npcs.begin() + i);}}
+	if (sf::Keyboard::S == t_event.key.code){
+		for (int i = 0; i < m_npcs.size(); i++) {if (m_npcs[i]->getSize() >2) {m_npcs.erase(m_npcs.begin() + i);}}}
 }
 
 /// <summary>
@@ -143,46 +115,45 @@ void System::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void System::update(sf::Time t_deltaTime)
 {
-	if (m_exit)
-	{m_window.close();}
+	if (m_exit){m_window.close();}
 
 
 	m_maleCount = 0;
 	m_femaleCount = 0;
-	for (int i = 0; i < m_npcs.size(); i++)
-	{
+	for (int i = 0; i < m_npcs.size(); i++){
 		m_npcs[i]->Update();
 		if (m_npcs[i]->isAlive() == false) { m_npcs.erase(m_npcs.begin() + i); }
 
-		if (i != 0)
-		{
-			if (m_npcs[i]->getGender() == 1)
-			{
-				m_maleCount++;
-			}
+		if (i != 0){
+			if (m_npcs[i]->getGender() == 1) {m_maleCount++;}
 			else { m_femaleCount++; }
 		}
 	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//where to add the second gn
+
+
+
+
 	GAReproduction();
 
-	if (m_highestPopulation < m_npcs.size())
-	{
+
+
+
+
+	if (m_highestPopulation < m_npcs.size()){
 		m_highestPopulation = m_npcs.size();
 		m_totalNPCAlltime.setString("Highest Population: " + std::to_string(m_highestPopulation));
 	}
 	m_totalNPC.setString("Total NPC's: " + std::to_string(m_npcs.size()));
-
 	m_maleCountText.setString("Total males: " + std::to_string(m_maleCount));
 	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
 	
 	//temp hold for statistic choice make into a chioce by user ---------------------------------------------------------------------------------
 	GetAvgSpeed();
 
-
-
 	m_gui.update(m_avgStatistic, m_npcs.size());
-	
-
 }
 
 /// <summary>
@@ -199,7 +170,6 @@ void System::render()
 	m_window.draw(m_totalNPCAlltime);
 	m_window.draw(m_maleCountText);
 	m_window.draw(m_femaleCountText);
-
 	m_window.draw(m_foregroundSprite);
 
 	m_gui.Draw();
@@ -223,15 +193,9 @@ int System::randomNumber(int t_max, int t_min)
 /// </summary>
 void System::setupFontAndText()
 {
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
+	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf")) {std::cout << "problem loading arial black font" << std::endl;}
+	if (!m_heartTexture.loadFromFile("ASSETS\\IMAGES\\Heart.png")) {std::cout << "problem loading heart Texture" << std::endl;}
 
-	if (!m_heartTexture.loadFromFile("ASSETS\\IMAGES\\Heart.png"))
-	{
-		std::cout << "problem loading heart Texture" << std::endl;
-	}
 	m_heartSprite.setTexture(m_heartTexture);
 	m_heartSprite.setPosition(-WIDTH/25, -HEIGHT/15);
 	m_heartSprite.setScale((WIDTH / HEIGHT) * 3, (WIDTH / HEIGHT) * 3);
@@ -239,19 +203,22 @@ void System::setupFontAndText()
 	m_totalNPC.setFont(m_ArialBlackfont);
 	m_totalNPC.setFillColor(sf::Color::Black);
 	m_totalNPC.setPosition(sf::Vector2f(WIDTH/1.219f,0));
-	
+	m_totalNPC.setCharacterSize(WIDTH / 100);
+
 	m_totalNPCAlltime.setFont(m_ArialBlackfont);
 	m_totalNPCAlltime.setFillColor(sf::Color::Black);
 	m_totalNPCAlltime.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT/50));
+	m_totalNPCAlltime.setCharacterSize(WIDTH / 100);
 
 	m_maleCountText.setFont(m_ArialBlackfont);
 	m_maleCountText.setFillColor(sf::Color::Black);
 	m_maleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 25));
+	m_maleCountText.setCharacterSize(WIDTH / 100);
 
 	m_femaleCountText.setFont(m_ArialBlackfont);
 	m_femaleCountText.setFillColor(sf::Color::Black);
 	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 16.667f));
-
+	m_femaleCountText.setCharacterSize(WIDTH / 100);
 }
 
 void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
@@ -269,56 +236,34 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	Mutations[1] = 0;
 	Mutations[2] = 0;
 	Mutations[3] = 0;
-
-
 	
 
 	int mutationChance;
 	float number;
 	for (int i = 0; i < 4; i++)
 	{
-		if (m_wantedStatistics[i] == 1)
+		if (m_wantedStatistics[i] == 1) // if the statistic is desirable 
 		{
 			mutationChance = randomNumber(100, 0);
-			if (mutationChance <= 25 )
-			{
-				Mutations[i] = -mutationArray[i];
-			}
-			else if (mutationChance >=40)
-			{
-				Mutations[i] = mutationArray[i];
-			}
-			else
-			{
-				Mutations[i] = 0;
-			}
-
+			if (mutationChance <= 25 ) {Mutations[i] = -mutationArray[i];} // 25% chance to reduce
+			else if (mutationChance >=40) {Mutations[i] = mutationArray[i];} // 60% chance to increase
+			else{Mutations[i] = 0;}// 15% chance to do nothing
 		}
-		else
-		{
+		else{
 			mutationChance = randomNumber(100,0);
-			if (mutationChance <= 33)
+			if (mutationChance <= 33) // 33% chance 
 			{
 				number = mutationArray[i];
 				Mutations[i] = -mutationArray[i];
 			}
-			else if(mutationChance >= 66)
+			else if(mutationChance >= 66) // 33% chance 
 			{
 				number = mutationArray[i];
 				Mutations[i] = mutationArray[i];
 			}
-			else
-			{
-				Mutations[i] = 0;
-			}
+			else {Mutations[i] = 0;}// 33% chance
 		}
 	}
-
-
-
-
-
-
 
 
 
@@ -365,11 +310,7 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	t_npcOne->resetReproductionTimer();
 	t_npcTwo->resetReproductionTimer();
 
-
-	if (m_npcs[m_npcs.size() - 1]->getGenertaion() > m_highestGen)
-	{
-		m_highestGen = m_npcs[m_npcs.size() - 1]->getGenertaion();
-	}
+	if (m_npcs[m_npcs.size() - 1]->getGenertaion() > m_highestGen) {m_highestGen = m_npcs[m_npcs.size() - 1]->getGenertaion();}
 }
 
 

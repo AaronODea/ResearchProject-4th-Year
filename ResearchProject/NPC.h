@@ -77,7 +77,6 @@ private:
 	int m_age = 0;
 	int m_health = 100;
 
-
 	//variables for genetic algorithm
 	float m_speed;
 	float m_strength;
@@ -85,8 +84,9 @@ private:
 	float m_size;
 
 
-	bool m_SequenceComplete = false; // when the end goal has been reached 
+	float m_sizeScale;
 
+	bool m_SequenceComplete = false; // when the end goal has been reached -----------------------------------------------------------------------------------------
 
 	//DNA sequence 
 	std::string m_DNADisplay;
@@ -99,7 +99,6 @@ private:
 
 	float m_Statistic_cap = 100;
 
-
 	//++++++++++++++++++++++++TEXT+++++++++++++++++++++
 	sf::Text m_DNAText;
 	sf::Text m_GenerationText;
@@ -108,7 +107,6 @@ private:
 	//Health Bar 
 	sf::RectangleShape m_healthBarBase;
 	sf::RectangleShape m_healthBarFront;
-
 
 	//sprite Visual
 	sf::Sprite m_sprite;

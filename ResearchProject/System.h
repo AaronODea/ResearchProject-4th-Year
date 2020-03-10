@@ -24,6 +24,8 @@ private:
 
 	int WIDTH = 1920;
 	int HEIGHT = 1080;
+	sf::Vector2f m_penSize;
+
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -59,15 +61,16 @@ private:
 	const int BREEDING_DISTANCE = 400;
 	const int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
-	
+	const int STARTER_AMOUNT = 10;
+
+
 	//++++++++++GLOBAL VARIABLE ++++++++++
 	int REPRODUCTION_INCREASE = 30; //increase in reproduction chance when a wanted trait is found 
 
 	int REPRODUCTION_TIME = 300; // 300 = 3 years
 	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	std::array<float, 4> mutationArray = { 30,0,0,0 };
-
+	std::array<float, 4> mutationArray = { 30,0,0,0 }; // mutation array for  the chance of mutation 
 	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
 
 

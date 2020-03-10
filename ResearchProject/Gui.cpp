@@ -5,6 +5,8 @@ GUI::GUI(sf::RenderWindow& t_window, sf::Font& t_font) :
 	m_font(t_font),
 	m_lines(sf::TriangleFan, 2)
 {
+	WIDTH = m_window.getSize().x;
+	HEIGHT = m_window.getSize().y;
 	SetUpLineGraph();
 }
 
@@ -73,13 +75,13 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 			m_lines.clear();
 			m_AverageGraphX = WIDTH/41.667f;
 			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
-			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * ((WIDTH/HEIGHT)*4)));
-			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) *( (WIDTH / HEIGHT) * 4)));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) *  4));
+			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY - (t_AvgStatistic) * 4));
 		}
 
 		m_currentGenerationHeld = t_highestGen;	
 		m_lines.resize(m_lines.getVertexCount()-1);
-		m_lines.append(sf::Vector2f(m_AverageGraphX += WIDTH/125, m_AverageGraphY - (t_AvgStatistic)* ((WIDTH / HEIGHT) * 3)));
+		m_lines.append(sf::Vector2f(m_AverageGraphX += WIDTH/125, m_AverageGraphY - (t_AvgStatistic)*  3));
 		m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
 	}
 	for (int i = 0; i < m_lines.getVertexCount(); i++)

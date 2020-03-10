@@ -1,10 +1,14 @@
 #include "NPC.h"
 
 
-NPC::NPC(sf::RenderWindow& t_window, sf::Font& t_font):
-m_window(t_window),
-m_font(t_font)
+NPC::NPC(sf::RenderWindow& t_window, sf::Font& t_font) :
+	m_window(t_window),
+	m_font(t_font)
 {
+	WIDTH = m_window.getSize().x;
+	HEIGHT = m_window.getSize().y;
+	m_penSize.x = (WIDTH / 1.28f);
+	m_penSize.y = (HEIGHT / 1.578f);
 }
 
 NPC::~NPC()
@@ -25,23 +29,23 @@ void NPC::Draw()
 
 void NPC::Update()
 {
-	
-	if (m_ReproductionTimer >= 0) { m_ReproductionTimer--; }
-	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age/100)); }
-	else {m_alive = false;}
 
+
+
+	if (m_ReproductionTimer >= 0) { m_ReproductionTimer--; }
+	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age / 100)); }
+	else { m_alive = false; }
 
 	wander();
 
-
 	m_mateingrandTemp.setPosition(m_position);
-	
-	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y)* ((HEIGHT * WIDTH) * 2.5f) ));
-	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * ((HEIGHT * WIDTH) * 2.5f)));
 
-	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH/50)));
-	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * ((HEIGHT * WIDTH) * 0.5f), m_position.y + (m_texture.getSize().y) * ((HEIGHT * WIDTH) * 0.5f)));
-	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - (WIDTH/75)));
+	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
+	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
+
+	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH / 90)));
+	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * 0.5f, m_position.y + (m_texture.getSize().y) * 0.5f));
+	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - (WIDTH / 100)));
 }
 
 
@@ -119,36 +123,26 @@ void NPC::setGender(int t_gender)
 //++++++++++FUNCTIONS ++++++++++
 void NPC::resetReproductionTimer()
 {
- m_ReproductionTimer = REPRODUCTION_TIME;
+	m_ReproductionTimer = REPRODUCTION_TIME;
 }
 
-bool NPC::isAlive ()
+bool NPC::isAlive()
 {
 	return m_alive;
 }
 
 void NPC::wander()
 {
-	if ((std::sqrt((m_endPosition.x - m_position.x) * (m_endPosition.x - m_position.x)+(m_endPosition.y - m_position.y) * (m_endPosition.y - m_position.y)))  <= 20)
-	{
-		m_penSize.x =randomNumber(m_window.getSize().x,0);
-		m_penSize.y = randomNumber(m_window.getSize().y, 0);
+	if ((std::sqrt((m_endPosition.x - m_position.x) * (m_endPosition.x - m_position.x) + (m_endPosition.y - m_position.y) * (m_endPosition.y - m_position.y))) <= (HEIGHT/75)){
+		m_endPosition.x = randomNumber(m_penSize.x, 0);
+		m_endPosition.y = randomNumber(m_penSize.y, 0);}
 
-
-		if (m_penSize.x > (WIDTH / 1.28f)){m_penSize.x = (WIDTH / 1.28f);}
-		if (m_penSize.y > (HEIGHT / 1.578f)){ m_penSize.y = (HEIGHT / 1.578f); }
-
-		m_endPosition = m_penSize;
-	}
-
-	if (m_position.x >= m_endPosition.x ) { m_position.x -= m_speed / (m_size * .9); }
-	if(m_position.x <= m_endPosition.x) { m_position.x += m_speed / (m_size * .9); }
-	if (m_position.y > m_endPosition.y ) { m_position.y -= m_speed / (m_size * .9); }
-	if (m_position.y <= m_endPosition.y ) { m_position.y += m_speed / (m_size*.9); }
+	if (m_position.x >= m_endPosition.x) { m_position.x -= m_speed / (m_size * .9); }
+	if (m_position.x <= m_endPosition.x) { m_position.x += m_speed / (m_size * .9); }
+	if (m_position.y > m_endPosition.y) { m_position.y -= m_speed / (m_size * .9); }
+	if (m_position.y <= m_endPosition.y) { m_position.y += m_speed / (m_size * .9); }
 
 	m_sprite.setPosition(m_position);
-
-	
 }
 
 int NPC::randomNumber(int t_max, int t_min)
@@ -205,55 +199,65 @@ void NPC::setUpNpcStart(int t_ID)
 
 	//make the Dna String for display
 	m_DNADisplay =
-		m_speedStream.str()+ "," +
+		m_speedStream.str() + "," +
 		m_strengthStream.str() + "," +
 		m_intelligenceStream.str() + "," +
 		m_sizeStream.str();
 
 	//set the ID of the NPC
 	m_ID = t_ID;
-	
+
 	//Set the NPC Texture
-	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png"))
-	{
-		std::cout << "problem loading Npc Texture" << std::endl;
-	}
+	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png")) {std::cout << "problem loading Npc Texture" << std::endl;}
 	m_sprite.setTexture(m_texture);
 
 	//set gender
-	if (m_gender == 0)
-	{
+	if (m_gender == 0){
 		m_gender = 0;
-		m_sprite.setColor(sf::Color(255, 255, 0,200));
+		m_sprite.setColor(sf::Color(255, 255, 0, 200));
 	}
-	else
-	{
+	else{
 		m_gender = 1;
-		m_sprite.setColor(sf::Color(0, 255, 255,200));
+		m_sprite.setColor(sf::Color(0, 255, 255, 200));
 	}
 
 	//set size,origin and scale 
 
-	if (m_size < 20.0f)
-	{
-		if (m_size < 10.0f)
-		{m_sprite.setScale(m_size * .3, m_size * .3);}
-		else {m_sprite.setScale(m_size * .2, m_size * .2);}
+	if (m_size <= 50) {
+		if (m_size <= 10) { m_sizeScale = 0.08f; }
+		else if (m_size <= 20) { m_sizeScale = 0.07f; }
+		else if (m_size <= 30) { m_sizeScale = 0.06f; }
+		else if (m_size <= 40) { m_sizeScale = 0.05f; }
+		else { m_sizeScale = 0.04f; }
 	}
-	else{m_sprite.setScale(m_size * .06, m_size * .06);}
+	else {
+		if (m_size <= 60) { m_sizeScale = 0.035f; }
+		else if (m_size <= 70) { m_sizeScale = 0.037f; }
+		else if (m_size <= 80) { m_sizeScale = 0.039f; }
+		else if (m_size <= 90) { m_sizeScale = 0.041f; }
+		else { m_sizeScale = 0.042f; }
+	}
+	
+
+
+
+
+	
+	m_sprite.setScale(m_size*m_sizeScale, m_size*m_sizeScale);
+
 	m_sprite.setOrigin(m_sprite.getScale().x / 2, m_sprite.getScale().y / 2);
 
+
+
+
+
 	//set the starting position of the NPCs
-	m_position = sf::Vector2f(WIDTH/2,HEIGHT/2);
+	m_position = sf::Vector2f(WIDTH / 2, HEIGHT / 2);
 	m_sprite.setPosition(m_position);
 
 	//Set a random postion within the Pen for the NPCS to walk to0
-	m_penSize.x = randomNumber(m_window.getSize().x,0);
-	m_penSize.y = randomNumber(m_window.getSize().y, 0);
-
-	if (m_penSize.x > (WIDTH / 1.28f)) { m_penSize.x = (WIDTH / 1.28f); }	//size of pen for npcs 
-	if (m_penSize.y > (HEIGHT / 1.578f)) { m_penSize.y = (HEIGHT / 1.578f); }
-	m_endPosition = m_penSize;
+	m_endPosition.x = randomNumber(m_penSize.x, 0);
+	m_endPosition.y = randomNumber(m_penSize.y, 0);
 
 	////++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
 	////Health Bar.
@@ -263,20 +267,18 @@ void NPC::setUpNpcStart(int t_ID)
 	m_healthBarBase.setOrigin(m_sprite.getOrigin());
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
-
 	////front of health bar
 	m_healthBarFront.setFillColor(sf::Color::Red);
 	m_healthBarFront.setSize(sf::Vector2f(100, 10));
 	m_healthBarFront.setOrigin(m_sprite.getOrigin());
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
-
 	//DNA text 
-	m_DNAText.setString("DNA: "+ m_DNADisplay);
+	m_DNAText.setString("DNA: " + m_DNADisplay);
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
 	m_DNAText.setFont(m_font);
 	m_DNAText.setFillColor(sf::Color::Black);
-	m_DNAText.setCharacterSize(20);
+	m_DNAText.setCharacterSize(WIDTH / 150);
 
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
@@ -284,14 +286,14 @@ void NPC::setUpNpcStart(int t_ID)
 	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * .5, m_position.y + (m_texture.getSize().y) * .5));
 	m_GenerationText.setFont(m_font);
 	m_GenerationText.setFillColor(sf::Color::Black);
-	m_GenerationText.setCharacterSize(20);
+	m_GenerationText.setCharacterSize(WIDTH / 150);
 
 	//age text 
 	m_AgeText.setString("Age: " + std::to_string((m_age)));
-	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - 20));
+	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - WIDTH/125));
 	m_AgeText.setFont(m_font);
 	m_AgeText.setFillColor(sf::Color::Black);
-	m_AgeText.setCharacterSize(20);
+	m_AgeText.setCharacterSize(WIDTH / 150);
 
 	//cmd out of inital ID's
 	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
@@ -324,86 +326,85 @@ void NPC::setUpNpc(int t_ID)
 	m_ID = t_ID;
 
 	//Set the NPC Texture
-	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png"))
-	{
-		std::cout << "problem loading Npc Texture" << std::endl;
-	}
+	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png")) {std::cout << "problem loading Npc Texture" << std::endl;}
 	m_sprite.setTexture(m_texture);
 
 	//set gender
-	if (randomNumber(1, 0) == 0)
-	{
+	if (randomNumber(1, 0) == 0){
 		m_gender = 0;
 		m_sprite.setColor(sf::Color::Yellow);
 	}
-	else
-	{
+	else{
 		m_gender = 1;
 		m_sprite.setColor(sf::Color::Cyan);
 	}
 
-
 	//set size,origin and scale 
-	if (m_size < 20.0f)
-	{
-		if (m_size < 10.0f)
-		{
-			m_sprite.setScale(m_size * .3, m_size * .3);
-		}
-		else { m_sprite.setScale(m_size * .2, m_size * .2); }
+
+	if (m_size <= 50) {
+		if (m_size <= 10) { m_sizeScale = 0.08f; }
+		else if (m_size <= 20) { m_sizeScale = 0.07f; }
+		else if (m_size <= 30) { m_sizeScale = 0.06f; }
+		else if (m_size <= 40) { m_sizeScale = 0.05f; }
+		else { m_sizeScale = 0.04f; }
 	}
-	else { m_sprite.setScale(m_size * .06, m_size * .06); }
-	m_sprite.setOrigin(m_sprite.getScale().x / 2, m_sprite.getScale().y / 2);
+	else {
+		if (m_size <= 60) { m_sizeScale = 0.035f; }
+		else if (m_size <= 70) { m_sizeScale = 0.037f; }
+		else if (m_size <= 80) { m_sizeScale = 0.039f; }
+		else if (m_size <= 90) { m_sizeScale = 0.041f; }
+		else { m_sizeScale = 0.042f; }
+	}
+
 
 	//set the starting position of the NPCs
+	m_position = sf::Vector2f(WIDTH / 2, HEIGHT / 2);
 	m_sprite.setPosition(m_position);
 
 	//Set a random postion within the Pen for the NPCS to walk to0
-	m_penSize.x = randomNumber(WIDTH*0.8f, 0);
-	m_penSize.y = randomNumber(HEIGHT*0.8f, 0);
+	m_endPosition.x = randomNumber(m_penSize.x, 0);
+	m_endPosition.y = randomNumber(m_penSize.y, 0);
 
-	if (m_penSize.x > (WIDTH/1.28f)) { m_penSize.x = (WIDTH / 1.28f); }//size of pen for npcs 
-	if (m_penSize.y > (HEIGHT/1.578f)) { m_penSize.y = (HEIGHT / 1.578f); }
-	m_endPosition = m_penSize;
-
-
-	//++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
+	////++++++++++++++++++++++++++TEXT SETUP++++++++++++++++++++++++++
 	////Health Bar.
 	m_healthBarBase.setFillColor(sf::Color(169, 169, 169));
 	m_healthBarBase.setOutlineColor(sf::Color::Black);
-	m_healthBarBase.setSize(sf::Vector2f(WIDTH/100, HEIGHT/150));
+	m_healthBarBase.setSize(sf::Vector2f(100, 10));
 	m_healthBarBase.setOrigin(m_sprite.getOrigin());
-	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * ((HEIGHT * WIDTH) * 2.5f)));
-
+	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
 	////front of health bar
 	m_healthBarFront.setFillColor(sf::Color::Red);
-	m_healthBarFront.setSize(sf::Vector2f(WIDTH / 100, HEIGHT/150));
+	m_healthBarFront.setSize(sf::Vector2f(100, 10));
 	m_healthBarFront.setOrigin(m_sprite.getOrigin());
-	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * ((HEIGHT * WIDTH) * 2.5f)));
-
+	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
 	//DNA text 
 	m_DNAText.setString("DNA: " + m_DNADisplay);
-	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - (WIDTH/50), m_healthBarBase.getPosition().y - (WIDTH/50)));
+	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
 	m_DNAText.setFont(m_font);
 	m_DNAText.setFillColor(sf::Color::Black);
-	m_DNAText.setCharacterSize(20);
+	m_DNAText.setCharacterSize(WIDTH / 150);
 
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
 	m_GenerationText.setOrigin(m_sprite.getOrigin());
-	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) *((HEIGHT *WIDTH)*0.5f), m_position.y + (m_texture.getSize().y) * ((HEIGHT *WIDTH)*0.5f)));
+	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * .5, m_position.y + (m_texture.getSize().y) * .5));
 	m_GenerationText.setFont(m_font);
 	m_GenerationText.setFillColor(sf::Color::Black);
-	m_GenerationText.setCharacterSize(20);
+	m_GenerationText.setCharacterSize(WIDTH / 150);
 
 	//age text 
 	m_AgeText.setString("Age: " + std::to_string((m_age)));
-	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - HEIGHT/75));
+	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - WIDTH / 125));
 	m_AgeText.setFont(m_font);
 	m_AgeText.setFillColor(sf::Color::Black);
-	m_AgeText.setCharacterSize(20);
+	m_AgeText.setCharacterSize(WIDTH / 150);
+
+	//cmd out of inital ID's
+	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
+	std::cout << "DNA: " + m_DNADisplay << std::endl;
+	std::cout << "---------------------------------------------------------------" << std::endl;
 }
 
 void NPC::setUpGAvar(int t_RT, int t_Age)
