@@ -35,8 +35,8 @@ void GUI::SetUpLineGraph()
 	m_YaxisGraph.setFillColor(sf::Color::White);
 	m_YaxisGraph.setOutlineColor(sf::Color::Black);
 	m_YaxisGraph.setOutlineThickness(5);
-	m_YaxisGraph.setSize(sf::Vector2f(WIDTH/250, HEIGHT/3.658f));
-	m_YaxisGraph.setPosition(sf::Vector2f(WIDTH/50, HEIGHT) );
+	m_YaxisGraph.setSize(sf::Vector2f(WIDTH/250, HEIGHT/4.1f));
+	m_YaxisGraph.setPosition(sf::Vector2f(WIDTH/50, HEIGHT/1.371f) );
 
 	m_XaxisGraph.setFillColor(sf::Color::White);
 	m_XaxisGraph.setOutlineColor(sf::Color::Black);
@@ -79,7 +79,7 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 
 		m_currentGenerationHeld = t_highestGen;	
 		m_lines.resize(m_lines.getVertexCount()-1);
-		m_lines.append(sf::Vector2f(m_AverageGraphX += WIDTH/125, m_AverageGraphY - (t_AvgStatistic)* ((WIDTH / HEIGHT) * 4)));
+		m_lines.append(sf::Vector2f(m_AverageGraphX += WIDTH/125, m_AverageGraphY - (t_AvgStatistic)* ((WIDTH / HEIGHT) * 3)));
 		m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
 	}
 	for (int i = 0; i < m_lines.getVertexCount(); i++)

@@ -344,15 +344,15 @@ void NPC::setUpNpc(int t_ID)
 
 
 	//set size,origin and scale 
-	if (m_size < ((HEIGHT * WIDTH) * 20.0f))
+	if (m_size < 20.0f)
 	{
-		if (m_size < ((HEIGHT * WIDTH) * 10.0f))
+		if (m_size < 10.0f)
 		{
-			m_sprite.setScale(m_size * ((HEIGHT * WIDTH) * 0.3f), m_size * ((HEIGHT * WIDTH) * 0.3f));
+			m_sprite.setScale(m_size * .3, m_size * .3);
 		}
-		else { m_sprite.setScale(m_size * ((HEIGHT * WIDTH) * 0.2f), m_size * ((HEIGHT * WIDTH) * 0.2f)); }
+		else { m_sprite.setScale(m_size * .2, m_size * .2); }
 	}
-	else { m_sprite.setScale(m_size * ((HEIGHT * WIDTH) * 0.6f), m_size * ((HEIGHT * WIDTH) * 0.6f)); }
+	else { m_sprite.setScale(m_size * .06, m_size * .06); }
 	m_sprite.setOrigin(m_sprite.getScale().x / 2, m_sprite.getScale().y / 2);
 
 	//set the starting position of the NPCs

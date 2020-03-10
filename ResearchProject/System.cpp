@@ -26,7 +26,7 @@ System::System() :
 		std::cout << "problem loading background Texture" << std::endl;
 	}
 	m_backgroundSprite.setTexture(m_backgroundTexture);
-	m_backgroundSprite.setScale(0.8f, 0.8f);
+	m_backgroundSprite.setScale(0.78f, 0.78f);
 
 
 	if (!m_foregroundTexture.loadFromFile("ASSETS\\IMAGES\\Foreground.png"))
@@ -34,7 +34,7 @@ System::System() :
 		std::cout << "problem loading Foreground Texture" << std::endl;
 	}
 	m_foregroundSprite.setTexture(m_foregroundTexture);
-	m_foregroundSprite.setScale(0.8f, 0.8f);
+	m_foregroundSprite.setScale(0.78f, 0.78f);
 
  	m_npcs.reserve(10);
 	for (int i = 0; i < 10; i++)
