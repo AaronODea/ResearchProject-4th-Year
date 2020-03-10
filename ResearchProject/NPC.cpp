@@ -15,12 +15,16 @@ void NPC::Draw()
 {
 	//m_window.draw(m_mateingrandTemp);
 	m_window.draw(m_sprite);
-	m_window.draw(m_DNAText);
 	m_window.draw(m_GenerationText);
+
+}
+
+void NPC::DrawStatistics()
+{
+	m_window.draw(m_DNAText);
 	m_window.draw(m_AgeText);
 	m_window.draw(m_healthBarBase);
 	m_window.draw(m_healthBarFront);
-
 }
 
 void NPC::Update()

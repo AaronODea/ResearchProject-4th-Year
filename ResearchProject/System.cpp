@@ -189,7 +189,8 @@ void System::render()
 	m_window.draw(m_backgroundSprite);
 
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
-	
+	for (int i = 0; i <  10; i++) { m_npcs[i]->DrawStatistics(); }
+
 	m_window.draw(m_heartSprite);
 	m_window.draw(m_totalNPC);
 	m_window.draw(m_totalNPCAlltime);
