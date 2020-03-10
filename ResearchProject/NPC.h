@@ -51,6 +51,7 @@ public:
 
 	//++++++++++FUNCTIONS ++++++++++
 	void Draw();
+	void DrawStatistics();
 	void Update();
 	int randomNumber(int t_max, int t_min);//make a random number 
 	void resetReproductionTimer();
