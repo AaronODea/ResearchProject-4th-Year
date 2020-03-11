@@ -85,7 +85,10 @@ private:
 	float m_size;
 
 
+	float sizeRounded;
 	float m_sizeScale;
+	float m_speedScale;
+
 
 	bool m_SequenceComplete = false; // when the end goal has been reached -----------------------------------------------------------------------------------------
 

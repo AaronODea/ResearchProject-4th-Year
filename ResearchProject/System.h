@@ -55,7 +55,7 @@ private:
 	float GetAvgSize();
 
 	float m_avgStatistic = 0;
-
+	int m_statisticWanted = 0;
 
 	//++++++++++CONST VARIABLE ++++++++++ 
 	const int BREEDING_DISTANCE = 400;
@@ -99,6 +99,8 @@ private:
 	sf::Text m_totalNPC;
 	sf::Text m_totalNPCAlltime;
 	
+	sf::Text m_staisticTrackedname;
+
 
 	//++++++++++Sprites & Textures ++++++++++
 	sf::Sprite m_backgroundSprite;

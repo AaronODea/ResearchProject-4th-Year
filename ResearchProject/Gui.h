@@ -11,10 +11,10 @@ public:
 	~GUI();
 
 	void Draw();
-	void update(float t_AvgStatistic, int t_highestGen);
+	void update(float t_AvgStatistic, int t_highestGen, int t_currentStat);
 
 	void SetUpLineGraph();
-	void updateGraph(float t_AvgStatistic, int t_highestGen);
+	void updateGraph(float t_AvgStatistic, int t_highestGen, int t_currentStat);
 
 private:
 	int WIDTH = 1920;
@@ -32,7 +32,7 @@ private:
 	int m_AverageGraphY = HEIGHT / 1.0344f;
 
 	sf::VertexArray m_lines;
-
+	std::vector<sf::Color> m_color;
 
 	sf::Text m_averageGraphTextX;
 	sf::Text m_averageGraphTextY;

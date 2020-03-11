@@ -20,7 +20,6 @@ void NPC::Draw()
 	//m_window.draw(m_mateingrandTemp);
 	m_window.draw(m_sprite);
 	m_window.draw(m_GenerationText);
-
 }
 
 void NPC::DrawStatistics()
@@ -33,9 +32,6 @@ void NPC::DrawStatistics()
 
 void NPC::Update()
 {
-
-
-
 	if (m_ReproductionTimer >= 0) { m_ReproductionTimer--; }
 	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age / 100)); }
 	else { m_alive = false; }
@@ -141,10 +137,10 @@ void NPC::wander()
 		m_endPosition.x = randomNumber(m_penSize.x, 0);
 		m_endPosition.y = randomNumber(m_penSize.y, 0);}
 
-	if (m_position.x >= m_endPosition.x) { m_position.x -= m_speed / (m_size * .9); }
-	if (m_position.x <= m_endPosition.x) { m_position.x += m_speed / (m_size * .9); }
-	if (m_position.y > m_endPosition.y) { m_position.y -= m_speed / (m_size * .9); }
-	if (m_position.y <= m_endPosition.y) { m_position.y += m_speed / (m_size * .9); }
+	if (m_position.x >= m_endPosition.x) { m_position.x -= m_speed / (sizeRounded * m_speedScale); }
+	if (m_position.x <= m_endPosition.x) { m_position.x += m_speed / (sizeRounded * m_speedScale); }
+	if (m_position.y > m_endPosition.y) { m_position.y -= m_speed / (sizeRounded * m_speedScale); }
+	if (m_position.y <= m_endPosition.y) { m_position.y += m_speed / (sizeRounded * m_speedScale); }
 
 	m_sprite.setPosition(m_position);
 }
@@ -159,24 +155,16 @@ int NPC::randomNumber(int t_max, int t_min)
 }
 //++++++++++GETTER FUNCTIONS++++++++++
 float NPC::GetSpeedStatistic()
-{
-	return m_speed;
-}
+{return m_speed;}
 
 float NPC::GetStrStatistic()
-{
-	return m_speed;
-}
+{return m_speed;}
 
 float NPC::GetIntStatistic()
-{
-	return m_intelligence;
-}
+{return m_intelligence;}
 
 float NPC::GetSizeStatistic()
-{
-	return m_size;
-}
+{return m_size;}
 
 //++++++++++SET UP FUNCTIONS ++++++++++
 
@@ -228,30 +216,22 @@ void NPC::setUpNpcStart(int t_ID)
 	//set size,origin and scale 
 
 	if (m_size <= 50) {
-		if (m_size <= 10) { m_sizeScale = 0.08f; }
-		else if (m_size <= 20) { m_sizeScale = 0.07f; }
-		else if (m_size <= 30) { m_sizeScale = 0.06f; }
-		else if (m_size <= 40) { m_sizeScale = 0.05f; }
-		else { m_sizeScale = 0.04f; }
+		m_speedScale = 0.99f;
+		if (m_size <= 10) { m_sizeScale = 0.08f; sizeRounded = 10;	}
+		else if (m_size <= 20) { m_sizeScale = 0.07f; sizeRounded = 20;}
+		else if (m_size <= 30) { m_sizeScale = 0.06f; sizeRounded = 30;}
+		else if (m_size <= 40) { m_sizeScale = 0.05f; sizeRounded = 40;}
+		else { m_sizeScale = 0.04f; sizeRounded = 50;}
 	}
 	else {
-		if (m_size <= 60) { m_sizeScale = 0.035f; }
-		else if (m_size <= 70) { m_sizeScale = 0.037f; }
-		else if (m_size <= 80) { m_sizeScale = 0.039f; }
-		else if (m_size <= 90) { m_sizeScale = 0.041f; }
-		else { m_sizeScale = 0.042f; }
+		if (m_size <= 60) { m_sizeScale = 0.035f; sizeRounded = 60; m_speedScale = 0.6f;}
+		else if (m_size <= 70) { m_sizeScale = 0.037f; sizeRounded = 70; m_speedScale = 0.7f;}
+		else if (m_size <= 80) { m_sizeScale = 0.039f; sizeRounded = 80; m_speedScale = 0.8f;}
+		else if (m_size <= 90) { m_sizeScale = 0.041f; sizeRounded = 90; m_speedScale = 0.9f;}
+		else { m_sizeScale = 0.042f; sizeRounded = 100; m_speedScale = 1;}
 	}
-	
-
-
-
-
-	
-	m_sprite.setScale(m_size*m_sizeScale, m_size*m_sizeScale);
-
+	m_sprite.setScale(sizeRounded * m_sizeScale, sizeRounded *m_sizeScale);
 	m_sprite.setOrigin(m_sprite.getScale().x / 2, m_sprite.getScale().y / 2);
-
-
 
 
 
@@ -346,19 +326,23 @@ void NPC::setUpNpc(int t_ID)
 	//set size,origin and scale 
 
 	if (m_size <= 50) {
-		if (m_size <= 10) { m_sizeScale = 0.08f; }
-		else if (m_size <= 20) { m_sizeScale = 0.07f; }
-		else if (m_size <= 30) { m_sizeScale = 0.06f; }
-		else if (m_size <= 40) { m_sizeScale = 0.05f; }
-		else { m_sizeScale = 0.04f; }
+		m_speedScale = 0.99f;
+		if (m_size <= 10) { m_sizeScale = 0.08f; sizeRounded = 10; }
+		else if (m_size <= 20) { m_sizeScale = 0.07f; sizeRounded = 20; }
+		else if (m_size <= 30) { m_sizeScale = 0.06f; sizeRounded = 30; }
+		else if (m_size <= 40) { m_sizeScale = 0.05f; sizeRounded = 40; }
+		else { m_sizeScale = 0.04f; sizeRounded = 50; }
 	}
 	else {
-		if (m_size <= 60) { m_sizeScale = 0.035f; }
-		else if (m_size <= 70) { m_sizeScale = 0.037f; }
-		else if (m_size <= 80) { m_sizeScale = 0.039f; }
-		else if (m_size <= 90) { m_sizeScale = 0.041f; }
-		else { m_sizeScale = 0.042f; }
+		if (m_size <= 60) { m_sizeScale = 0.035f; sizeRounded = 60; m_speedScale = 0.6f; }
+		else if (m_size <= 70) { m_sizeScale = 0.037f; sizeRounded = 70; m_speedScale = 0.7f; }
+		else if (m_size <= 80) { m_sizeScale = 0.039f; sizeRounded = 80; m_speedScale = 0.8f; }
+		else if (m_size <= 90) { m_sizeScale = 0.041f; sizeRounded = 90; m_speedScale = 0.9f; }
+		else { m_sizeScale = 0.042f; sizeRounded = 100; m_speedScale = 1; }
 	}
+	m_sprite.setScale(sizeRounded * m_sizeScale, sizeRounded * m_sizeScale);
+	m_sprite.setOrigin(m_sprite.getScale().x / 2, m_sprite.getScale().y / 2);
+
 
 
 	//set the starting position of the NPCs

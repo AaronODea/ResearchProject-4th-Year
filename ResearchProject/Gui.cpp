@@ -8,6 +8,11 @@ GUI::GUI(sf::RenderWindow& t_window, sf::Font& t_font) :
 	WIDTH = m_window.getSize().x;
 	HEIGHT = m_window.getSize().y;
 	SetUpLineGraph();
+
+	m_color.push_back(sf::Color::Black);
+	m_color.push_back(sf::Color::Blue);
+	m_color.push_back(sf::Color::Green);
+	m_color.push_back(sf::Color::Yellow);
 }
 
 
@@ -25,9 +30,9 @@ void GUI::Draw()
 
 }
 
-void GUI::update(float t_AvgStatistic, int t_highestGen)
+void GUI::update(float t_AvgStatistic, int t_highestGen, int t_currentStat)
 {
-	updateGraph(t_AvgStatistic,t_highestGen);
+	updateGraph(t_AvgStatistic,t_highestGen, t_currentStat);
 
 }
 
@@ -65,13 +70,13 @@ void GUI::SetUpLineGraph()
 
 }
 
-void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
+void GUI::updateGraph(float t_AvgStatistic, int t_highestGen, int t_currentStat)
 {
+
 
 	if (m_currentGenerationHeld != t_highestGen)
 	{
-		if (m_AverageGraphX >= WIDTH/2.5)
-		{
+		if (m_AverageGraphX >= WIDTH/2.5){
 			m_lines.clear();
 			m_AverageGraphX = WIDTH/41.667f;
 			m_lines.append(sf::Vector2f(m_AverageGraphX, m_AverageGraphY));
@@ -86,6 +91,6 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen)
 	}
 	for (int i = 0; i < m_lines.getVertexCount(); i++)
 	{
-		m_lines[i].color = sf::Color::Black; 
+		m_lines[i].color = m_color[t_currentStat];
 	}
 }

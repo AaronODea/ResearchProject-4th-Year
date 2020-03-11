@@ -87,13 +87,9 @@ void System::processEvents()
 	while (m_window.pollEvent(newEvent))
 	{
 		if ( sf::Event::Closed == newEvent.type) // window message
-		{
-			m_exit = true;
-		}
+		{m_exit = true;}
 		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
-		{
-			processKeys(newEvent);
-		}
+		{processKeys(newEvent);}
 	}
 }
 
@@ -107,6 +103,16 @@ void System::processKeys(sf::Event t_event)
 	if (sf::Keyboard::Space == t_event.key.code) {for (int i = 0; i < m_npcs.size()/2; i++) {m_npcs.erase(m_npcs.begin() + i);}}
 	if (sf::Keyboard::S == t_event.key.code){
 		for (int i = 0; i < m_npcs.size(); i++) {if (m_npcs[i]->getSize() >2) {m_npcs.erase(m_npcs.begin() + i);}}}
+
+	if (sf::Keyboard::Left == t_event.key.code) {
+		m_statisticWanted--;
+		if (m_statisticWanted < 0) { m_statisticWanted = 3; }
+	}
+	if (sf::Keyboard::Right == t_event.key.code) {
+		m_statisticWanted++;
+		if (m_statisticWanted > 3) { m_statisticWanted = 0; }
+	}
+
 }
 
 /// <summary>
@@ -118,7 +124,7 @@ void System::update(sf::Time t_deltaTime)
 	if (m_exit){m_window.close();}
 
 
-	m_maleCount = 0;
+	m_maleCount = 1;
 	m_femaleCount = 0;
 	for (int i = 0; i < m_npcs.size(); i++){
 		m_npcs[i]->Update();
@@ -126,8 +132,7 @@ void System::update(sf::Time t_deltaTime)
 
 		if (i != 0){
 			if (m_npcs[i]->getGender() == 1) {m_maleCount++;}
-			else { m_femaleCount++; }
-		}
+			else { m_femaleCount++; }}
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -150,10 +155,38 @@ void System::update(sf::Time t_deltaTime)
 	m_maleCountText.setString("Total males: " + std::to_string(m_maleCount));
 	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
 	
-	//temp hold for statistic choice make into a chioce by user ---------------------------------------------------------------------------------
-	GetAvgSpeed();
 
-	m_gui.update(m_avgStatistic, m_npcs.size());
+	//temp hold for statistic choice make into a chioce by user ---------------------------------------------------------------------------------
+
+
+	switch (m_statisticWanted)
+	{
+	default:
+		GetAvgSpeed();
+		m_staisticTrackedname.setString("Statistic tracked: Speed");
+		break;
+	case 0:
+		GetAvgSpeed();
+		m_staisticTrackedname.setString("Statistic tracked: Speed");
+		break;
+	case 1:	
+		GetAvgStr();
+		m_staisticTrackedname.setString("Statistic tracked: Strength");
+		break;
+	case 2:
+		GetAvgInt();
+		m_staisticTrackedname.setString("Statistic tracked: Intelligence");
+		break;
+	case 3:
+		GetAvgSize();
+		m_staisticTrackedname.setString("Statistic tracked: Size");
+		break;
+	}
+	
+
+
+
+	m_gui.update(m_avgStatistic, m_npcs.size(), m_statisticWanted);
 }
 
 /// <summary>
@@ -164,18 +197,20 @@ void System::render()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_backgroundSprite);
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
-	for (int i = 0; i <  10; i++) { m_npcs[i]->DrawStatistics(); }
+
+	if (m_npcs.size() <= 10) {for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
+	else{for (int i = 0; i < 10; i++) { m_npcs[i]->DrawStatistics(); }}
 
 	m_window.draw(m_heartSprite);
 	m_window.draw(m_totalNPC);
 	m_window.draw(m_totalNPCAlltime);
 	m_window.draw(m_maleCountText);
 	m_window.draw(m_femaleCountText);
+	m_window.draw(m_staisticTrackedname);
 	m_window.draw(m_foregroundSprite);
 
 	m_gui.Draw();
 
-	
 	m_window.display();
 }
 
@@ -220,6 +255,11 @@ void System::setupFontAndText()
 	m_femaleCountText.setFillColor(sf::Color::Black);
 	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 16.667f));
 	m_femaleCountText.setCharacterSize(WIDTH / 100);
+
+	m_staisticTrackedname.setFont(m_ArialBlackfont);
+	m_staisticTrackedname.setFillColor(sf::Color::Black);
+	m_staisticTrackedname.setPosition(sf::Vector2f(WIDTH * 0.02f, HEIGHT * 0.7f));
+	m_staisticTrackedname.setCharacterSize(WIDTH / 100);
 }
 
 void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
