@@ -70,7 +70,7 @@ private:
 	int REPRODUCTION_TIME = 300; // 300 = 3 years
 	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	std::array<float, 4> mutationArray = { 30,0,0,0 }; // mutation array for  the chance of mutation 
+	std::array<float, 4> m_mutationArray = { 30,0,0,0 }; // mutation array for  the chance of mutation 
 	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
 
 
@@ -98,8 +98,14 @@ private:
 	int m_highestPopulation = 0;
 	sf::Text m_totalNPC;
 	sf::Text m_totalNPCAlltime;
-	
+
+	//++++++++++Mutation &  statistics ++++++++++
 	sf::Text m_staisticTrackedname;
+
+	sf::Text m_speedMutation;
+	sf::Text m_strMutation;
+	sf::Text m_intMutation;
+	sf::Text m_sizeMutation;
 
 
 	//++++++++++Sprites & Textures ++++++++++
@@ -109,10 +115,13 @@ private:
 	sf::Sprite m_foregroundSprite;
 	sf::Texture m_foregroundTexture;
 
-	sf::Sprite m_heartSprite;
 	sf::Texture m_heartTexture;
 
+	std::vector< sf::Sprite> m_heartSprite;
 
+
+	NPC* m_trackedOneNPC;
+	NPC* m_trackedTwoNPC;
 	//++++++++++GUI++++++++++
 	GUI m_gui;
 

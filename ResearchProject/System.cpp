@@ -42,6 +42,10 @@ System::System() :
 		m_npcs[i]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
 		m_npcs[i]->setUpNpcStart(m_IDCount); m_IDCount++; 
 	}
+
+	m_trackedOneNPC = m_npcs[0];
+	m_trackedTwoNPC = m_npcs[1];
+
 }
 
 /// <summary>
@@ -121,8 +125,12 @@ void System::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void System::update(sf::Time t_deltaTime)
 {
-	if (m_exit){m_window.close();}
 
+	if (m_exit){m_window.close();}
+	if (m_heartSprite.size() >= 5)
+	{
+		m_heartSprite.pop_back();
+	}
 
 	m_maleCount = 1;
 	m_femaleCount = 0;
@@ -156,10 +164,7 @@ void System::update(sf::Time t_deltaTime)
 	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
 	
 
-	//temp hold for statistic choice make into a chioce by user ---------------------------------------------------------------------------------
-
-
-	switch (m_statisticWanted)
+	switch (m_statisticWanted)//tracked statistic 
 	{
 	default:
 		GetAvgSpeed();
@@ -198,15 +203,31 @@ void System::render()
 	m_window.draw(m_backgroundSprite);
 	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
 
-	if (m_npcs.size() <= 10) {for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
-	else{for (int i = 0; i < 10; i++) { m_npcs[i]->DrawStatistics(); }}
+	if (m_npcs.size() <= 10)
+	{for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
+	else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
 
-	m_window.draw(m_heartSprite);
+
+	if (m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+	   {m_window.draw(m_heartSprite[0]);
+		m_window.draw(m_heartSprite[1]);}
 	m_window.draw(m_totalNPC);
 	m_window.draw(m_totalNPCAlltime);
 	m_window.draw(m_maleCountText);
 	m_window.draw(m_femaleCountText);
 	m_window.draw(m_staisticTrackedname);
+	
+	m_window.draw(m_speedMutation);
+	m_window.draw(m_strMutation);
+	m_window.draw(m_intMutation);
+	m_window.draw(m_sizeMutation); 
+
+
+	if(m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+	{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
+	 m_heartSprite[1].setPosition(sf::Vector2f((m_trackedTwoNPC->getPos().x)+ (m_trackedTwoNPC->getSizeTexture().x / 2), (m_trackedTwoNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));}
+
+
 	m_window.draw(m_foregroundSprite);
 
 	m_gui.Draw();
@@ -232,9 +253,15 @@ void System::setupFontAndText()
 	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf")) {std::cout << "problem loading arial black font" << std::endl;}
 	if (!m_heartTexture.loadFromFile("ASSETS\\IMAGES\\Heart.png")) {std::cout << "problem loading heart Texture" << std::endl;}
 
-	m_heartSprite.setTexture(m_heartTexture);
-	m_heartSprite.setPosition(-WIDTH/25, -HEIGHT/15);
-	m_heartSprite.setScale((WIDTH / HEIGHT) * 3, (WIDTH / HEIGHT) * 3);
+
+	m_heartSprite.push_back(sf::Sprite());
+	m_heartSprite[0].setTexture(m_heartTexture);
+	m_heartSprite[0].setScale(WIDTH / 833.33f, HEIGHT / 500);
+
+
+	m_heartSprite.push_back(sf::Sprite());
+	m_heartSprite[1].setTexture(m_heartTexture);
+	m_heartSprite[1].setScale(WIDTH / 833.33f, HEIGHT / 500);
 
 	m_totalNPC.setFont(m_ArialBlackfont);
 	m_totalNPC.setFillColor(sf::Color::Black);
@@ -256,21 +283,67 @@ void System::setupFontAndText()
 	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 16.667f));
 	m_femaleCountText.setCharacterSize(WIDTH / 100);
 
+	std::stringstream m_speedMutationStream;
+	std::stringstream m_strengthMutationStream;
+	std::stringstream m_intelligenceMutationStream;
+	std::stringstream m_sizeMutationStream;
+
+	m_speedMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[0];
+	m_strengthMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[1];
+	m_intelligenceMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[2];
+	m_sizeMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[3];
+
+
+
+	m_speedMutation.setFont(m_ArialBlackfont);
+	m_speedMutation.setFillColor(sf::Color::Black);
+	m_speedMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 10.0f));
+	m_speedMutation.setCharacterSize(WIDTH / 100);
+	m_speedMutation.setString("Speed mutation: " + m_speedMutationStream.str() + "%");
+
+	m_strMutation.setFont(m_ArialBlackfont);
+	m_strMutation.setFillColor(sf::Color::Black);
+	m_strMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 8.5f));
+	m_strMutation.setCharacterSize(WIDTH / 100);
+	m_strMutation.setString("Strenght mutation: " + m_strengthMutationStream.str() + "%");
+
+	m_intMutation.setFont(m_ArialBlackfont);
+	m_intMutation.setFillColor(sf::Color::Black);
+	m_intMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 7.5f));
+	m_intMutation.setCharacterSize(WIDTH / 100);
+	m_intMutation.setString("Intelligence mutation: " + m_intelligenceMutationStream.str() + "%");
+
+	m_sizeMutation.setFont(m_ArialBlackfont);
+	m_sizeMutation.setFillColor(sf::Color::Black);
+	m_sizeMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 6.5f));
+	m_sizeMutation.setCharacterSize(WIDTH / 100);
+	m_sizeMutation.setString("Size mutation: " + m_sizeMutationStream.str() + "%");
+
+
+
 	m_staisticTrackedname.setFont(m_ArialBlackfont);
 	m_staisticTrackedname.setFillColor(sf::Color::Black);
 	m_staisticTrackedname.setPosition(sf::Vector2f(WIDTH * 0.02f, HEIGHT * 0.7f));
 	m_staisticTrackedname.setCharacterSize(WIDTH / 100);
+
 }
 
 void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 {
+	m_trackedOneNPC = t_npcOne;
+	m_trackedTwoNPC = t_npcTwo;
+
+
 	std::array<float, 4> DNA_ONE = t_npcOne->getDNA();
 	std::array<float, 4> DNA_TWO = t_npcTwo->getDNA();
 	std::array<float, 4> DNA_THREE;
 
 	t_npcOne->setEndPosition(t_npcTwo->getPos());
 	t_npcTwo->setEndPosition(t_npcOne->getPos());
-	m_heartSprite.setPosition(sf::Vector2f((t_npcOne->getPos().x + t_npcTwo->getPos().x) / 2, (t_npcOne->getPos().y + t_npcTwo->getPos().y) / 2));
+
+	m_heartSprite[m_heartSprite.size()-1].setPosition(sf::Vector2f((t_npcOne->getPos().x), (t_npcOne->getPos().y)));
+	m_heartSprite[m_heartSprite.size() - 1].setPosition(sf::Vector2f((t_npcTwo->getPos().x), (t_npcTwo->getPos().y)));
+
 
 	float Mutations[4] ;
 	Mutations[0] = 0;
@@ -286,21 +359,21 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 		if (m_wantedStatistics[i] == 1) // if the statistic is desirable 
 		{
 			mutationChance = randomNumber(100, 0);
-			if (mutationChance <= 25 ) {Mutations[i] = -mutationArray[i];} // 25% chance to reduce
-			else if (mutationChance >=40) {Mutations[i] = mutationArray[i];} // 60% chance to increase
+			if (mutationChance <= 25 ) {Mutations[i] = -m_mutationArray[i];} // 25% chance to reduce
+			else if (mutationChance >=40) {Mutations[i] = m_mutationArray[i];} // 60% chance to increase
 			else{Mutations[i] = 0;}// 15% chance to do nothing
 		}
 		else{
 			mutationChance = randomNumber(100,0);
 			if (mutationChance <= 33) // 33% chance 
 			{
-				number = mutationArray[i];
-				Mutations[i] = -mutationArray[i];
+				number = m_mutationArray[i];
+				Mutations[i] = -m_mutationArray[i];
 			}
 			else if(mutationChance >= 66) // 33% chance 
 			{
-				number = mutationArray[i];
-				Mutations[i] = mutationArray[i];
+				number = m_mutationArray[i];
+				Mutations[i] = m_mutationArray[i];
 			}
 			else {Mutations[i] = 0;}// 33% chance
 		}
@@ -466,6 +539,8 @@ void System::GAReproduction()
 										else
 										{
 											m_npcs[i]->resetReproductionTimer();//failed reproduction wait till try again rest 
+											m_npcs[j]->resetReproductionTimer();//failed reproduction wait till try again rest 
+
 											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}
 

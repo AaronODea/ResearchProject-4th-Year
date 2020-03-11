@@ -65,6 +65,11 @@ float NPC::getSize()
 	return m_size;
 }
 
+sf::Vector2f NPC::getSizeTexture()
+{
+	return sf::Vector2f(m_texture.getSize());
+}
+
 int NPC::getGender()
 {
 	return m_gender;
@@ -283,7 +288,6 @@ void NPC::setUpNpcStart(int t_ID)
 	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
 	std::cout << "DNA: " + m_DNADisplay << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
-	resetReproductionTimer();
 }
 void NPC::setUpNpc(int t_ID)
 {
@@ -298,6 +302,7 @@ void NPC::setUpNpc(int t_ID)
 	m_strengthStream << std::fixed << std::setprecision(1) << m_strength;
 	m_intelligenceStream << std::fixed << std::setprecision(1) << m_intelligence;
 	m_sizeStream << std::fixed << std::setprecision(1) << m_size;
+
 
 	//make the Dna String for display
 	m_DNADisplay =
@@ -393,6 +398,7 @@ void NPC::setUpNpc(int t_ID)
 	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
 	std::cout << "DNA: " + m_DNADisplay << std::endl;
 	std::cout << "---------------------------------------------------------------" << std::endl;
+	resetReproductionTimer();
 }
 
 void NPC::setUpGAvar(int t_RT, int t_Age)

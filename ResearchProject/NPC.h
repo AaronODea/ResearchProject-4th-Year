@@ -30,6 +30,7 @@ public:
 	sf::Vector2f getPos();
 	int getID();
 	float getSize();
+	sf::Vector2f getSizeTexture();
 	int getGender();
 	int getAge();
 	int getGenertaion();
