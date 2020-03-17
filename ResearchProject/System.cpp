@@ -16,14 +16,17 @@
 System::System() :
 	m_window{ sf::VideoMode{ 1920, 1080, 32 }, "GA" },
 	m_exit{false}, //when true System will exit
-	m_gui(m_window, m_ArialBlackfont)//set up GUI
+	m_gui(m_window)//set up GUI
 {	
+	m_currentState = m_startingScreen;
+
 	WIDTH = m_window.getSize().x;
 	HEIGHT = m_window.getSize().y;
 	m_penSize.x = (WIDTH*.0004);
 	m_penSize.y = (HEIGHT * .0007);
-
 	setupFontAndText(); // load font 
+	m_gui.SetUpLineGraph(m_ArialBlackfont);
+
 
 	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\Background.png")){std::cout << "problem loading background Texture" << std::endl;}
 	m_backgroundSprite.setTexture(m_backgroundTexture);
@@ -33,18 +36,6 @@ System::System() :
 	m_foregroundSprite.setTexture(m_foregroundTexture);
 	m_foregroundSprite.setScale(m_penSize.x, m_penSize.y);
 
- 	m_npcs.reserve(STARTER_AMOUNT);
-	for (int i = 0; i < STARTER_AMOUNT; i++) {m_npcs.push_back(new NPC(m_window, m_ArialBlackfont));}
-	for (int i = 0; i < STARTER_AMOUNT/2; i++) {m_npcs[i]->setGender(1);}
-
-	for (int i = 0; i < m_npcs.size(); i++) 
-	{ 
-		m_npcs[i]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
-		m_npcs[i]->setUpNpcStart(m_IDCount); m_IDCount++; 
-	}
-
-	m_trackedOneNPC = m_npcs[0];
-	m_trackedTwoNPC = m_npcs[1];
 
 }
 
@@ -70,8 +61,7 @@ void System::run()
 	{
 		processEvents(); // as many as possible
 		timeSinceLastUpdate += clock.restart();
-		while (timeSinceLastUpdate > timePerFrame)
-		{
+		while (timeSinceLastUpdate > timePerFrame){
 			timeSinceLastUpdate -= timePerFrame;
 			processEvents(); // at least 60 fps
 			update(timePerFrame); //60 fps
@@ -88,12 +78,9 @@ void System::run()
 void System::processEvents()
 {
 	sf::Event newEvent;
-	while (m_window.pollEvent(newEvent))
-	{
-		if ( sf::Event::Closed == newEvent.type) // window message
-		{m_exit = true;}
-		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
-		{processKeys(newEvent);}
+	while (m_window.pollEvent(newEvent)) {
+		if (sf::Event::Closed == newEvent.type) { m_exit = true; }// window message
+		if (sf::Event::KeyPressed == newEvent.type) { processKeys(newEvent); }//user pressed a key
 	}
 }
 
@@ -104,17 +91,126 @@ void System::processEvents()
 void System::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::Escape == t_event.key.code){m_exit = true;}
-	if (sf::Keyboard::Space == t_event.key.code) {for (int i = 0; i < m_npcs.size()/2; i++) {m_npcs.erase(m_npcs.begin() + i);}}
-	if (sf::Keyboard::S == t_event.key.code){
-		for (int i = 0; i < m_npcs.size(); i++) {if (m_npcs[i]->getSize() >2) {m_npcs.erase(m_npcs.begin() + i);}}}
 
-	if (sf::Keyboard::Left == t_event.key.code) {
-		m_statisticWanted--;
-		if (m_statisticWanted < 0) { m_statisticWanted = 3; }
-	}
-	if (sf::Keyboard::Right == t_event.key.code) {
-		m_statisticWanted++;
-		if (m_statisticWanted > 3) { m_statisticWanted = 0; }
+	switch (m_currentState)
+	{
+	default:
+		break;
+	case m_startingScreen:
+		if (sf::Keyboard::Space == t_event.key.code) 
+		{m_currentState = m_mainScreen;
+			GAStartUp();
+			setUpGuiStates();
+			switch (m_ALGORYTHIM_CHOICE)
+			{
+			default:
+			case 0:
+				break;
+			case 1:
+				break;
+			}
+		}
+
+		if (sf::Keyboard::Up == t_event.key.code) {m_menuButton--;
+		if (m_menuButton < 0) { m_menuButton = m_menuButtonTEXT.size()-1; }}
+		if (sf::Keyboard::Down == t_event.key.code) {m_menuButton++;
+		if (m_menuButton >= m_menuButtonTEXT.size()) { m_menuButton = 0; }}
+
+		
+
+	
+		switch (m_menuButton)
+		{
+		default:
+		case 0://algo choice 
+			if (sf::Keyboard::Left == t_event.key.code) { m_ALGORYTHIM_CHOICE--; }
+			if (sf::Keyboard::Right == t_event.key.code) { m_ALGORYTHIM_CHOICE++; }
+			if (m_ALGORYTHIM_CHOICE > 1) { m_ALGORYTHIM_CHOICE = 0; };
+			if (m_ALGORYTHIM_CHOICE < 0) { m_ALGORYTHIM_CHOICE = 1; };
+			break;
+		case 1://mutation
+			if (sf::Keyboard::Left == t_event.key.code) { m_mutationArray[0] -= m_mutationRateSpeed; }
+			if (sf::Keyboard::Right == t_event.key.code) { m_mutationArray[0] += m_mutationRateSpeed; }
+			if (m_mutationArray[0] > 100) { m_mutationArray[0] = 0; };
+			if (m_mutationArray[0] < 0) { m_mutationArray[0] = 100; };
+			break;
+		case 2://mutation
+			if (sf::Keyboard::Left == t_event.key.code) { m_mutationArray[1] -= m_mutationRateSpeed;}
+			if (sf::Keyboard::Right == t_event.key.code) { m_mutationArray[1] += m_mutationRateSpeed;}
+			if (m_mutationArray[1] > 100) { m_mutationArray[1] = 0; };
+			if (m_mutationArray[1] < 0) { m_mutationArray[1] = 100; };
+			break;
+		case 3://mutation
+			if (sf::Keyboard::Left == t_event.key.code) { m_mutationArray[2] -= m_mutationRateSpeed;}
+			if (sf::Keyboard::Right == t_event.key.code) { m_mutationArray[2] += m_mutationRateSpeed;}
+			if (m_mutationArray[2] > 100) { m_mutationArray[2] = 0; };
+			if (m_mutationArray[2] < 0) { m_mutationArray[2] = 100; };
+			break;
+		case 4://mutation
+			if (sf::Keyboard::Left == t_event.key.code) { m_mutationArray[3] -= m_mutationRateSpeed;}
+			if (sf::Keyboard::Right == t_event.key.code) { m_mutationArray[3] += m_mutationRateSpeed;}
+			if (m_mutationArray[3] > 100) { m_mutationArray[3] = 0; };
+			if (m_mutationArray[3] < 0) { m_mutationArray[3] = 100; };
+			break;
+		case 5://Wanted stat
+			if (sf::Keyboard::Left == t_event.key.code || sf::Keyboard::Right == t_event.key.code) {
+				if (m_YesNo[0] == "YES") { m_YesNo[0] = "NO"; m_wantedStatistics[0] = 0; }
+				else if (m_YesNo[0] == "NO") { m_YesNo[0] = "YES"; m_wantedStatistics[0] = 1;}}
+			break;
+		case 6://Wanted stat
+			if (sf::Keyboard::Left == t_event.key.code || sf::Keyboard::Right == t_event.key.code) {
+				if (m_YesNo[1] == "YES") { m_YesNo[1] = "NO"; m_wantedStatistics[1] = 0;}
+				else if (m_YesNo[1] == "NO") { m_YesNo[1] = "YES"; m_wantedStatistics[1] = 1;}}
+			break;
+		case 7://Wanted stat
+			if (sf::Keyboard::Left == t_event.key.code || sf::Keyboard::Right == t_event.key.code) {
+				if (m_YesNo[2] == "YES") { m_YesNo[2] = "NO"; m_wantedStatistics[2] = 0;}
+				else if (m_YesNo[2] == "NO") { m_YesNo[2] = "YES"; m_wantedStatistics[2] = 0;}}
+			break;
+		case 8://Wanted stat		  
+			if (sf::Keyboard::Left == t_event.key.code || sf::Keyboard::Right == t_event.key.code){
+				if (m_YesNo[3] == "YES") { m_YesNo[3] = "NO"; m_wantedStatistics[3] = 0;}
+				else if (m_YesNo[3] == "NO") { m_YesNo[3] = "YES"; m_wantedStatistics[3] = 0;}}
+		break;
+		case 9:
+			if (sf::Keyboard::Left == t_event.key.code) { BREEDING_DISTANCE -= 50; }
+			if (sf::Keyboard::Right == t_event.key.code) { BREEDING_DISTANCE += 50; }
+			if (BREEDING_DISTANCE > 1000) { BREEDING_DISTANCE = 0; };
+			if (BREEDING_DISTANCE < 0) { BREEDING_DISTANCE = 1000; };
+			break;
+		case 10:
+			if (sf::Keyboard::Left == t_event.key.code) { REPRODUCTION_CHANCE_THRESHOLD -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { REPRODUCTION_CHANCE_THRESHOLD += 1; }
+			if (REPRODUCTION_CHANCE_THRESHOLD > 100) { REPRODUCTION_CHANCE_THRESHOLD = 0; };
+			if (REPRODUCTION_CHANCE_THRESHOLD < 0) { REPRODUCTION_CHANCE_THRESHOLD = 100; };
+			break; 
+		case 11:
+			if (sf::Keyboard::Left == t_event.key.code) { STARTER_AMOUNT -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { STARTER_AMOUNT += 1; }
+			if (STARTER_AMOUNT > 100) { STARTER_AMOUNT = 0; };
+			if (STARTER_AMOUNT < 0) { STARTER_AMOUNT = 100; };
+			break;
+		}
+
+
+
+		break;
+	case m_mainScreen:
+		if (sf::Keyboard::Space == t_event.key.code) {for (int i = 0; i < m_npcs.size()/2; i++) {m_npcs.erase(m_npcs.begin() + i);}}
+
+		if (sf::Keyboard::Left == t_event.key.code) {
+			m_statisticWanted--;
+			if (m_statisticWanted < 0) { m_statisticWanted = 3; };}
+		if (sf::Keyboard::Right == t_event.key.code) { m_statisticWanted++; 
+			if (m_statisticWanted > 3) { m_statisticWanted = 0; };}
+
+		
+	
+		 
+		if (sf::Keyboard::S == t_event.key.code){
+			for (int i = 0; i < m_npcs.size(); i++) {if (m_npcs[i]->getSize() >2) {m_npcs.erase(m_npcs.begin() + i);}}}
+
+		break;
 	}
 
 }
@@ -125,73 +221,112 @@ void System::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void System::update(sf::Time t_deltaTime)
 {
-
 	if (m_exit){m_window.close();}
-	if (m_heartSprite.size() >= 5)
-	{
-		m_heartSprite.pop_back();
-	}
 
-	m_maleCount = 1;
-	m_femaleCount = 0;
-	for (int i = 0; i < m_npcs.size(); i++){
-		m_npcs[i]->Update();
-		if (m_npcs[i]->isAlive() == false) { m_npcs.erase(m_npcs.begin() + i); }
-
-		if (i != 0){
-			if (m_npcs[i]->getGender() == 1) {m_maleCount++;}
-			else { m_femaleCount++; }}
-	}
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	//where to add the second gn
-
-
-
-
-	GAReproduction();
-
-
-
-
-
-	if (m_highestPopulation < m_npcs.size()){
-		m_highestPopulation = m_npcs.size();
-		m_totalNPCAlltime.setString("Highest Population: " + std::to_string(m_highestPopulation));
-	}
-	m_totalNPC.setString("Total NPC's: " + std::to_string(m_npcs.size()));
-	m_maleCountText.setString("Total males: " + std::to_string(m_maleCount));
-	m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
-	
-
-	switch (m_statisticWanted)//tracked statistic 
+	switch (m_currentState)
 	{
 	default:
-		GetAvgSpeed();
-		m_staisticTrackedname.setString("Statistic tracked: Speed");
 		break;
-	case 0:
-		GetAvgSpeed();
-		m_staisticTrackedname.setString("Statistic tracked: Speed");
+	case m_startingScreen:
+
+		m_buttonOutline.setSize((sf::Vector2f(m_menuButtonTEXT[m_menuButton].getString().getSize() * (WIDTH / 160), HEIGHT / 54)));
+		m_buttonOutline.setPosition(m_menuButtonTEXT[m_menuButton].getPosition());
+
+			switch (m_ALGORYTHIM_CHOICE)
+			{
+			default:
+			case 0:
+				m_menuButtonTEXT[0].setString("Current algorithm is Non-Fixed ");
+				break;
+			case 1:
+				m_menuButtonTEXT[0].setString("Current algorithm is Fixed ");
+				break;
+			}
+
+
+			m_menuButtonTEXT[1].setString("Current Speed mutation : " + setMutation(m_mutationArray[0]).str() + "%");
+			m_menuButtonTEXT[2].setString("Current Strength mutation :" + setMutation(m_mutationArray[1]).str() + " % ");
+			m_menuButtonTEXT[3].setString("Current Intelligence mutation :"+ setMutation(m_mutationArray[2]).str() + " % ");
+			m_menuButtonTEXT[4].setString("Current Size mutation : " + setMutation(m_mutationArray[3]).str() + "%");
+			
+
+			m_menuButtonTEXT[5].setString("SPEED Wanted : "+ m_YesNo[0]);//wanted stats
+			m_menuButtonTEXT[6].setString("Strength Wanted : "+ m_YesNo[1]);
+			m_menuButtonTEXT[7].setString("Intelligence Wanted : "+ m_YesNo[2]);
+			m_menuButtonTEXT[8].setString("Size Wanted : "+ m_YesNo[3]);
+
+			m_menuButtonTEXT[9].setString("Breeding Distance : " + std::to_string(BREEDING_DISTANCE));
+			m_menuButtonTEXT[10].setString("Reproduction Chance : " + std::to_string(REPRODUCTION_CHANCE_THRESHOLD) + "%");
+			m_menuButtonTEXT[11].setString("Starter amount : " + std::to_string(STARTER_AMOUNT));
 		break;
-	case 1:	
-		GetAvgStr();
-		m_staisticTrackedname.setString("Statistic tracked: Strength");
-		break;
-	case 2:
-		GetAvgInt();
-		m_staisticTrackedname.setString("Statistic tracked: Intelligence");
-		break;
-	case 3:
-		GetAvgSize();
-		m_staisticTrackedname.setString("Statistic tracked: Size");
-		break;
-	}
+
+	case m_mainScreen:
+
+		if (m_heartSprite.size() >= 5) {m_heartSprite.pop_back();}
+
+		m_maleCount = 1;
+		m_femaleCount = 0;
+
+		for (int i = 0; i < m_npcs.size(); i++){
+			m_npcs[i]->Update();
+			if (m_npcs[i]->isAlive() == false) { m_npcs.erase(m_npcs.begin() + i); }}
+
+		for (int i = 0; i < m_npcs.size(); i++) {
+			if (m_npcs[i]->getGender() == 1) { m_maleCount++; }
+			else { m_femaleCount++; }}
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			//where to add the second gn
+			switch (m_ALGORYTHIM_CHOICE)
+			{
+			default:
+			case 0:
+				GAReproduction();
+
+				break;
+			case 1:
+
+
+				//fixed background here _________________________________________________________________________________________________________________________________________________________
+				break;
+			}
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		if (m_highestPopulation < m_npcs.size()){
+			m_highestPopulation = m_npcs.size();
+			m_totalNPCAlltime.setString("Highest Population: " + std::to_string(m_highestPopulation));}
+
+		m_totalNPC.setString("Total NPC's: " + std::to_string(m_npcs.size()));
+		m_maleCountText.setString("Total males: " + std::to_string(m_maleCount-1));
+		m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
 	
+		switch (m_statisticWanted)
+			{
+			default:
+				GetAvgSpeed();
+				m_staisticTrackedname.setString("Statistic tracked: Speed");
+				break;
+			case 0:
+				GetAvgSpeed();
+				m_staisticTrackedname.setString("Statistic tracked: Speed");
+				break;
+			case 1:	
+				GetAvgStr();
+				m_staisticTrackedname.setString("Statistic tracked: Strength");
+				break;
+			case 2:
+				GetAvgInt();
+				m_staisticTrackedname.setString("Statistic tracked: Intelligence");
+				break;
+			case 3:
+				GetAvgSize();
+				m_staisticTrackedname.setString("Statistic tracked: Size");
+				break;
+			}//tracked statistic 
 
-
-
-	m_gui.update(m_avgStatistic, m_npcs.size(), m_statisticWanted);
+		m_gui.update(m_avgStatistic, m_npcs.size(), m_statisticWanted);
+	break;
+	}
 }
 
 /// <summary>
@@ -200,41 +335,68 @@ void System::update(sf::Time t_deltaTime)
 void System::render()
 {
 	m_window.clear(sf::Color::White);
-	m_window.draw(m_backgroundSprite);
-	for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
-
-	if (m_npcs.size() <= 10)
-	{for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
-	else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
-
-
-	if (m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
-	   {m_window.draw(m_heartSprite[0]);
-		m_window.draw(m_heartSprite[1]);}
-	m_window.draw(m_totalNPC);
-	m_window.draw(m_totalNPCAlltime);
-	m_window.draw(m_maleCountText);
-	m_window.draw(m_femaleCountText);
-	m_window.draw(m_staisticTrackedname);
 	
-	m_window.draw(m_speedMutation);
-	m_window.draw(m_strMutation);
-	m_window.draw(m_intMutation);
-	m_window.draw(m_sizeMutation); 
+	switch (m_currentState)
+	{
+	default:
+		break;
+	case m_startingScreen:
+
+		for (int i = 0; i < m_menuButtonTEXT.size(); i++) {m_window.draw(m_menuButtonTEXT[i]);}
+		m_window.draw(m_buttonOutline);
+		break;
+	case m_mainScreen:
+
+		m_window.draw(m_backgroundSprite);
+		for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
+
+		if (m_npcs.size() <= 10)
+			{for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
+			else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
 
 
-	if(m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
-	{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
-	 m_heartSprite[1].setPosition(sf::Vector2f((m_trackedTwoNPC->getPos().x)+ (m_trackedTwoNPC->getSizeTexture().x / 2), (m_trackedTwoNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));}
+		if (m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+		   {m_window.draw(m_heartSprite[0]);
+			m_window.draw(m_heartSprite[1]);}
+
+		m_window.draw(m_totalNPC);
+		m_window.draw(m_totalNPCAlltime);
+		m_window.draw(m_maleCountText);
+		m_window.draw(m_femaleCountText);
+		m_window.draw(m_staisticTrackedname);
+	
+		m_window.draw(m_speedMutation);
+		m_window.draw(m_strMutation);
+		m_window.draw(m_intMutation);
+		m_window.draw(m_sizeMutation); 
+
+		m_window.draw(m_speedWanted);
+		m_window.draw(m_strWanted);
+		m_window.draw(m_intWanted);
+		m_window.draw(m_sizeWanted);
+
+		m_window.draw(m_breeedingDistanceText);
+		m_window.draw(m_reproductionChanceText);
+		m_window.draw(m_starterAmountText);
 
 
-	m_window.draw(m_foregroundSprite);
+		if(m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+		{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
+		 m_heartSprite[1].setPosition(sf::Vector2f((m_trackedTwoNPC->getPos().x)+ (m_trackedTwoNPC->getSizeTexture().x / 2), (m_trackedTwoNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));}
 
-	m_gui.Draw();
+		m_window.draw(m_foregroundSprite);
+
+		m_gui.Draw();
+
+		break;
+	}
 
 	m_window.display();
 }
 
+/// <summary>
+/// random number generator that outputs a random number from input numbers
+/// </summary>
 int System::randomNumber(int t_max, int t_min)
 {
 	std::random_device dev;
@@ -243,8 +405,13 @@ int System::randomNumber(int t_max, int t_min)
 
 	return dist(rng);
 }
-
-
+std::stringstream System::setMutation(float t_mutation)
+{
+	std::stringstream MutationStream;
+	
+	MutationStream << std::fixed << std::setprecision(1) << t_mutation;
+	return MutationStream;
+}
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
@@ -253,24 +420,28 @@ void System::setupFontAndText()
 	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf")) {std::cout << "problem loading arial black font" << std::endl;}
 	if (!m_heartTexture.loadFromFile("ASSETS\\IMAGES\\Heart.png")) {std::cout << "problem loading heart Texture" << std::endl;}
 
-
 	m_heartSprite.push_back(sf::Sprite());
 	m_heartSprite[0].setTexture(m_heartTexture);
 	m_heartSprite[0].setScale(WIDTH / 833.33f, HEIGHT / 500);
-
 
 	m_heartSprite.push_back(sf::Sprite());
 	m_heartSprite[1].setTexture(m_heartTexture);
 	m_heartSprite[1].setScale(WIDTH / 833.33f, HEIGHT / 500);
 
+	//++++++++++Statistics STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	m_staisticTrackedname.setFont(m_ArialBlackfont);
+	m_staisticTrackedname.setFillColor(sf::Color::Black);
+	m_staisticTrackedname.setPosition(sf::Vector2f(WIDTH * 0.02f, HEIGHT * 0.7f));
+	m_staisticTrackedname.setCharacterSize(WIDTH / 100);
+
 	m_totalNPC.setFont(m_ArialBlackfont);
 	m_totalNPC.setFillColor(sf::Color::Black);
-	m_totalNPC.setPosition(sf::Vector2f(WIDTH/1.219f,0));
+	m_totalNPC.setPosition(sf::Vector2f(WIDTH / 1.219f, 0));
 	m_totalNPC.setCharacterSize(WIDTH / 100);
 
 	m_totalNPCAlltime.setFont(m_ArialBlackfont);
 	m_totalNPCAlltime.setFillColor(sf::Color::Black);
-	m_totalNPCAlltime.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT/50));
+	m_totalNPCAlltime.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 50));
 	m_totalNPCAlltime.setCharacterSize(WIDTH / 100);
 
 	m_maleCountText.setFont(m_ArialBlackfont);
@@ -283,6 +454,52 @@ void System::setupFontAndText()
 	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 16.667f));
 	m_femaleCountText.setCharacterSize(WIDTH / 100);
 
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	//++++++++++MENU STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	for (int i = 0; i < 12; i++)
+	{
+	m_menuButtonTEXT.push_back(sf::Text());
+	m_menuButtonTEXT[i].setFont(m_ArialBlackfont);
+	m_menuButtonTEXT[i].setFillColor(sf::Color::Black);
+	m_menuButtonTEXT[i].setPosition(sf::Vector2f(1, i* (HEIGHT/37.5) +( HEIGHT / 16.667f)));
+	m_menuButtonTEXT[i].setCharacterSize(WIDTH / 100);
+	}
+	m_menuButtonTEXT[0].setString("Current algorithm is Non-Fixed ");//gA
+
+	m_menuButtonTEXT[1].setString("Current Speed mutation : ");//Mutations
+	m_menuButtonTEXT[2].setString("Current Strength mutation : ");
+	m_menuButtonTEXT[3].setString("Current Intelligence mutation : ");
+	m_menuButtonTEXT[4].setString("Current Size mutation : ");
+
+	m_menuButtonTEXT[5].setString("SPEED Wanted : NO");//wanted stats
+	m_menuButtonTEXT[6].setString("Strength Wanted : NO");
+	m_menuButtonTEXT[7].setString("Intelligence Wanted : NO");
+	m_menuButtonTEXT[8].setString("Size Wanted : NO");
+
+	m_menuButtonTEXT[9].setString("Breeding Distance : 400");//wanted stats
+	m_menuButtonTEXT[10].setString("Reproduction Chance : 20%");
+	m_menuButtonTEXT[11].setString("Starter amount : 10");
+
+	
+	m_buttonOutline.setFillColor(sf::Color::Transparent);
+	m_buttonOutline.setOutlineColor(sf::Color::Red);
+	m_buttonOutline.setOutlineThickness(WIDTH/384);
+
+	m_buttonOutline.setSize((sf::Vector2f(m_menuButtonTEXT[m_menuButton].getString().getSize() * (WIDTH / 160), HEIGHT / 54)));
+	m_buttonOutline.setPosition(m_menuButtonTEXT[m_menuButton].getPosition());
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+	m_YesNo.push_back("NO");
+	m_YesNo.push_back("NO");
+	m_YesNo.push_back("NO");
+	m_YesNo.push_back("NO");
+}
+
+void System::setUpGuiStates()
+{
+	//++++++++++MUTATION STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	std::stringstream m_speedMutationStream;
 	std::stringstream m_strengthMutationStream;
 	std::stringstream m_intelligenceMutationStream;
@@ -293,8 +510,6 @@ void System::setupFontAndText()
 	m_intelligenceMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[2];
 	m_sizeMutationStream << std::fixed << std::setprecision(1) << m_mutationArray[3];
 
-
-
 	m_speedMutation.setFont(m_ArialBlackfont);
 	m_speedMutation.setFillColor(sf::Color::Black);
 	m_speedMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 10.0f));
@@ -302,29 +517,73 @@ void System::setupFontAndText()
 	m_speedMutation.setString("Speed mutation: " + m_speedMutationStream.str() + "%");
 
 	m_strMutation.setFont(m_ArialBlackfont);
-	m_strMutation.setFillColor(sf::Color::Black);
+	m_strMutation.setFillColor(sf::Color::Blue);
 	m_strMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 8.5f));
 	m_strMutation.setCharacterSize(WIDTH / 100);
-	m_strMutation.setString("Strenght mutation: " + m_strengthMutationStream.str() + "%");
+	m_strMutation.setString("Strength mutation: " + m_strengthMutationStream.str() + "%");
 
 	m_intMutation.setFont(m_ArialBlackfont);
-	m_intMutation.setFillColor(sf::Color::Black);
+	m_intMutation.setFillColor(sf::Color::Green);
 	m_intMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 7.5f));
 	m_intMutation.setCharacterSize(WIDTH / 100);
 	m_intMutation.setString("Intelligence mutation: " + m_intelligenceMutationStream.str() + "%");
 
 	m_sizeMutation.setFont(m_ArialBlackfont);
-	m_sizeMutation.setFillColor(sf::Color::Black);
+	m_sizeMutation.setFillColor(sf::Color::Cyan);
 	m_sizeMutation.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 6.5f));
 	m_sizeMutation.setCharacterSize(WIDTH / 100);
 	m_sizeMutation.setString("Size mutation: " + m_sizeMutationStream.str() + "%");
 
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+	//++++++++++STAT WANTED STRINGS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	m_speedWanted.setFont(m_ArialBlackfont);
+	m_speedWanted.setFillColor(sf::Color::Black);
+	m_speedWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 5.0f));
+	m_speedWanted.setCharacterSize(WIDTH / 100);
+	m_speedWanted.setString("Speed Wanted: " + m_YesNo[0]);
 
-	m_staisticTrackedname.setFont(m_ArialBlackfont);
-	m_staisticTrackedname.setFillColor(sf::Color::Black);
-	m_staisticTrackedname.setPosition(sf::Vector2f(WIDTH * 0.02f, HEIGHT * 0.7f));
-	m_staisticTrackedname.setCharacterSize(WIDTH / 100);
+	m_strWanted.setFont(m_ArialBlackfont);
+	m_strWanted.setFillColor(sf::Color::Blue);
+	m_strWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 4.5f));
+	m_strWanted.setCharacterSize(WIDTH / 100);
+	m_strWanted.setString("Strength Wanted: " + m_YesNo[1]);
+
+	m_intWanted.setFont(m_ArialBlackfont);
+	m_intWanted.setFillColor(sf::Color::Green);
+	m_intWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 4.1f));
+	m_intWanted.setCharacterSize(WIDTH / 100);
+	m_intWanted.setString("Intelligence Wanted: " + m_YesNo[2]);
+
+	m_sizeWanted.setFont(m_ArialBlackfont);
+	m_sizeWanted.setFillColor(sf::Color::Cyan);
+	m_sizeWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 3.8f));
+	m_sizeWanted.setCharacterSize(WIDTH / 100);
+	m_sizeWanted.setString("Size Wanted: " + m_YesNo[3]);
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	//++++++++++Global STASTS STRINGS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	m_breeedingDistanceText.setFont(m_ArialBlackfont);
+	m_breeedingDistanceText.setFillColor(sf::Color::Black);
+	m_breeedingDistanceText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 3.0f));
+	m_breeedingDistanceText.setCharacterSize(WIDTH / 100);
+	m_breeedingDistanceText.setString("Breeding Distance : " + std::to_string(BREEDING_DISTANCE));
+
+	m_reproductionChanceText.setFont(m_ArialBlackfont);
+	m_reproductionChanceText.setFillColor(sf::Color::Black);
+	m_reproductionChanceText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 2.8f));
+	m_reproductionChanceText.setCharacterSize(WIDTH / 100);
+	m_reproductionChanceText.setString("Reproduction Chance : " + std::to_string(REPRODUCTION_CHANCE_THRESHOLD) + "%");
+
+	m_starterAmountText.setFont(m_ArialBlackfont);
+	m_starterAmountText.setFillColor(sf::Color::Black);
+	m_starterAmountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 2.6f));
+	m_starterAmountText.setCharacterSize(WIDTH / 100);
+	m_starterAmountText.setString("Starter amount : " + std::to_string(STARTER_AMOUNT));
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+
 
 }
 
@@ -379,10 +638,6 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 		}
 	}
 
-
-
-
-
 	//++++++++++1/2 split DNA++++++++++
 
 	//DNA_THREE[0] = DNA_ONE[0];
@@ -427,7 +682,6 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 	if (m_npcs[m_npcs.size() - 1]->getGenertaion() > m_highestGen) {m_highestGen = m_npcs[m_npcs.size() - 1]->getGenertaion();}
 }
 
-
 //++++++++++ Getters for average Statistics ++++++++++
 
 /// <summary>
@@ -436,24 +690,17 @@ void System::GAReproduce(NPC* t_npcOne, NPC* t_npcTwo)
 float System::GetAvgSpeed()
 {
 	m_avgStatistic = 0;
-	for (int i = 0; i < m_npcs.size(); i++)
-	{
-		m_avgStatistic += m_npcs[i]->GetSpeedStatistic();
-	}
-
+	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetSpeedStatistic();}
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
 /// <summary>
-/// Get Average NPC Strenght 
+/// Get Average NPC Strength 
 /// </summary>
 float System::GetAvgStr()
 {
-
-	for (int i = 0; i < m_npcs.size(); i++)
-	{
-		m_avgStatistic += m_npcs[i]->GetSizeStatistic();
-	}
+	m_avgStatistic = 0;
+	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetSizeStatistic();}
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
@@ -462,12 +709,8 @@ float System::GetAvgStr()
 /// </summary>
 float System::GetAvgInt()
 {
-
-	for (int i = 0; i < m_npcs.size(); i++)
-	{
-		m_avgStatistic += m_npcs[i]->GetIntStatistic();
-
-	}
+	m_avgStatistic = 0;
+	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetIntStatistic();}
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
@@ -476,24 +719,34 @@ float System::GetAvgInt()
 /// </summary>
 float System::GetAvgSize()
 {
-
-	for (int i = 0; i < m_npcs.size(); i++)
-	{
-		m_avgStatistic += m_npcs[i]->GetIntStatistic();
-	}
+	m_avgStatistic = 0;
+	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetIntStatistic();}
 	m_avgStatistic = m_avgStatistic / m_npcs.size();
 	return m_avgStatistic;
 }
 
 
+void System::GAStartUp()
+{
+	m_npcs.reserve(STARTER_AMOUNT);
+	for (int i = 0; i < STARTER_AMOUNT; i++) { m_npcs.push_back(new NPC(m_window, m_ArialBlackfont)); }
+	for (int i = 0; i < STARTER_AMOUNT / 2; i++) { m_npcs[i]->setGender(1); }
+
+	for (int i = 0; i < m_npcs.size(); i++) {
+		m_npcs[i]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
+		m_npcs[i]->setUpNpcStart(m_IDCount); m_IDCount++;
+	}
+
+	m_trackedOneNPC = m_npcs[0];
+	m_trackedTwoNPC = m_npcs[1];
+}
+
 void System::GAReproduction()
 {
-
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3)) //check if the first npc is within the corect age range 
 		{
-
 			if (m_npcs[i]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
 			{
 				for (int j = 0; j < m_npcs.size(); j++)
@@ -506,43 +759,33 @@ void System::GAReproduction()
 							{
 								if (m_npcs[j]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
 								{
-
 									m_distanceBetweenNPC =
 										sqrt((pow((m_npcs[j]->getPos().x - m_npcs[i]->getPos().x), 2)) +
 										(pow((m_npcs[j]->getPos().y - m_npcs[i]->getPos().y), 2)));
 
 									if (m_distanceBetweenNPC <= BREEDING_DISTANCE)
 									{
-
 										if(m_wantedStatistics[0] == 1)//speed wanted 
-										{
-											if (m_npcs[j]->GetSpeedStatistic() >= m_npcs[i]->GetSpeedStatistic()) {m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
-										}
-										if (m_wantedStatistics[1] == 1)//strenght wanted
-										{
-											if (m_npcs[j]->GetStrStatistic() >= m_npcs[i]->GetStrStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
-										}
+										{if (m_npcs[j]->GetSpeedStatistic() >= m_npcs[i]->GetSpeedStatistic()) {m_runningReproductionChance -= REPRODUCTION_INCREASE;}}//increase the chance of reproduction
+										
+										if (m_wantedStatistics[1] == 1)//Strength wanted
+										{if (m_npcs[j]->GetStrStatistic() >= m_npcs[i]->GetStrStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}}//increase the chance of reproduction
+										
 										if (m_wantedStatistics[2] == 1)//intelegence wanted
-										{
-											if (m_npcs[j]->GetIntStatistic() >= m_npcs[i]->GetIntStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}//increase the chance of reproduction
-										}
+										{if (m_npcs[j]->GetIntStatistic() >= m_npcs[i]->GetIntStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}} //increase the chance of reproduction
+										
 										if (m_wantedStatistics[3] == 1)//size wanted
-										{
-											if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;} //increase the chance of reproduction
-										}
-
+										{if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}} //increase the chance of reproduction
+										
 										if (randomNumber(m_runningReproductionChance,0) <= REPRODUCTION_CHANCE_THRESHOLD)
 										{
 											GAReproduce(m_npcs[i], m_npcs[j]);										
 											m_runningReproductionChance = REPRODUCTION_CHANCE;
 										}
-										else
-										{
+										else{
 											m_npcs[i]->resetReproductionTimer();//failed reproduction wait till try again rest 
 											m_npcs[j]->resetReproductionTimer();//failed reproduction wait till try again rest 
-
-											m_runningReproductionChance = REPRODUCTION_CHANCE;
-										}
+											m_runningReproductionChance = REPRODUCTION_CHANCE;}
 
 									}
 								}

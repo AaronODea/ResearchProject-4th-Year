@@ -1,0 +1,60 @@
+﻿-------- Edit and Continue build started --------
+
+Gui.cpp
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.h(32,31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(42,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(43,41): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(44,45): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(48,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(49,54): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(50,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(58,26): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(63,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(83,36): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(84,31): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(89,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(95,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(96,31): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(97,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(99,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+        with
+        [
+            T=float
+        ]
+C:\Users\Aaron\Desktop\Projects\ResearchProject-4th-Year\ResearchProject\Gui.cpp(102,45): warning C4018: '>': signed/unsigned mismatch
+--------------------- Done ----------------------
+
+Edit and Continue : Successfully applied code changes.
+

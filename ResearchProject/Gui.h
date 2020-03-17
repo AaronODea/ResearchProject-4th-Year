@@ -7,13 +7,14 @@
 class GUI
 {
 public:
-	GUI(sf::RenderWindow& t_window ,sf::Font& t_font);
+	GUI(sf::RenderWindow& t_window);
 	~GUI();
 
 	void Draw();
 	void update(float t_AvgStatistic, int t_highestGen, int t_currentStat);
 
-	void SetUpLineGraph();
+
+	void SetUpLineGraph(sf::Font& t_font);
 	void updateGraph(float t_AvgStatistic, int t_highestGen, int t_currentStat);
 
 private:
@@ -21,9 +22,8 @@ private:
 	int HEIGHT = 1080;
 
 
+	sf::Text m_currentGeneration;
 
-
-	sf::Font m_font;
 	sf::RenderWindow& m_window;
 
 	int m_currentGenerationHeld = -1;

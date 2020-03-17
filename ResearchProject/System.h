@@ -8,19 +8,20 @@
 #include "Gui.h"
 
 
-
+enum STATES { m_startingScreen, m_mainScreen};
 
 class System
 {
 public:
 	System();
 	~System();
-	/// <summary>
-	/// main method
-	/// </summary>
+	
+	STATES m_currentState;
+
 	void run();
 
 private:
+	
 
 	int WIDTH = 1920;
 	int HEIGHT = 1080;
@@ -39,12 +40,15 @@ private:
 	
 	//++++++++++FUNCTION++++++++++
 	int randomNumber(int t_max, int t_min);
+	std::stringstream setMutation(float t_mutation);
 
 
 	//++++++++++SET UP++++++++++
 	void setupFontAndText();
+	void setUpGuiStates();
 
 	//++++++++++GA++++++++++
+	void GAStartUp();
 	void GAReproduction();
 	void GAReproduce(NPC* t_npcOne, NPC* t_npcTwo);
 
@@ -56,12 +60,12 @@ private:
 
 	float m_avgStatistic = 0;
 	int m_statisticWanted = 0;
-
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//++++++++++CONST VARIABLE ++++++++++ 
-	const int BREEDING_DISTANCE = 400;
-	const int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
+	int BREEDING_DISTANCE = 400;
+	int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
-	const int STARTER_AMOUNT = 10;
+	int STARTER_AMOUNT = 10;
 
 
 	//++++++++++GLOBAL VARIABLE ++++++++++
@@ -70,11 +74,10 @@ private:
 	int REPRODUCTION_TIME = 300; // 300 = 3 years
 	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	std::array<float, 4> m_mutationArray = { 30,0,0,0 }; // mutation array for  the chance of mutation 
-	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
+	std::array<float, 4> m_mutationArray = { 0,0,0,0 }; // mutation array for  the chance of mutation 
+	std::array<int, 4> m_wantedStatistics = { 0,0,0,0 }; // 1= yes 0 = no
 
 	//++++++++++NPCS VARIABLES ++++++++++
 	int m_IDCount = 0;
@@ -99,6 +102,15 @@ private:
 	sf::Text m_totalNPC;
 	sf::Text m_totalNPCAlltime;
 
+	//++++++++++MENU TEXT++++++++++
+	int m_menuButton = 0;
+
+	int m_ALGORYTHIM_CHOICE = 0;
+	float m_mutationRateSpeed = 0.1f;
+
+
+	std::vector <sf::Text> m_menuButtonTEXT;
+	
 	//++++++++++Mutation &  statistics ++++++++++
 	sf::Text m_staisticTrackedname;
 
@@ -107,6 +119,20 @@ private:
 	sf::Text m_intMutation;
 	sf::Text m_sizeMutation;
 
+	sf::Text m_speedWanted;
+	sf::Text m_strWanted;
+	sf::Text m_intWanted;
+	sf::Text m_sizeWanted;
+
+
+	sf::Text m_breeedingDistanceText;
+	sf::Text m_reproductionChanceText;
+	sf::Text m_starterAmountText;
+
+
+
+	std::vector<std::string> m_YesNo;
+	sf::RectangleShape m_buttonOutline;
 
 	//++++++++++Sprites & Textures ++++++++++
 	sf::Sprite m_backgroundSprite;
