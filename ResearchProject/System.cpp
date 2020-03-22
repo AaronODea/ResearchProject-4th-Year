@@ -36,6 +36,9 @@ System::System() :
 	m_foregroundSprite.setTexture(m_foregroundTexture);
 	m_foregroundSprite.setScale(m_penSize.x, m_penSize.y);
 
+	m_highStatCircle.setFillColor(sf::Color::Transparent);
+	m_highStatCircle.setOutlineColor(sf::Color::Black);
+	m_highStatCircle.setOutlineThickness(WIDTH/364);
 
 }
 
@@ -324,6 +327,47 @@ void System::update(sf::Time t_deltaTime)
 				break;
 			}//tracked statistic 
 
+		m_highestCurrentStatNumber = 0;  
+
+		for (int i = 0; i < m_npcs.size(); i++)
+		{
+
+			switch (m_statisticWanted)
+			{
+			default:
+			case 0:
+				if (m_highestCurrentStatNumber <= m_npcs[i]->GetSpeedStatistic()) {
+					m_highestCurrentStatNumber = m_npcs[i]->GetSpeedStatistic();
+					m_highestCurrentStatID = i;
+				}
+				break;
+			case 1:
+				if (m_highestCurrentStatNumber <= m_npcs[i]->GetStrStatistic()) {
+					m_highestCurrentStatNumber = m_npcs[i]->GetStrStatistic();
+					m_highestCurrentStatID = i;
+				}
+				break;
+			case 2:
+				if (m_highestCurrentStatNumber <= m_npcs[i]->GetIntStatistic()) {
+					m_highestCurrentStatNumber = m_npcs[i]->GetIntStatistic();
+					m_highestCurrentStatID = i;
+				}
+				break;
+			case 3:
+				if (m_highestCurrentStatNumber <= m_npcs[i]->GetSizeStatistic()) {
+					m_highestCurrentStatNumber = m_npcs[i]->GetSizeStatistic();
+					m_highestCurrentStatID = i;
+				}
+				break;
+			}///highest of that stat
+		}
+
+		if (m_npcs.size() != NULL)
+		{
+			m_highStatCircle.setPosition(sf::Vector2f(m_npcs[m_highestCurrentStatID]->getPos().x - (m_npcs[m_highestCurrentStatID]->getSize() * 0.5f),
+				m_npcs[m_highestCurrentStatID]->getPos().y - (m_npcs[m_highestCurrentStatID]->getSize())));
+			m_highStatCircle.setRadius((m_npcs[m_highestCurrentStatID]->getSize() * 1.2));
+		}
 		m_gui.update(m_avgStatistic, m_npcs.size(), m_statisticWanted);
 	break;
 	}
@@ -383,9 +427,10 @@ void System::render()
 		if(m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
 		{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
 		 m_heartSprite[1].setPosition(sf::Vector2f((m_trackedTwoNPC->getPos().x)+ (m_trackedTwoNPC->getSizeTexture().x / 2), (m_trackedTwoNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));}
-
+		
 		m_window.draw(m_foregroundSprite);
-
+	
+		m_window.draw(m_highStatCircle);
 		m_gui.Draw();
 
 		break;

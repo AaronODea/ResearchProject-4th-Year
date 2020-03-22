@@ -97,10 +97,12 @@ void GUI::updateGraph(float t_AvgStatistic, int t_highestGen, int t_currentStat)
 		m_lines.append(sf::Vector2f(m_AverageGraphX - (WIDTH / 200), (HEIGHT / 1.0344f)));
 		
 		m_currentGeneration.setPosition(sf::Vector2f(m_AverageGraphX, (HEIGHT / 1.08f) - m_AverageGraphY));
-		m_currentGeneration.setString(std::to_string(m_currentGenerationHeld));
+		m_currentGeneration.setString(std::to_string(t_AvgStatistic));
 	}
 	for (int i = m_lines.getVertexCount()-1 ;i > m_lines.getVertexCount()-5; i--)
 	{
 		m_lines[i].color = m_color[t_currentStat];
 	}
+
+	
 }

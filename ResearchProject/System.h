@@ -86,6 +86,10 @@ private:
 	int m_distanceBetweenNPC = 0;
 	int m_runningReproductionChance = REPRODUCTION_CHANCE;
 
+	float m_highestCurrentStatNumber = 0;
+	int m_highestCurrentStatID = 0;
+
+
 	//++++++++++TEXT++++++++++
 	//gender stat 
 	int m_maleCount = 0;
@@ -145,6 +149,7 @@ private:
 
 	std::vector< sf::Sprite> m_heartSprite;
 
+	sf::CircleShape m_highStatCircle;
 
 	NPC* m_trackedOneNPC;
 	NPC* m_trackedTwoNPC;

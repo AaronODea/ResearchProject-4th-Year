@@ -17,6 +17,7 @@ public:
 	void SetUpLineGraph(sf::Font& t_font);
 	void updateGraph(float t_AvgStatistic, int t_highestGen, int t_currentStat);
 
+
 private:
 	int WIDTH = 1920;
 	int HEIGHT = 1080;
