@@ -28,6 +28,8 @@ void NPC::DrawStatistics()
 	m_window.draw(m_AgeText);
 	m_window.draw(m_healthBarBase);
 	m_window.draw(m_healthBarFront);
+
+	m_window.draw(m_DNAString);
 }
 
 void NPC::Update()
@@ -38,12 +40,12 @@ void NPC::Update()
 
 	wander();
 
-	m_mateingrandTemp.setPosition(m_position);
-
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
 
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH / 90)));
+	m_DNAString.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH / 90)));
+
 	m_GenerationText.setPosition(sf::Vector2f(m_position.x + (m_texture.getSize().x) * 0.5f, m_position.y + (m_texture.getSize().y) * 0.5f));
 	m_AgeText.setPosition(sf::Vector2f(m_DNAText.getPosition().x, m_DNAText.getPosition().y - (WIDTH / 100)));
 }
@@ -176,6 +178,9 @@ float NPC::GetSizeStatistic()
 void NPC::setUpNpcStart(int t_ID)
 {
 
+	m_DNAString.setFont(m_font);
+	
+
 	//randomise the starters DNA
 	m_speed = (randomNumber(m_Statistic_cap, 1));
 	m_strength = (randomNumber(m_Statistic_cap, 1));
@@ -195,11 +200,16 @@ void NPC::setUpNpcStart(int t_ID)
 	m_sizeStream << std::fixed << std::setprecision(1) << m_size;
 
 	//make the Dna String for display
-	m_DNADisplay =
-		m_speedStream.str() + "," +
-		m_strengthStream.str() + "," +
-		m_intelligenceStream.str() + "," +
-		m_sizeStream.str();
+	m_DNAString << sf::Color::Black << "DNA: " <<
+				   sf::Color(255, 102, 102) << m_speedStream.str() + ","<<
+				   sf::Color(255, 178, 102) << m_strengthStream.str() + "," <<
+				   sf::Color(255, 255, 102) << m_intelligenceStream.str() + "," <<
+				   sf::Color(178, 255, 102) << m_sizeStream.str();
+
+
+
+	m_DNAString.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
+	m_DNAString.setCharacterSize(WIDTH / 150);
 
 	//set the ID of the NPC
 	m_ID = t_ID;
@@ -263,11 +273,9 @@ void NPC::setUpNpcStart(int t_ID)
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
 	//DNA text 
-	m_DNAText.setString("DNA: " + m_DNADisplay);
-	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
-	m_DNAText.setFont(m_font);
-	m_DNAText.setFillColor(sf::Color::Black);
-	m_DNAText.setCharacterSize(WIDTH / 150);
+	m_DNAString.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
+	m_DNAString.setFont(m_font);
+	m_DNAString.setCharacterSize(WIDTH / 150);
 
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
@@ -284,10 +292,9 @@ void NPC::setUpNpcStart(int t_ID)
 	m_AgeText.setFillColor(sf::Color::Black);
 	m_AgeText.setCharacterSize(WIDTH / 150);
 
-	//cmd out of inital ID's
-	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
-	std::cout << "DNA: " + m_DNADisplay << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl;
+
+	resetReproductionTimer();
+
 }
 void NPC::setUpNpc(int t_ID)
 {
@@ -305,11 +312,12 @@ void NPC::setUpNpc(int t_ID)
 
 
 	//make the Dna String for display
-	m_DNADisplay =
-		m_speedStream.str() + "," +
-		m_strengthStream.str() + "," +
-		m_intelligenceStream.str() + "," +
-		m_sizeStream.str();
+	m_DNAString.setFont(m_font);
+	m_DNAString << sf::Color::Black << "DNA: " <<
+		sf::Color(255, 102, 102) << m_speedStream.str() + "," <<
+		sf::Color(255, 178, 102) << m_strengthStream.str() + "," <<
+		sf::Color(255, 255, 102) << m_intelligenceStream.str() + "," <<
+		sf::Color(178, 255, 102) << m_sizeStream.str();
 
 	//set the ID of the NPC
 	m_ID = t_ID;
@@ -373,11 +381,9 @@ void NPC::setUpNpc(int t_ID)
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) * 2.5));
 
 	//DNA text 
-	m_DNAText.setString("DNA: " + m_DNADisplay);
-	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
-	m_DNAText.setFont(m_font);
-	m_DNAText.setFillColor(sf::Color::Black);
-	m_DNAText.setCharacterSize(WIDTH / 150);
+	m_DNAString.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x - 50, m_healthBarBase.getPosition().y - 30));
+	m_DNAString.setFont(m_font);
+	m_DNAString.setCharacterSize(WIDTH / 150);
 
 	//generation text 
 	m_GenerationText.setString(std::to_string(m_generation));
@@ -394,10 +400,7 @@ void NPC::setUpNpc(int t_ID)
 	m_AgeText.setFillColor(sf::Color::Black);
 	m_AgeText.setCharacterSize(WIDTH / 150);
 
-	//cmd out of inital ID's
-	std::cout << "ID:" + std::to_string(m_ID) << std::endl;
-	std::cout << "DNA: " + m_DNADisplay << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl;
+
 	resetReproductionTimer();
 }
 

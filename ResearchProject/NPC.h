@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "RichText.h"
 #include <iostream>
 #include <vector>
 #include <time.h>
@@ -68,7 +69,6 @@ private:
 	sf::RenderWindow& m_window;
 
 
-	sf::CircleShape m_mateingrandTemp;//temp circle for range of reprocuction 
 	
 
 	bool m_alive = true;
@@ -94,11 +94,13 @@ private:
 	bool m_SequenceComplete = false; // when the end goal has been reached -----------------------------------------------------------------------------------------
 
 	//DNA sequence 
-	std::string m_DNADisplay;
+	sfe::RichText m_DNAString;
 	std::stringstream m_speedStream;
 	std::stringstream m_strengthStream;
 	std::stringstream m_intelligenceStream;
 	std::stringstream m_sizeStream;
+
+
 
 	std::array<float, 4>  m_DNA;
 

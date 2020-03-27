@@ -1,6 +1,7 @@
 #ifndef SYSTEM_HPP
 #define SYSTEM_HPP
 
+#include "RichText.h"
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <array>
@@ -32,7 +33,6 @@ private:
 	sf::Font m_ArialBlackfont; // font used by message
 	bool m_exit; // control exiting 
 
-
 	void processEvents();
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
@@ -49,8 +49,11 @@ private:
 
 	//++++++++++GA++++++++++
 	void GAStartUp();
-	void GAReproduction();
-	void GAReproduce(NPC* t_npcOne, NPC* t_npcTwo);
+	void GAReproductionWanted();
+	void GAReproductionHighest();
+	void GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo);
+	void GAReproduceSplit(NPC* t_npcOne, NPC* t_npcTwo);
+
 
 	//++++++++++Get Statistics ++++++++++
 	float GetAvgSpeed();
@@ -82,6 +85,9 @@ private:
 	//++++++++++NPCS VARIABLES ++++++++++
 	int m_IDCount = 0;
 	std::vector<NPC*> m_npcs;
+	std::vector<int> m_npcBreedingGroup;
+
+
 
 	int m_distanceBetweenNPC = 0;
 	int m_runningReproductionChance = REPRODUCTION_CHANCE;
@@ -89,6 +95,8 @@ private:
 	float m_highestCurrentStatNumber = 0;
 	int m_highestCurrentStatID = 0;
 
+	int m_maleHeighest ;
+	int m_femaleHeighest;
 
 	//++++++++++TEXT++++++++++
 	//gender stat 
@@ -110,8 +118,9 @@ private:
 	int m_menuButton = 0;
 
 	int m_ALGORYTHIM_CHOICE = 0;
-	float m_mutationRateSpeed = 0.1f;
+	int m_Mutation_CHOICE = 0;
 
+	float m_mutationRateSpeed = 0.1f;
 
 	std::vector <sf::Text> m_menuButtonTEXT;
 	
@@ -132,6 +141,9 @@ private:
 	sf::Text m_breeedingDistanceText;
 	sf::Text m_reproductionChanceText;
 	sf::Text m_starterAmountText;
+
+	sf::Text m_algorithmType;
+	sf::Text m_mutationType;
 
 
 

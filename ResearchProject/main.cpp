@@ -12,7 +12,7 @@
 #pragma comment(lib,"sfml-network.lib") 
 #endif 
 
-
+#include "RichText.h"
 #include "System.h"
 
 /// <summary>

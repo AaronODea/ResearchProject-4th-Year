@@ -7,10 +7,10 @@ GUI::GUI(sf::RenderWindow& t_window) :
 	WIDTH = m_window.getSize().x;
 	HEIGHT = m_window.getSize().y;
 
-	m_color.push_back(sf::Color::Black);
-	m_color.push_back(sf::Color::Blue);
-	m_color.push_back(sf::Color::Green);
-	m_color.push_back(sf::Color::Cyan);
+	m_color.push_back(sf::Color(255,102,102));
+	m_color.push_back(sf::Color(255,178,102));
+	m_color.push_back(sf::Color(255, 255, 102));
+	m_color.push_back(sf::Color(178, 255, 102));
 }
 
 
@@ -67,7 +67,7 @@ void GUI::SetUpLineGraph(sf::Font& t_font)
 	m_currentGeneration.setFillColor(sf::Color::Black);
 	m_currentGeneration.setPosition(sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f)));
 	m_currentGeneration.setCharacterSize(20);
-	m_currentGeneration.setString("hello");
+	m_currentGeneration.setString("");
 
 
 }

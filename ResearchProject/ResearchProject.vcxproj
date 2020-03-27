@@ -23,6 +23,7 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="RichText.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="RichText.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
   <ItemGroup>
