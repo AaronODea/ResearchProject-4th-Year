@@ -9,6 +9,8 @@ NPC::NPC(sf::RenderWindow& t_window, sf::Font& t_font) :
 	HEIGHT = m_window.getSize().y;
 	m_penSize.x = (WIDTH / 1.28f);
 	m_penSize.y = (HEIGHT / 1.578f);
+	m_StartTimeReproduction = std::chrono::steady_clock::now();
+
 }
 
 NPC::~NPC()
@@ -34,9 +36,23 @@ void NPC::DrawStatistics()
 
 void NPC::Update()
 {
-	if (m_ReproductionTimer >= 0) { m_ReproductionTimer--; }
-	if (m_age <= AGE_CAP) { m_age++; m_AgeText.setString("Age: " + std::to_string(m_age / 100)); }
-	else { m_alive = false; }
+	m_CurrentTimeReproduction = std::chrono::steady_clock::now();
+	m_elapsedtimeReproduction = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeReproduction - m_StartTimeReproduction);
+
+	if(m_elapsedtimeReproduction.count() >= REPRODUCTION_TIME)
+
+	m_age++;
+	m_AgeText.setString("Age: " + std::to_string(m_age / 100));
+
+	if (m_age >= m_runningAge)
+	{
+
+		m_deathChance = randomNumber(static_cast<int>(m_strength), 0);
+		if (m_deathChance <= m_strength/10){ m_alive = false; }
+		else {m_runningAge = m_age + 50;
+			if(m_age >= AGE_CAP *2){m_alive = false;}}
+	}
+
 
 	wander();
 
@@ -56,41 +72,36 @@ sf::Vector2f NPC::getPos()
 {
 	return m_position;
 }
-
 int NPC::getID()
 {
 	return m_ID;
 }
-
 float NPC::getSize()
 {
 	return m_size;
 }
-
 sf::Vector2f NPC::getSizeTexture()
 {
 	return sf::Vector2f(m_texture.getSize());
 }
-
 int NPC::getGender()
 {
 	return m_gender;
 }
-
 int NPC::getAge()
 {
 	return m_age;
 }
-
 int NPC::getGenertaion()
 {
 	return m_generation;
 }
 
-int NPC::getReproductionCooldown()
+std::chrono::duration<double> NPC::getReproductionCooldown()
 {
-	return m_ReproductionTimer;
+	return m_elapsedtimeReproduction;
 }
+
 
 std::array<float, 4> NPC::getDNA()
 {
@@ -104,22 +115,18 @@ void NPC::setDNA(std::array<float, 4> t_DNA)
 
 	m_DNA = t_DNA;
 }
-
 void NPC::setPosition(sf::Vector2f t_pos)
 {
 	m_position = t_pos;
 }
-
 void NPC::setEndPosition(sf::Vector2f t_pos)
 {
 	m_endPosition = t_pos;
 }
-
 void NPC::setGenertaion(int t_gen)
 {
 	m_generation = t_gen;
 }
-
 void NPC::setGender(int t_gender)
 {
 	m_gender = t_gender;
@@ -130,7 +137,7 @@ void NPC::setGender(int t_gender)
 //++++++++++FUNCTIONS ++++++++++
 void NPC::resetReproductionTimer()
 {
-	m_ReproductionTimer = REPRODUCTION_TIME;
+	m_StartTimeReproduction = std::chrono::steady_clock::now();
 }
 
 bool NPC::isAlive()
@@ -138,7 +145,7 @@ bool NPC::isAlive()
 	return m_alive;
 }
 
-void NPC::wander()
+void NPC::wander()//wander function for npcs to wander around their pen
 {
 	if ((std::sqrt((m_endPosition.x - m_position.x) * (m_endPosition.x - m_position.x) + (m_endPosition.y - m_position.y) * (m_endPosition.y - m_position.y))) <= (HEIGHT/75)){
 		m_endPosition.x = randomNumber(m_penSize.x, 0);
@@ -408,4 +415,5 @@ void NPC::setUpGAvar(int t_RT, int t_Age)
 {
 	REPRODUCTION_TIME = t_RT;
 	AGE_CAP = t_Age;
+	m_runningAge = (t_Age/100)*90;
 }

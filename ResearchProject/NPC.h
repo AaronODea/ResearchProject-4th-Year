@@ -9,7 +9,9 @@
 #include <iomanip>
 #include <array>
 #include <sstream>
-
+#include <chrono>
+#include <ctime>
+#include <cmath>
 
 
 
@@ -35,7 +37,7 @@ public:
 	int getGender();
 	int getAge();
 	int getGenertaion();
-	int getReproductionCooldown();
+	std::chrono::duration<double> getReproductionCooldown();
 	std::array<float, 4> getDNA();
 	bool isAlive();
 
@@ -58,18 +60,20 @@ public:
 	int randomNumber(int t_max, int t_min);//make a random number 
 	void resetReproductionTimer();
 
-	//  put into main system or set up gn Function_-------------------------------------------------------------------------
+	//  put into main system or set up gn Function_
 	int REPRODUCTION_TIME;
 	int AGE_CAP;
-	int m_ReproductionTimer = 0;
+
+
+
+	std::chrono::steady_clock::time_point m_StartTimeReproduction;
+	std::chrono::steady_clock::time_point m_CurrentTimeReproduction;
+	std::chrono::duration<double> m_elapsedtimeReproduction;
 
 private:
 	//text and displays;
 	sf::Font m_font;
 	sf::RenderWindow& m_window;
-
-
-	
 
 	bool m_alive = true;
 	int m_ID = NULL;
@@ -77,7 +81,11 @@ private:
 	int m_generation = 0;//generation of the NPC
 	int m_gender = 0; // 0 = female     1 = male
 	int m_age = 0;
+	int m_runningAge = 0;
+
 	int m_health = 100;
+
+	int m_deathChance;
 
 	//variables for genetic algorithm
 	float m_speed;
@@ -85,13 +93,11 @@ private:
 	float m_intelligence;
 	float m_size;
 
-
 	float sizeRounded;
 	float m_sizeScale;
 	float m_speedScale;
 
-
-	bool m_SequenceComplete = false; // when the end goal has been reached -----------------------------------------------------------------------------------------
+	bool m_SequenceComplete = false; // when the end goal has been reached ------------------------------------------------------------------------------------------------------------------------------------
 
 	//DNA sequence 
 	sfe::RichText m_DNAString;
@@ -99,8 +105,6 @@ private:
 	std::stringstream m_strengthStream;
 	std::stringstream m_intelligenceStream;
 	std::stringstream m_sizeStream;
-
-
 
 	std::array<float, 4>  m_DNA;
 

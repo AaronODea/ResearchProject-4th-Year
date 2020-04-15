@@ -203,10 +203,17 @@ void System::processKeys(sf::Event t_event)
 			if (STARTER_AMOUNT < 0) { STARTER_AMOUNT = 100; };
 			break;
 		case 13:
-			if (sf::Keyboard::Left == t_event.key.code) { STARTER_AMOUNT -= 1; }
-			if (sf::Keyboard::Right == t_event.key.code) { STARTER_AMOUNT += 1; }
-			if (STARTER_AMOUNT > 100) { STARTER_AMOUNT = 0; };
-			if (STARTER_AMOUNT < 0) { STARTER_AMOUNT = 100; };
+			if (sf::Keyboard::Left == t_event.key.code) { AGE_CAP -= 100; }
+			if (sf::Keyboard::Right == t_event.key.code) { AGE_CAP += 100; }
+			if (AGE_CAP > 10000) { AGE_CAP = 1; };
+			if (AGE_CAP < 1) { AGE_CAP = 10000; };
+			break;
+		case 14:
+			if (sf::Keyboard::Left == t_event.key.code) { REPRODUCTION_TIME -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { REPRODUCTION_TIME += 1; }
+			if (REPRODUCTION_TIME > 200) { REPRODUCTION_TIME = 0; };
+			if (REPRODUCTION_TIME < 0) { REPRODUCTION_TIME = 200; };
+			m_reproductionCountdown = REPRODUCTION_TIME;
 			break;
 		}
 
@@ -227,12 +234,6 @@ void System::processKeys(sf::Event t_event)
 		 
 		if (sf::Keyboard::S == t_event.key.code){
 			for (int i = 0; i < m_npcs.size(); i++) {if (m_npcs[i]->getSize() >2) {m_npcs.erase(m_npcs.begin() + i);}}}
-
-		if (sf::Keyboard::Q == t_event.key.code) {
-
-			GAReproductionHighest();
-		}//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------remove
-
 
 		break;
 	}
@@ -281,8 +282,7 @@ void System::update(sf::Time t_deltaTime)
 			m_menuButtonTEXT[2].setString("Current Speed mutation : " + setMutation(m_mutationArray[0]).str() + "%");
 			m_menuButtonTEXT[3].setString("Current Strength mutation :" + setMutation(m_mutationArray[1]).str() + " % ");
 			m_menuButtonTEXT[4].setString("Current Intelligence mutation :"+ setMutation(m_mutationArray[2]).str() + " % ");
-			m_menuButtonTEXT[5].setString("Current Size mutation : " + setMutation(m_mutationArray[3]).str() + "%");
-			
+			m_menuButtonTEXT[5].setString("Current Size mutation : " + setMutation(m_mutationArray[3]).str() + "%");			
 
 			m_menuButtonTEXT[6].setString("SPEED Wanted : "+ m_YesNo[0]);//wanted stats
 			m_menuButtonTEXT[7].setString("Strength Wanted : "+ m_YesNo[1]);
@@ -292,9 +292,18 @@ void System::update(sf::Time t_deltaTime)
 			m_menuButtonTEXT[10].setString("Breeding Distance : " + std::to_string(BREEDING_DISTANCE));
 			m_menuButtonTEXT[11].setString("Reproduction Chance : " + std::to_string(REPRODUCTION_CHANCE_THRESHOLD) + "%");
 			m_menuButtonTEXT[12].setString("Starter amount : " + std::to_string(STARTER_AMOUNT));
+
+			m_menuButtonTEXT[13].setString("Average highest age : " + std::to_string(AGE_CAP/100));
+			m_menuButtonTEXT[14].setString("Reproduction Timer : " + std::to_string(REPRODUCTION_TIME));
+
 		break;
 
+
 	case m_mainScreen:
+
+		m_CurrentTimeEvent = std::chrono::steady_clock::now();
+		m_elapsedtimeEvent = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeEvent -m_StartTimeEvent);
+
 
 		if (m_heartSprite.size() >= 5) {m_heartSprite.pop_back();}
 
@@ -309,8 +318,7 @@ void System::update(sf::Time t_deltaTime)
 			if (m_npcs[i]->getGender() == 1) { m_maleCount++; }
 			else { m_femaleCount++; }}
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-			//where to add the second gn
+
 			switch (m_ALGORYTHIM_CHOICE)
 			{
 			default:
@@ -319,10 +327,14 @@ void System::update(sf::Time t_deltaTime)
 
 				break;
 			case 1:
+				if (m_reproductionCountdown <= 0)
+				{
 				GAReproductionHighest();
+				m_reproductionCountdown = REPRODUCTION_TIME;
+				}
+				else{m_reproductionCountdown--;}
 				break;
 			}
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		if (m_highestPopulation < m_npcs.size()){
 			m_highestPopulation = m_npcs.size();
@@ -335,26 +347,24 @@ void System::update(sf::Time t_deltaTime)
 		switch (m_statisticWanted)
 			{
 			default:
-				GetAvgSpeed();
-				m_staisticTrackedname.setString("Statistic tracked: Speed");
-				break;
 			case 0:
-				GetAvgSpeed();
 				m_staisticTrackedname.setString("Statistic tracked: Speed");
 				break;
 			case 1:	
-				GetAvgStr();
 				m_staisticTrackedname.setString("Statistic tracked: Strength");
 				break;
 			case 2:
-				GetAvgInt();
 				m_staisticTrackedname.setString("Statistic tracked: Intelligence");
 				break;
 			case 3:
-				GetAvgSize();
 				m_staisticTrackedname.setString("Statistic tracked: Size");
 				break;
 			}//tracked statistic 
+
+				GetAvgSpeed();
+				GetAvgStr();
+				GetAvgInt();
+				GetAvgSize();
 
 		m_highestCurrentStatNumber = 0;  
 
@@ -389,7 +399,7 @@ void System::update(sf::Time t_deltaTime)
 				}
 				break;
 			}///highest of that stat
-		}
+		}//for the circle around the highest of the tracked stat
 
 		if (m_npcs.size() != NULL)
 		{
@@ -397,7 +407,15 @@ void System::update(sf::Time t_deltaTime)
 				m_npcs[m_highestCurrentStatID]->getPos().y - (m_npcs[m_highestCurrentStatID]->getSize())));
 			m_highStatCircle.setRadius((m_npcs[m_highestCurrentStatID]->getSize() * 1.2));
 		}
-		m_gui.update(m_avgStatistic, m_npcs.size(), m_statisticWanted);
+		m_gui.update(m_avgStatisticSpeed,m_avgStatisticStr,m_avgStatisticInt,m_avgStatisticSize, m_npcs.size(), m_statisticWanted);
+
+
+
+		//================================event timer==================
+		if (m_elapsedtimeEvent.count() >= EVENT_COUNTDOWM)
+		{EventCall();
+		}
+		//
 	break;
 	}
 }
@@ -428,7 +446,7 @@ void System::render()
 			else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
 
 
-		if (m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+		if (m_trackedOneNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME && m_trackedTwoNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME)
 		   {m_window.draw(m_heartSprite[0]);
 			m_window.draw(m_heartSprite[1]);}
 
@@ -455,7 +473,7 @@ void System::render()
 		m_window.draw(m_mutationType);
 
 
-		if(m_trackedOneNPC->getReproductionCooldown() >= 0 && m_trackedTwoNPC->getReproductionCooldown() >= 0)
+		if(m_trackedOneNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME && m_trackedTwoNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME)
 		{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
 		 m_heartSprite[1].setPosition(sf::Vector2f((m_trackedTwoNPC->getPos().x)+ (m_trackedTwoNPC->getSizeTexture().x / 2), (m_trackedTwoNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));}
 		
@@ -488,6 +506,45 @@ std::stringstream System::setMutation(float t_mutation)
 	MutationStream << std::fixed << std::setprecision(1) << t_mutation;
 	return MutationStream;
 }
+void System::EventCall()
+{
+	m_StartTimeEvent = std::chrono::steady_clock::now();
+	int temp = randomNumber(3, 0);
+	switch (temp)
+	{
+	default:
+	case 0:
+		SpeedEvent();
+		break;
+	case 1:
+		StrEvent();
+		break;
+	case 2:
+		intEvent();
+		break;
+	case 3:
+		SizeEvent();
+		break;
+	}
+}
+void System::SpeedEvent()
+{
+	std::cout << "SPEED" << std::endl;
+}
+void System::StrEvent()
+{
+	std::cout << "strength" << std::endl;
+
+}
+void System::intEvent()
+{
+	std::cout << "Intelegent" << std::endl;
+
+}
+void System::SizeEvent()
+{
+	std::cout << "size" << std::endl;
+}
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
@@ -507,7 +564,7 @@ void System::setupFontAndText()
 
 
 	//++++++++++MENU STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < 15; i++)
 	{
 	m_menuButtonTEXT.push_back(sf::Text());
 	m_menuButtonTEXT[i].setFont(m_ArialBlackfont);
@@ -550,6 +607,13 @@ void System::setupFontAndText()
 	m_menuButtonTEXT[11].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.85f)));
 	m_menuButtonTEXT[12].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.7f)));
 	
+
+	m_menuButtonTEXT[13].setString("Average highest age : 50");//age stats
+	m_menuButtonTEXT[13].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.58f)));
+
+	m_menuButtonTEXT[14].setString("Reproduction Timer :1000");//age stats
+	m_menuButtonTEXT[14].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.46f)));
+
 	m_buttonOutline.setFillColor(sf::Color(102, 204, 0, 60));
 	m_buttonOutline.setOutlineColor(sf::Color(0,0,0,160));
 	m_buttonOutline.setOutlineThickness(WIDTH/500);
@@ -718,7 +782,7 @@ void System::setUpGuiStates()
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-
+	m_StartTimeEvent = std::chrono::steady_clock::now();
 
 }
 
@@ -778,8 +842,6 @@ void System::GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo)
 	DNA_THREE[2] = (DNA_ONE[2] + DNA_TWO[2]) / 2;
 	DNA_THREE[3] = (DNA_ONE[3] + DNA_TWO[3]) / 2;
 
-
-
 	for (int i = 0; i < 4; i++)
 	{
 		 
@@ -808,7 +870,6 @@ void System::GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo)
 
 	if (m_npcs[m_npcs.size() - 1]->getGenertaion() > m_highestGen) {m_highestGen = m_npcs[m_npcs.size() - 1]->getGenertaion();}
 }
-
 void System::GAReproduceSplit(NPC* t_npcOne, NPC* t_npcTwo)
 {
 	m_trackedOneNPC = t_npcOne;
@@ -865,12 +926,8 @@ void System::GAReproduceSplit(NPC* t_npcOne, NPC* t_npcTwo)
 	DNA_THREE[2] = DNA_TWO[2];
 	DNA_THREE[3] = DNA_TWO[3];
 
-
-
-
 	for (int i = 0; i < 4; i++)
 	{
-
 		DNA_THREE[i] += Mutations[i];
 		if (DNA_THREE[i] < 1) { DNA_THREE[i] = 1; }
 		if (DNA_THREE[i] > 100) { DNA_THREE[i] = 100; }
@@ -907,40 +964,40 @@ void System::GAReproduceSplit(NPC* t_npcOne, NPC* t_npcTwo)
 /// </summary>
 float System::GetAvgSpeed()
 {
-	m_avgStatistic = 0;
-	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetSpeedStatistic();}
-	m_avgStatistic = m_avgStatistic / m_npcs.size();
-	return m_avgStatistic;
+	m_avgStatisticSpeed = 0;
+	for (int i = 0; i < m_npcs.size(); i++){ m_avgStatisticSpeed += m_npcs[i]->GetSpeedStatistic();}
+	m_avgStatisticSpeed = m_avgStatisticSpeed / m_npcs.size();
+	return m_avgStatisticSpeed;
 }
 /// <summary>
 /// Get Average NPC Strength 
 /// </summary>
 float System::GetAvgStr()
 {
-	m_avgStatistic = 0;
-	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetSizeStatistic();}
-	m_avgStatistic = m_avgStatistic / m_npcs.size();
-	return m_avgStatistic;
+	m_avgStatisticStr = 0;
+	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticStr += m_npcs[i]->GetSizeStatistic();}
+	m_avgStatisticStr = m_avgStatisticStr / m_npcs.size();
+	return m_avgStatisticStr;
 }
 /// <summary>
 /// Get Average NPC intelegnece 
 /// </summary>
 float System::GetAvgInt()
 {
-	m_avgStatistic = 0;
-	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetIntStatistic();}
-	m_avgStatistic = m_avgStatistic / m_npcs.size();
-	return m_avgStatistic;
+	m_avgStatisticInt = 0;
+	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticInt += m_npcs[i]->GetIntStatistic();}
+	m_avgStatisticInt = m_avgStatisticInt / m_npcs.size();
+	return m_avgStatisticInt;
 }
 /// <summary>
 /// Get Average NPC size 
 /// </summary>
 float System::GetAvgSize()
 {
-	m_avgStatistic = 0;
-	for (int i = 0; i < m_npcs.size(); i++) {m_avgStatistic += m_npcs[i]->GetIntStatistic();}
-	m_avgStatistic = m_avgStatistic / m_npcs.size();
-	return m_avgStatistic;
+	m_avgStatisticSize = 0;
+	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticSize += m_npcs[i]->GetIntStatistic();}
+	m_avgStatisticSize = m_avgStatisticSize / m_npcs.size();
+	return m_avgStatisticSize;
 }
 
 
@@ -965,7 +1022,7 @@ void System::GAReproductionWanted()
 	{
 		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3)) //check if the first npc is within the corect age range 
 		{
-			if (m_npcs[i]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
+			if (m_npcs[i]->getReproductionCooldown().count() >= REPRODUCTION_TIME)//check if the npc is able to bread 
 			{
 				for (int j = 0; j < m_npcs.size(); j++)
 				{
@@ -975,7 +1032,7 @@ void System::GAReproductionWanted()
 						{
 							if (m_npcs[i]->getGender() != m_npcs[j]->getGender()) //check if the genders are opposite 
 							{
-								if (m_npcs[j]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
+								if (m_npcs[j]->getReproductionCooldown().count() >= REPRODUCTION_TIME)//check if the npc is able to bread 
 								{
 									m_distanceBetweenNPC =
 										sqrt((pow((m_npcs[j]->getPos().x - m_npcs[i]->getPos().x), 2)) +
@@ -1044,7 +1101,7 @@ void System::GAReproductionHighest()
 	{
 		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3)) //check if the first npc is within the corect age range 
 		{
-			if (m_npcs[i]->getReproductionCooldown() <= 0)//check if the npc is able to bread 
+			if (m_npcs[i]->getReproductionCooldown().count() <= REPRODUCTION_TIME)//check if the npc is able to bread 
 			{m_npcBreedingGroup.push_back(i);}
 		}
 	}
@@ -1095,9 +1152,10 @@ void System::GAReproductionHighest()
 		GAReproduceAVG(m_npcs[m_maleHeighest], m_npcs[m_femaleHeighest]);
 		break;
 	}
-		m_npcs[m_maleHeighest]->resetReproductionTimer();//failed reproduction wait till try again rest 
-		m_npcs[m_femaleHeighest]->resetReproductionTimer();//failed reproduction wait till try again rest 
+	m_npcs[m_maleHeighest]->resetReproductionTimer();//failed reproduction wait till try again rest 
+	m_npcs[m_femaleHeighest]->resetReproductionTimer();//failed reproduction wait till try again rest 
 	}
+
 	m_npcBreedingGroup.clear();
 
 }

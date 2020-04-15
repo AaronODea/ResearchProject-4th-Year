@@ -7,7 +7,9 @@
 #include <array>
 #include "NPC.h"
 #include "Gui.h"
-
+#include <chrono>
+#include <ctime>
+#include <cmath>
 
 enum STATES { m_startingScreen, m_mainScreen};
 
@@ -42,6 +44,15 @@ private:
 	int randomNumber(int t_max, int t_min);
 	std::stringstream setMutation(float t_mutation);
 
+	//++++++++++Events++++++++++
+
+	void EventCall();
+
+	void SpeedEvent();
+	void StrEvent();
+	void intEvent();
+	void SizeEvent();
+
 
 	//++++++++++SET UP++++++++++
 	void setupFontAndText();
@@ -61,23 +72,37 @@ private:
 	float GetAvgInt();
 	float GetAvgSize();
 
-	float m_avgStatistic = 0;
+	float m_avgStatisticSpeed = 0;
+	float m_avgStatisticStr= 0;
+	float m_avgStatisticInt = 0;
+	float m_avgStatisticSize = 0;
+
 	int m_statisticWanted = 0;
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 	//++++++++++CONST VARIABLE ++++++++++ 
 	int BREEDING_DISTANCE = 400;
 	int REPRODUCTION_CHANCE_THRESHOLD = 20; // 20  = 20% CHANCE OF REPRODUCTION
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
 	int STARTER_AMOUNT = 10;
 
+	int EVENT_COUNTDOWM = 10;
+
 
 	//++++++++++GLOBAL VARIABLE ++++++++++
 	int REPRODUCTION_INCREASE = 30; //increase in reproduction chance when a wanted trait is found 
 
-	int REPRODUCTION_TIME = 300; // 300 = 3 years
+	int REPRODUCTION_TIME = 30; // 1 = 1 years
 	int AGE_CAP = 5000;  // 5000 = 50 years 
 
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    std::chrono::steady_clock::time_point m_StartTimeEvent;
+	std::chrono::steady_clock::time_point m_CurrentTimeEvent;
+	std::chrono::duration<double> m_elapsedtimeEvent;
+
+
+
+	//++++++++++vars for singe reproduction+++++++
+	int m_reproductionCountdown = REPRODUCTION_TIME;
 
 	std::array<float, 4> m_mutationArray = { 0,0,0,0 }; // mutation array for  the chance of mutation 
 	std::array<int, 4> m_wantedStatistics = { 0,0,0,0 }; // 1= yes 0 = no
@@ -86,8 +111,6 @@ private:
 	int m_IDCount = 0;
 	std::vector<NPC*> m_npcs;
 	std::vector<int> m_npcBreedingGroup;
-
-
 
 	int m_distanceBetweenNPC = 0;
 	int m_runningReproductionChance = REPRODUCTION_CHANCE;
