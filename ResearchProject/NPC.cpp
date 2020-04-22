@@ -10,6 +10,7 @@ NPC::NPC(sf::RenderWindow& t_window, sf::Font& t_font) :
 	m_penSize.x = (WIDTH / 1.28f);
 	m_penSize.y = (HEIGHT / 1.578f);
 	m_StartTimeReproduction = std::chrono::steady_clock::now();
+	m_StartTimeAGE = std::chrono::steady_clock::now();
 
 }
 
@@ -39,14 +40,24 @@ void NPC::Update()
 	m_CurrentTimeReproduction = std::chrono::steady_clock::now();
 	m_elapsedtimeReproduction = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeReproduction - m_StartTimeReproduction);
 
-	if(m_elapsedtimeReproduction.count() >= REPRODUCTION_TIME)
+	m_CurrentTimeAGE = std::chrono::steady_clock::now();
+	m_elapsedtimeAGE = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeAGE - m_StartTimeAGE);
 
-	m_age++;
-	m_AgeText.setString("Age: " + std::to_string(m_age / 100));
-
-	if (m_age >= m_runningAge)
+	if (m_health <= 0)
 	{
+		m_alive = false;
+	}
 
+	//if (m_elapsedtimeReproduction.count() >= REPRODUCTION_TIME)
+	//{
+
+	//}
+
+	m_age = m_elapsedtimeAGE.count();
+	m_AgeText.setString("Age: " + std::to_string(m_age));
+
+ 	if (m_age >= m_runningAge)
+	{
 		m_deathChance = randomNumber(static_cast<int>(m_strength), 0);
 		if (m_deathChance <= m_strength/10){ m_alive = false; }
 		else {m_runningAge = m_age + 50;
@@ -58,6 +69,9 @@ void NPC::Update()
 
 	m_healthBarBase.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
 	m_healthBarFront.setPosition(sf::Vector2f(m_position.x, m_position.y - (m_texture.getSize().y) ));
+
+	m_healthBarFront.setSize(sf::Vector2f(m_health, m_healthBarFront.getSize().y));
+
 
 	m_DNAText.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH / 90)));
 	m_DNAString.setPosition(sf::Vector2f(m_healthBarBase.getPosition().x, m_healthBarBase.getPosition().y - (WIDTH / 90)));
@@ -179,6 +193,16 @@ float NPC::GetIntStatistic()
 
 float NPC::GetSizeStatistic()
 {return m_size;}
+
+void NPC::takeHealth(int t_reduction)
+{
+	std::cout << m_health << std::endl;
+	m_health -= t_reduction;
+
+	if (m_health <= 0){m_health = 0;}
+	
+
+}
 
 //++++++++++SET UP FUNCTIONS ++++++++++
 
@@ -415,5 +439,5 @@ void NPC::setUpGAvar(int t_RT, int t_Age)
 {
 	REPRODUCTION_TIME = t_RT;
 	AGE_CAP = t_Age;
-	m_runningAge = (t_Age/100)*90;
+	m_runningAge = (t_Age-((t_Age / 9)));
 }

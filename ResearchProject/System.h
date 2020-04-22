@@ -10,6 +10,8 @@
 #include <chrono>
 #include <ctime>
 #include <cmath>
+#include <fstream>
+#include "tinyxml2.h"
 
 enum STATES { m_startingScreen, m_mainScreen};
 
@@ -20,6 +22,8 @@ public:
 	~System();
 	
 	STATES m_currentState;
+	
+
 
 	void run();
 
@@ -92,13 +96,13 @@ private:
 	int REPRODUCTION_INCREASE = 30; //increase in reproduction chance when a wanted trait is found 
 
 	int REPRODUCTION_TIME = 30; // 1 = 1 years
-	int AGE_CAP = 5000;  // 5000 = 50 years 
+	int AGE_CAP = 50;  // 50 = 50 years 
 
 
     std::chrono::steady_clock::time_point m_StartTimeEvent;
 	std::chrono::steady_clock::time_point m_CurrentTimeEvent;
 	std::chrono::duration<double> m_elapsedtimeEvent;
-
+	int m_randomEvent = 0;
 
 
 	//++++++++++vars for singe reproduction+++++++
@@ -111,6 +115,7 @@ private:
 	int m_IDCount = 0;
 	std::vector<NPC*> m_npcs;
 	std::vector<int> m_npcBreedingGroup;
+	int hpHit = 0;
 
 	int m_distanceBetweenNPC = 0;
 	int m_runningReproductionChance = REPRODUCTION_CHANCE;
@@ -174,6 +179,9 @@ private:
 	sf::RectangleShape m_buttonOutline;
 
 	//++++++++++Sprites & Textures ++++++++++
+	sf::Sprite m_backgroundSpriteMainMenu;
+	sf::Texture m_backgroundTextureMainMenu;
+
 	sf::Sprite m_backgroundSprite;
 	sf::Texture m_backgroundTexture;
 

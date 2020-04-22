@@ -46,6 +46,10 @@ public:
 	float GetIntStatistic();
 	float GetSizeStatistic();
 
+
+	void takeHealth(int t_reduction);
+
+
 	//++++++++++SET FUNCTIONS ++++++++++
 	void setPosition(sf::Vector2f t_pos);
 	void setEndPosition(sf::Vector2f t_pos);
@@ -70,6 +74,10 @@ public:
 	std::chrono::steady_clock::time_point m_CurrentTimeReproduction;
 	std::chrono::duration<double> m_elapsedtimeReproduction;
 
+
+	std::chrono::steady_clock::time_point m_StartTimeAGE;
+	std::chrono::steady_clock::time_point m_CurrentTimeAGE;
+	std::chrono::duration<double> m_elapsedtimeAGE;
 private:
 	//text and displays;
 	sf::Font m_font;

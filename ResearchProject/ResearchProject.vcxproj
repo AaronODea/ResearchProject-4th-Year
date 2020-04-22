@@ -26,6 +26,7 @@
     <ClCompile Include="RichText.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enviroment.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="NPC.h" />
     <ClInclude Include="RichText.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">

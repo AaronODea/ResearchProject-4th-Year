@@ -40,6 +40,9 @@ System::System() :
 	m_highStatCircle.setOutlineColor(sf::Color(0,0,0,200));
 	m_highStatCircle.setOutlineThickness(WIDTH/1000);
 
+	if (!m_backgroundTextureMainMenu.loadFromFile("ASSETS\\IMAGES\\backGroundMainMenu.png")) { std::cout << "problem loading background main menu Texture" << std::endl; }
+	m_backgroundSpriteMainMenu.setTexture(m_backgroundTextureMainMenu);
+	m_backgroundSpriteMainMenu.setScale(WIDTH/1920, HEIGHT/1080);
 
 
 }
@@ -197,23 +200,29 @@ void System::processKeys(sf::Event t_event)
 			if (REPRODUCTION_CHANCE_THRESHOLD < 0) { REPRODUCTION_CHANCE_THRESHOLD = 100; };
 			break; 
 		case 12:
-			if (sf::Keyboard::Left == t_event.key.code) { STARTER_AMOUNT -= 1; }
-			if (sf::Keyboard::Right == t_event.key.code) { STARTER_AMOUNT += 1; }
-			if (STARTER_AMOUNT > 100) { STARTER_AMOUNT = 0; };
-			if (STARTER_AMOUNT < 0) { STARTER_AMOUNT = 100; };
-			break;
-		case 13:
-			if (sf::Keyboard::Left == t_event.key.code) { AGE_CAP -= 100; }
-			if (sf::Keyboard::Right == t_event.key.code) { AGE_CAP += 100; }
-			if (AGE_CAP > 10000) { AGE_CAP = 1; };
-			if (AGE_CAP < 1) { AGE_CAP = 10000; };
-			break;
-		case 14:
 			if (sf::Keyboard::Left == t_event.key.code) { REPRODUCTION_TIME -= 1; }
 			if (sf::Keyboard::Right == t_event.key.code) { REPRODUCTION_TIME += 1; }
 			if (REPRODUCTION_TIME > 200) { REPRODUCTION_TIME = 0; };
 			if (REPRODUCTION_TIME < 0) { REPRODUCTION_TIME = 200; };
 			m_reproductionCountdown = REPRODUCTION_TIME;
+			break;
+		case 13:
+			if (sf::Keyboard::Left == t_event.key.code) { STARTER_AMOUNT -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { STARTER_AMOUNT += 1; }
+			if (STARTER_AMOUNT > 100) { STARTER_AMOUNT = 0; };
+			if (STARTER_AMOUNT < 0) { STARTER_AMOUNT = 100; };
+			break;
+		case 14:
+			if (sf::Keyboard::Left == t_event.key.code) { AGE_CAP -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { AGE_CAP += 1; }
+			if (AGE_CAP > 1000) { AGE_CAP = 1; };
+			if (AGE_CAP < 1) { AGE_CAP = 1000; };
+			break;
+		case 15:
+			if (sf::Keyboard::Left == t_event.key.code) { EVENT_COUNTDOWM -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { EVENT_COUNTDOWM += 1; }
+			if (EVENT_COUNTDOWM > 100) { EVENT_COUNTDOWM = 100; };
+			if (EVENT_COUNTDOWM < 0) { EVENT_COUNTDOWM = 100; };
 			break;
 		}
 
@@ -221,7 +230,6 @@ void System::processKeys(sf::Event t_event)
 
 		break;
 	case m_mainScreen:
-		if (sf::Keyboard::Space == t_event.key.code) {for (int i = 0; i < m_npcs.size()/2; i++) {m_npcs.erase(m_npcs.begin() + i);}}
 
 		if (sf::Keyboard::Left == t_event.key.code) {
 			m_statisticWanted--;
@@ -289,12 +297,15 @@ void System::update(sf::Time t_deltaTime)
 			m_menuButtonTEXT[8].setString("Intelligence Wanted : "+ m_YesNo[2]);
 			m_menuButtonTEXT[9].setString("Size Wanted : "+ m_YesNo[3]);
 
-			m_menuButtonTEXT[10].setString("Breeding Distance : " + std::to_string(BREEDING_DISTANCE));
+			m_menuButtonTEXT[10].setString("Breeding Distance : " + std::to_string(BREEDING_DISTANCE) + " units");
 			m_menuButtonTEXT[11].setString("Reproduction Chance : " + std::to_string(REPRODUCTION_CHANCE_THRESHOLD) + "%");
-			m_menuButtonTEXT[12].setString("Starter amount : " + std::to_string(STARTER_AMOUNT));
+			m_menuButtonTEXT[12].setString("Reproduction Timer : " + std::to_string(REPRODUCTION_TIME) + " seconds");
 
-			m_menuButtonTEXT[13].setString("Average highest age : " + std::to_string(AGE_CAP/100));
-			m_menuButtonTEXT[14].setString("Reproduction Timer : " + std::to_string(REPRODUCTION_TIME));
+
+			m_menuButtonTEXT[13].setString("Starter amount : " + std::to_string(STARTER_AMOUNT) + " NPC's");
+			m_menuButtonTEXT[14].setString("Average highest age : " + std::to_string(AGE_CAP) + " Years");
+
+			m_menuButtonTEXT[15].setString("Event Timer : " + std::to_string(EVENT_COUNTDOWM) + " seconds");
 
 		break;
 
@@ -433,6 +444,7 @@ void System::render()
 		break;
 	case m_startingScreen:
 
+		m_window.draw(m_backgroundSpriteMainMenu);
 		for (int i = 0; i < m_menuButtonTEXT.size(); i++) {m_window.draw(m_menuButtonTEXT[i]);}
 		m_window.draw(m_buttonOutline);
 		break;
@@ -509,8 +521,8 @@ std::stringstream System::setMutation(float t_mutation)
 void System::EventCall()
 {
 	m_StartTimeEvent = std::chrono::steady_clock::now();
-	int temp = randomNumber(3, 0);
-	switch (temp)
+	m_randomEvent = randomNumber(3, 0);
+	switch (m_randomEvent)
 	{
 	default:
 	case 0:
@@ -530,20 +542,70 @@ void System::EventCall()
 void System::SpeedEvent()
 {
 	std::cout << "SPEED" << std::endl;
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		if (m_npcs[i]->GetSpeedStatistic() >= m_avgStatisticSpeed)
+		{
+			hpHit = 0;
+			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetSpeedStatistic()), 0);
+			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
+			m_npcs[i]->takeHealth(hpHit/2);
+		}
+	}
+	std::cout << "----------------------------------------------------------" << std::endl;
+
 }
 void System::StrEvent()
-{
+{			
 	std::cout << "strength" << std::endl;
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		if (m_npcs[i]->GetStrStatistic() >= m_avgStatisticStr)
+		{
+			hpHit = 0;
+			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetStrStatistic()), 0);
+			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
+			m_npcs[i]->takeHealth(hpHit/2);
+		}
+	}
+	std::cout << "----------------------------------------------------------" << std::endl;
 
 }
 void System::intEvent()
 {
 	std::cout << "Intelegent" << std::endl;
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+
+		if (m_npcs[i]->GetIntStatistic() >= m_avgStatisticInt)
+		{
+			hpHit = 0;
+			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()), 0);
+			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
+			m_npcs[i]->takeHealth(hpHit/2);
+		}
+	}
+	std::cout << "----------------------------------------------------------" << std::endl;
+
 
 }
 void System::SizeEvent()
 {
 	std::cout << "size" << std::endl;
+	for (int i = 0; i < m_npcs.size(); i++)
+	{
+		if (m_npcs[i]->GetSizeStatistic() >= m_avgStatisticSize)
+		{
+			hpHit = 0;
+			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetSizeStatistic()), 0);
+			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
+			m_npcs[i]->takeHealth(hpHit/2);
+			std::cout << hpHit / 10 << std::endl;
+
+		}
+	}
+	std::cout << "----------------------------------------------------------" << std::endl;
+
 }
 /// <summary>
 /// load the font and setup the text message for screen
@@ -564,7 +626,7 @@ void System::setupFontAndText()
 
 
 	//++++++++++MENU STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 16; i++)
 	{
 	m_menuButtonTEXT.push_back(sf::Text());
 	m_menuButtonTEXT[i].setFont(m_ArialBlackfont);
@@ -602,17 +664,19 @@ void System::setupFontAndText()
 
 	m_menuButtonTEXT[10].setString("Breeding Distance : 400");//wanted stats
 	m_menuButtonTEXT[11].setString("Reproduction Chance : 20%");
-	m_menuButtonTEXT[12].setString("Starter amount : 10");
+	m_menuButtonTEXT[12].setString("Reproduction Timer :1000");//age stats
 	m_menuButtonTEXT[10].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 3.0f)));
 	m_menuButtonTEXT[11].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.85f)));
 	m_menuButtonTEXT[12].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.7f)));
 	
+	m_menuButtonTEXT[13].setString("Starter amount : 10");
+	m_menuButtonTEXT[13].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.36f)));
 
-	m_menuButtonTEXT[13].setString("Average highest age : 50");//age stats
-	m_menuButtonTEXT[13].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.58f)));
+	m_menuButtonTEXT[14].setString("Average highest age : 50");//age stats
+	m_menuButtonTEXT[14].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT /2.26f)));
 
-	m_menuButtonTEXT[14].setString("Reproduction Timer :1000");//age stats
-	m_menuButtonTEXT[14].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 2.46f)));
+	m_menuButtonTEXT[15].setString("Event Timer : 10 ");//age stats
+	m_menuButtonTEXT[15].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT /2.00f)));
 
 	m_buttonOutline.setFillColor(sf::Color(102, 204, 0, 60));
 	m_buttonOutline.setOutlineColor(sf::Color(0,0,0,160));
