@@ -3,6 +3,7 @@
 
 #include "RichText.h"
 #include <SFML/Graphics.hpp>
+#include "tinyxml2.h"
 #include <random>
 #include <array>
 #include "NPC.h"
@@ -11,7 +12,6 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
-#include "tinyxml2.h"
 
 enum STATES { m_startingScreen, m_mainScreen};
 
@@ -28,7 +28,8 @@ public:
 	void run();
 
 private:
-	
+	tinyxml2::XMLDocument m_fileoutputed;
+
 
 	int WIDTH = 1920;
 	int HEIGHT = 1080;
@@ -62,6 +63,7 @@ private:
 	void setupFontAndText();
 	void setUpGuiStates();
 
+	void reset();
 	//++++++++++GA++++++++++
 	void GAStartUp();
 	void GAReproductionWanted();
@@ -89,13 +91,17 @@ private:
 	const int REPRODUCTION_CHANCE = 100;   // Total % chance of reproduction 
 	int STARTER_AMOUNT = 10;
 
-	int EVENT_COUNTDOWM = 10;
+	int EVENT_COUNTDOWM = 20;
 
+	int ENDEING_TYPE = 0; // 0 = gen 1 = number of npcs
+	int ENDEING_NUMBER = 10;
+
+	bool m_EndReached = false;
 
 	//++++++++++GLOBAL VARIABLE ++++++++++
-	int REPRODUCTION_INCREASE = 30; //increase in reproduction chance when a wanted trait is found 
+	int REPRODUCTION_INCREASE = 40; //increase in reproduction chance when a wanted trait is found 
 
-	int REPRODUCTION_TIME = 30; // 1 = 1 years
+	int REPRODUCTION_TIME = 10; // 1 = 1 years
 	int AGE_CAP = 50;  // 50 = 50 years 
 
 
@@ -108,8 +114,8 @@ private:
 	//++++++++++vars for singe reproduction+++++++
 	int m_reproductionCountdown = REPRODUCTION_TIME;
 
-	std::array<float, 4> m_mutationArray = { 0,0,0,0 }; // mutation array for  the chance of mutation 
-	std::array<int, 4> m_wantedStatistics = { 0,0,0,0 }; // 1= yes 0 = no
+	std::array<float, 4> m_mutationArray = { 15,0,0,0 }; // mutation array for  the chance of mutation 
+	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
 
 	//++++++++++NPCS VARIABLES ++++++++++
 	int m_IDCount = 0;
@@ -148,7 +154,7 @@ private:
 	int m_ALGORYTHIM_CHOICE = 0;
 	int m_Mutation_CHOICE = 0;
 
-	float m_mutationRateSpeed = 0.1f;
+	float m_mutationRateSpeed = 0.1f;//increase for the amount the button increases by
 
 	std::vector <sf::Text> m_menuButtonTEXT;
 	
@@ -173,7 +179,10 @@ private:
 	sf::Text m_algorithmType;
 	sf::Text m_mutationType;
 
+	sf::Text m_EventTypeText;
+	sf::Text m_EventTypeTimeText;
 
+	
 
 	std::vector<std::string> m_YesNo;
 	sf::RectangleShape m_buttonOutline;
@@ -189,6 +198,9 @@ private:
 	sf::Texture m_foregroundTexture;
 
 	sf::Texture m_heartTexture;
+
+
+
 
 	std::vector< sf::Sprite> m_heartSprite;
 

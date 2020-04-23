@@ -105,6 +105,7 @@ void System::processKeys(sf::Event t_event)
 	default:
 		break;
 	case m_startingScreen:
+
 		if (sf::Keyboard::Space == t_event.key.code) 
 		{m_currentState = m_mainScreen;
 			GAStartUp();
@@ -224,6 +225,31 @@ void System::processKeys(sf::Event t_event)
 			if (EVENT_COUNTDOWM > 100) { EVENT_COUNTDOWM = 100; };
 			if (EVENT_COUNTDOWM < 0) { EVENT_COUNTDOWM = 100; };
 			break;
+		case 16:
+			if (sf::Keyboard::Left == t_event.key.code) { ENDEING_TYPE -= 1; }
+			if (sf::Keyboard::Right == t_event.key.code) { ENDEING_TYPE += 1; }
+			if (ENDEING_TYPE > 1) { ENDEING_TYPE = 0; };
+			if (ENDEING_TYPE < 0) { ENDEING_TYPE = 1; };
+			break;
+		case 17:
+
+			switch (ENDEING_TYPE)
+			{
+			default:
+			case 0:
+				if (sf::Keyboard::Left == t_event.key.code) { ENDEING_NUMBER -= 1; }
+				if (sf::Keyboard::Right == t_event.key.code) { ENDEING_NUMBER += 1; }
+				if (ENDEING_NUMBER > 100) { ENDEING_TYPE = 1; };
+				if (ENDEING_NUMBER < 1) { ENDEING_TYPE = 100; };
+				break;
+			case 1:
+				if (sf::Keyboard::Left == t_event.key.code) { ENDEING_NUMBER -= 1; }
+				if (sf::Keyboard::Right == t_event.key.code) { ENDEING_NUMBER += 1; }
+				if (ENDEING_NUMBER > 10000) { ENDEING_TYPE = 1; };
+				if (ENDEING_NUMBER < 1) { ENDEING_TYPE = 10000; };
+				break;
+			}
+			break;
 		}
 
 
@@ -255,6 +281,18 @@ void System::processKeys(sf::Event t_event)
 void System::update(sf::Time t_deltaTime)
 {
 	if (m_exit){m_window.close();}
+
+	if (m_EndReached == true) 
+	{
+		reset();
+
+		setUpGuiStates();
+
+		m_fileoutputed.SaveFile("ASSETS\\FILES\\FILE.xml");
+
+		m_EndReached = false;
+	}
+
 
 	switch (m_currentState)
 	{
@@ -307,6 +345,23 @@ void System::update(sf::Time t_deltaTime)
 
 			m_menuButtonTEXT[15].setString("Event Timer : " + std::to_string(EVENT_COUNTDOWM) + " seconds");
 
+
+			switch (ENDEING_TYPE)
+			{
+			default:
+			case 0:
+				m_menuButtonTEXT[16].setString("Ending perameter : Generation");//endeing peramaeter stats
+				m_menuButtonTEXT[17].setString("Genertations ending : " + std::to_string(ENDEING_NUMBER));
+
+				break;
+			case 1:
+				m_menuButtonTEXT[16].setString("Ending perameter : Total NPCs");//endeing peramaeter stats
+				m_menuButtonTEXT[17].setString("Peek Population ending : " + std::to_string(ENDEING_NUMBER));
+				break;
+			}
+
+
+
 		break;
 
 
@@ -316,6 +371,20 @@ void System::update(sf::Time t_deltaTime)
 		m_elapsedtimeEvent = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeEvent -m_StartTimeEvent);
 
 
+
+		switch (ENDEING_TYPE)
+		{
+		default:
+		case 0:
+			if (m_highestGen > ENDEING_NUMBER) {m_EndReached = true;}
+
+			break;
+		case 1:
+			if (m_npcs.size() >= ENDEING_NUMBER) {m_EndReached = true;}
+			break;
+		}
+
+		if (m_npcs.size() <= 0) {m_EndReached = true;}
 		if (m_heartSprite.size() >= 5) {m_heartSprite.pop_back();}
 
 		m_maleCount = 1;
@@ -354,28 +423,34 @@ void System::update(sf::Time t_deltaTime)
 		m_totalNPC.setString("Total NPC's: " + std::to_string(m_npcs.size()));
 		m_maleCountText.setString("Total males: " + std::to_string(m_maleCount-1));
 		m_femaleCountText.setString("Total Females: " + std::to_string(m_femaleCount));
+
+
 	
 		switch (m_statisticWanted)
 			{
 			default:
 			case 0:
-				m_staisticTrackedname.setString("Statistic tracked: Speed");
+				m_staisticTrackedname.setString("Current Event : Speed ");
 				break;
 			case 1:	
-				m_staisticTrackedname.setString("Statistic tracked: Strength");
+				m_staisticTrackedname.setString("Current Event : Strength ");
 				break;
 			case 2:
-				m_staisticTrackedname.setString("Statistic tracked: Intelligence");
+				m_staisticTrackedname.setString("Current Event : Intelligence ");
 				break;
 			case 3:
-				m_staisticTrackedname.setString("Statistic tracked: Size");
+				m_staisticTrackedname.setString("Current Event : Size ");
 				break;
 			}//tracked statistic 
 
 				GetAvgSpeed();
 				GetAvgStr();
 				GetAvgInt();
-				GetAvgSize();
+				GetAvgSize(); 
+
+		
+
+			
 
 		m_highestCurrentStatNumber = 0;  
 
@@ -424,8 +499,13 @@ void System::update(sf::Time t_deltaTime)
 
 		//================================event timer==================
 		if (m_elapsedtimeEvent.count() >= EVENT_COUNTDOWM)
-		{EventCall();
-		}
+		{EventCall();}
+
+		if((EVENT_COUNTDOWM - m_elapsedtimeEvent.count()) > (EVENT_COUNTDOWM/4)*3) {m_EventTypeTimeText.setFillColor(sf::Color::Green);}
+		else { m_EventTypeTimeText.setFillColor(sf::Color::Yellow); }
+		if ((EVENT_COUNTDOWM - m_elapsedtimeEvent.count()) < (EVENT_COUNTDOWM / 4) * 2) { m_EventTypeTimeText.setFillColor(sf::Color::Red); }
+		m_EventTypeTimeText.setString("Seconds left till next event : " + std::to_string(EVENT_COUNTDOWM - m_elapsedtimeEvent.count()));
+
 		//
 	break;
 	}
@@ -451,11 +531,13 @@ void System::render()
 	case m_mainScreen:
 
 		m_window.draw(m_backgroundSprite);
-		for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->Draw();}
+		if(m_npcs.size() <= 200) {for (int i = 0; i < m_npcs.size(); i++) { m_npcs[i]->Draw(); }}
+		else { for (int i = 0; i < 200; i++) { m_npcs[i]->Draw(); } }
+		
 
 		if (m_npcs.size() <= 10)
 			{for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
-			else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
+		else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
 
 
 		if (m_trackedOneNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME && m_trackedTwoNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME)
@@ -484,6 +566,8 @@ void System::render()
 		m_window.draw(m_algorithmType);
 		m_window.draw(m_mutationType);
 
+		m_window.draw(m_EventTypeText);
+		m_window.draw(m_EventTypeTimeText);
 
 		if(m_trackedOneNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME && m_trackedTwoNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME)
 		{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
@@ -526,22 +610,26 @@ void System::EventCall()
 	{
 	default:
 	case 0:
+		
+		m_EventTypeText.setString("Statistic tracked: Speed");
 		SpeedEvent();
 		break;
 	case 1:
+		m_EventTypeText.setString("Statistic tracked: Strength");
 		StrEvent();
 		break;
 	case 2:
+		m_EventTypeText.setString("Statistic tracked: Intelligence");
 		intEvent();
 		break;
 	case 3:
+		m_EventTypeText.setString("Statistic tracked: Size");
 		SizeEvent();
 		break;
 	}
 }
 void System::SpeedEvent()
 {
-	std::cout << "SPEED" << std::endl;
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 		if (m_npcs[i]->GetSpeedStatistic() >= m_avgStatisticSpeed)
@@ -552,12 +640,10 @@ void System::SpeedEvent()
 			m_npcs[i]->takeHealth(hpHit/2);
 		}
 	}
-	std::cout << "----------------------------------------------------------" << std::endl;
 
 }
 void System::StrEvent()
 {			
-	std::cout << "strength" << std::endl;
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 		if (m_npcs[i]->GetStrStatistic() >= m_avgStatisticStr)
@@ -568,12 +654,10 @@ void System::StrEvent()
 			m_npcs[i]->takeHealth(hpHit/2);
 		}
 	}
-	std::cout << "----------------------------------------------------------" << std::endl;
 
 }
 void System::intEvent()
 {
-	std::cout << "Intelegent" << std::endl;
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 
@@ -585,13 +669,10 @@ void System::intEvent()
 			m_npcs[i]->takeHealth(hpHit/2);
 		}
 	}
-	std::cout << "----------------------------------------------------------" << std::endl;
-
 
 }
 void System::SizeEvent()
 {
-	std::cout << "size" << std::endl;
 	for (int i = 0; i < m_npcs.size(); i++)
 	{
 		if (m_npcs[i]->GetSizeStatistic() >= m_avgStatisticSize)
@@ -600,11 +681,8 @@ void System::SizeEvent()
 			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetSizeStatistic()), 0);
 			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
 			m_npcs[i]->takeHealth(hpHit/2);
-			std::cout << hpHit / 10 << std::endl;
-
 		}
 	}
-	std::cout << "----------------------------------------------------------" << std::endl;
 
 }
 /// <summary>
@@ -624,9 +702,8 @@ void System::setupFontAndText()
 	m_heartSprite[1].setScale(WIDTH / 833.33f, HEIGHT / 500);
 
 
-
 	//++++++++++MENU STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 18; i++)
 	{
 	m_menuButtonTEXT.push_back(sf::Text());
 	m_menuButtonTEXT[i].setFont(m_ArialBlackfont);
@@ -678,6 +755,12 @@ void System::setupFontAndText()
 	m_menuButtonTEXT[15].setString("Event Timer : 10 ");//age stats
 	m_menuButtonTEXT[15].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT /2.00f)));
 
+	m_menuButtonTEXT[16].setString("Ending perameter : Generation ");//age stats
+	m_menuButtonTEXT[16].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 1.8f)));
+
+	m_menuButtonTEXT[17].setString("Genertations ending : 25 ");//age stats
+	m_menuButtonTEXT[17].setPosition(sf::Vector2f(WIDTH / 8, (HEIGHT / 1.74f)));
+
 	m_buttonOutline.setFillColor(sf::Color(102, 204, 0, 60));
 	m_buttonOutline.setOutlineColor(sf::Color(0,0,0,160));
 	m_buttonOutline.setOutlineThickness(WIDTH/500);
@@ -685,9 +768,10 @@ void System::setupFontAndText()
 	m_buttonOutline.setSize((sf::Vector2f(m_menuButtonTEXT[m_menuButton].getString().getSize() * (WIDTH / 150), HEIGHT / 20)));
 	m_buttonOutline.setPosition(m_menuButtonTEXT[m_menuButton].getPosition());
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	m_EventTypeText.setString("Statistic tracked: ");
 
-
-	m_YesNo.push_back("NO");
+	m_YesNo.push_back("YES");
 	m_YesNo.push_back("NO");
 	m_YesNo.push_back("NO");
 	m_YesNo.push_back("NO");
@@ -721,6 +805,9 @@ void System::setUpGuiStates()
 	m_femaleCountText.setFillColor(sf::Color::Yellow);
 	m_femaleCountText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 10.0f));
 	m_femaleCountText.setCharacterSize(WIDTH / 100);
+
+	
+
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -762,26 +849,25 @@ void System::setUpGuiStates()
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//++++++++++STAT WANTED STRINGS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 	m_speedWanted.setFont(m_ArialBlackfont);
 	m_speedWanted.setFillColor(sf::Color::Green);
 	m_speedWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 4.0f));
 	m_speedWanted.setCharacterSize(WIDTH / 100);
 	m_speedWanted.setString("Speed Wanted: " + m_YesNo[0]);
-	if (m_YesNo[0] == "NO") { m_speedWanted.setFillColor(sf::Color::Red); }
 
-	m_strWanted.setFont(m_ArialBlackfont);
+
+	m_strWanted.setFont(m_ArialBlackfont); 
 	m_strWanted.setFillColor(sf::Color::Green);
 	m_strWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 3.71f));
 	m_strWanted.setCharacterSize(WIDTH / 100);
 	m_strWanted.setString("Strength Wanted: " + m_YesNo[1]);
-	if (m_YesNo[1] == "NO") { m_strWanted.setFillColor(sf::Color::Red); }
 
 	m_intWanted.setFont(m_ArialBlackfont);
 	m_intWanted.setFillColor(sf::Color::Green);
 	m_intWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 3.5f));
 	m_intWanted.setCharacterSize(WIDTH / 100);
 	m_intWanted.setString("Intelligence Wanted: " + m_YesNo[2]);
-	if (m_YesNo[2] == "NO") { m_intWanted.setFillColor(sf::Color::Red); }
 
 
 	m_sizeWanted.setFont(m_ArialBlackfont);
@@ -789,8 +875,11 @@ void System::setUpGuiStates()
 	m_sizeWanted.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 3.3f));
 	m_sizeWanted.setCharacterSize(WIDTH / 100);
 	m_sizeWanted.setString("Size Wanted: " + m_YesNo[3]);
-	if (m_YesNo[3] == "NO") { m_sizeWanted.setFillColor(sf::Color::Red); }
 
+	if (m_YesNo[0] == "NO") { m_speedWanted.setFillColor(sf::Color::Red); }
+	if (m_YesNo[1] == "NO") { m_strWanted.setFillColor(sf::Color::Red); }
+	if (m_YesNo[2] == "NO") { m_intWanted.setFillColor(sf::Color::Red); }
+	if (m_YesNo[3] == "NO") { m_sizeWanted.setFillColor(sf::Color::Red); }
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//++++++++++Global STASTS STRINGS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -844,10 +933,44 @@ void System::setUpGuiStates()
 		m_mutationType.setString("Mutation type : 1/2 Split");
 		break;}
 
+
+
+	m_EventTypeText.setFont(m_ArialBlackfont);
+	m_EventTypeText.setFillColor(sf::Color(150, 50, 50));
+	m_EventTypeText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 2.0f));
+	m_EventTypeText.setCharacterSize(WIDTH / 100);
+
+	m_EventTypeTimeText.setFont(m_ArialBlackfont);
+	m_EventTypeTimeText.setFillColor(sf::Color::Black);
+	m_EventTypeTimeText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 1.94f));
+	m_EventTypeTimeText.setCharacterSize(WIDTH / 100);
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+
 	
 	m_StartTimeEvent = std::chrono::steady_clock::now();
 
+}
+
+void System::reset()
+{
+	m_npcs.clear();
+
+	//m_gui.SetUpLineGraph(m_ArialBlackfont);
+
+	for (int i = 0; i < STARTER_AMOUNT; i++) { m_npcs.push_back(new NPC(m_window, m_ArialBlackfont)); }
+	for (int i = 0; i < STARTER_AMOUNT / 2; i++) { m_npcs[i]->setGender(1); }
+
+	for (int i = 0; i < m_npcs.size(); i++) {
+		m_npcs[i]->setUpGAvar(REPRODUCTION_TIME, AGE_CAP);
+		m_npcs[i]->setUpNpcStart(m_IDCount); m_IDCount++;
+	}
+
+	m_trackedOneNPC = m_npcs[0];
+	m_trackedTwoNPC = m_npcs[1];
+
+	m_highestPopulation = STARTER_AMOUNT;
+	m_StartTimeEvent = std::chrono::steady_clock::now();
 }
 
 void System::GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo)
@@ -1067,7 +1190,7 @@ float System::GetAvgSize()
 
 void System::GAStartUp()
 {
-	m_npcs.reserve(STARTER_AMOUNT);
+	m_npcs.reserve(100);
 	for (int i = 0; i < STARTER_AMOUNT; i++) { m_npcs.push_back(new NPC(m_window, m_ArialBlackfont)); }
 	for (int i = 0; i < STARTER_AMOUNT / 2; i++) { m_npcs[i]->setGender(1); }
 
@@ -1105,16 +1228,16 @@ void System::GAReproductionWanted()
 									if (m_distanceBetweenNPC <= BREEDING_DISTANCE)
 									{
 										if(m_wantedStatistics[0] == 1)//speed wanted 
-										{if (m_npcs[j]->GetSpeedStatistic() >= m_npcs[i]->GetSpeedStatistic()) {m_runningReproductionChance -= REPRODUCTION_INCREASE;}}//increase the chance of reproduction
+										{if (m_npcs[j]->GetSpeedStatistic() >= m_npcs[i]->GetSpeedStatistic()) {m_runningReproductionChance += REPRODUCTION_INCREASE;}}//increase the chance of reproduction
 										
 										if (m_wantedStatistics[1] == 1)//Strength wanted
-										{if (m_npcs[j]->GetStrStatistic() >= m_npcs[i]->GetStrStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}}//increase the chance of reproduction
+										{if (m_npcs[j]->GetStrStatistic() >= m_npcs[i]->GetStrStatistic()) { m_runningReproductionChance += REPRODUCTION_INCREASE;}}//increase the chance of reproduction
 										
 										if (m_wantedStatistics[2] == 1)//intelegence wanted
-										{if (m_npcs[j]->GetIntStatistic() >= m_npcs[i]->GetIntStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}} //increase the chance of reproduction
+										{if (m_npcs[j]->GetIntStatistic() >= m_npcs[i]->GetIntStatistic()) { m_runningReproductionChance += REPRODUCTION_INCREASE;}} //increase the chance of reproduction
 										
 										if (m_wantedStatistics[3] == 1)//size wanted
-										{if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance -= REPRODUCTION_INCREASE;}} //increase the chance of reproduction
+										{if (m_npcs[j]->GetSizeStatistic() >= m_npcs[i]->GetSizeStatistic()) { m_runningReproductionChance += REPRODUCTION_INCREASE;}} //increase the chance of reproduction
 										
 										if (randomNumber(m_runningReproductionChance,0) <= REPRODUCTION_CHANCE_THRESHOLD)
 										{

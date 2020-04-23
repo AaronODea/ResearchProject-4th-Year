@@ -105,7 +105,6 @@ private:
 	float m_sizeScale;
 	float m_speedScale;
 
-	bool m_SequenceComplete = false; // when the end goal has been reached ------------------------------------------------------------------------------------------------------------------------------------
 
 	//DNA sequence 
 	sfe::RichText m_DNAString;

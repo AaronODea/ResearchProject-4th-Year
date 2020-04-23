@@ -59,8 +59,11 @@ void NPC::Update()
  	if (m_age >= m_runningAge)
 	{
 		m_deathChance = randomNumber(static_cast<int>(m_strength), 0);
-		if (m_deathChance <= m_strength/10){ m_alive = false; }
-		else {m_runningAge = m_age + 50;
+		if (m_deathChance <= m_strength/2)
+		{
+			m_alive = false; 
+		}
+		else {m_runningAge = m_age + 1;
 			if(m_age >= AGE_CAP *2){m_alive = false;}}
 	}
 
@@ -196,7 +199,6 @@ float NPC::GetSizeStatistic()
 
 void NPC::takeHealth(int t_reduction)
 {
-	std::cout << m_health << std::endl;
 	m_health -= t_reduction;
 
 	if (m_health <= 0){m_health = 0;}
@@ -352,7 +354,7 @@ void NPC::setUpNpc(int t_ID)
 
 	//set the ID of the NPC
 	m_ID = t_ID;
-
+	  
 	//Set the NPC Texture
 	if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Npc_sprite.png")) {std::cout << "problem loading Npc Texture" << std::endl;}
 	m_sprite.setTexture(m_texture);
