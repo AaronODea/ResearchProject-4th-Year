@@ -20,7 +20,14 @@ public:
 	void updateGraphInt(float t_AvgStatistic);
 	void updateGraphSize(float t_AvgStatistic);
 
+	std::vector<float> returnLogSpeed();
+	std::vector<float> returnLogStr();
+	std::vector<float> returnLogInt();
+	std::vector<float> returnLogSize();
 
+	std::vector<int> returnLogTotalPOP();
+
+	void reset();
 private:
 	int WIDTH = 1920;
 	int HEIGHT = 1080;

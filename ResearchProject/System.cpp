@@ -3,6 +3,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <time.h> 
+#include "tinyxml2.h"
 
 
 
@@ -282,16 +283,7 @@ void System::update(sf::Time t_deltaTime)
 {
 	if (m_exit){m_window.close();}
 
-	if (m_EndReached == true) 
-	{
-		reset();
 
-		setUpGuiStates();
-
-		m_fileoutputed.SaveFile("ASSETS\\FILES\\FILE.xml");
-
-		m_EndReached = false;
-	}
 
 
 	switch (m_currentState)
@@ -372,17 +364,7 @@ void System::update(sf::Time t_deltaTime)
 
 
 
-		switch (ENDEING_TYPE)
-		{
-		default:
-		case 0:
-			if (m_highestGen > ENDEING_NUMBER) {m_EndReached = true;}
 
-			break;
-		case 1:
-			if (m_npcs.size() >= ENDEING_NUMBER) {m_EndReached = true;}
-			break;
-		}
 
 		if (m_npcs.size() <= 0) {m_EndReached = true;}
 		if (m_heartSprite.size() >= 5) {m_heartSprite.pop_back();}
@@ -399,6 +381,8 @@ void System::update(sf::Time t_deltaTime)
 			else { m_femaleCount++; }}
 
 
+		if (m_npcs.size() <= 600)
+		{
 			switch (m_ALGORYTHIM_CHOICE)
 			{
 			default:
@@ -409,13 +393,13 @@ void System::update(sf::Time t_deltaTime)
 			case 1:
 				if (m_reproductionCountdown <= 0)
 				{
-				GAReproductionHighest();
-				m_reproductionCountdown = REPRODUCTION_TIME;
+					GAReproductionHighest();
+					m_reproductionCountdown = REPRODUCTION_TIME;
 				}
-				else{m_reproductionCountdown--;}
+				else { m_reproductionCountdown--; }
 				break;
 			}
-
+		}
 		if (m_highestPopulation < m_npcs.size()){
 			m_highestPopulation = m_npcs.size();
 			m_totalNPCAlltime.setString("Highest Population: " + std::to_string(m_highestPopulation));}
@@ -494,6 +478,36 @@ void System::update(sf::Time t_deltaTime)
 			m_highStatCircle.setRadius((m_npcs[m_highestCurrentStatID]->getSize() * 1.2));
 		}
 		m_gui.update(m_avgStatisticSpeed,m_avgStatisticStr,m_avgStatisticInt,m_avgStatisticSize, m_npcs.size(), m_statisticWanted);
+
+
+		switch (ENDEING_TYPE)
+		{
+		default:
+		case 0:
+			if (m_highestGen > ENDEING_NUMBER) { m_EndReached = true; }
+
+			break;
+		case 1:
+			if (m_npcs.size() >= ENDEING_NUMBER) { m_EndReached = true; }
+			break;
+		}
+
+		if (m_EndReached == true)
+		{
+			makefile();
+			reset();
+			m_EndReached = false;
+
+			std::cout << m_totalItarationsRunning;
+
+			if (m_totalItarationsRunning >= m_totalItarations)
+			{
+				system("pause");
+				m_window.close();
+			}
+		}
+
+	
 
 
 
@@ -582,6 +596,68 @@ void System::render()
 	}
 
 	m_window.display();
+}
+
+void System::makefile()
+{	
+
+	
+	std::string VariableString = std::to_string(m_totalItarationsRunning);
+	std::string FilePath = "ASSETS\\FILES\\FILE-" + VariableString + ".txt";
+
+	std::ofstream m_fileoutputed("ASSETS\\FILES\\FILE-" + VariableString + ".txt");;
+
+	std::cout << "hit ";
+
+	std::vector<float> temp;
+	std::vector<int> tempTotalpop;
+
+	// Write to the file
+	m_fileoutputed << "Iteration " + VariableString + "\n";
+
+	m_fileoutputed << "Average Speed \n";
+	temp = m_gui.returnLogSpeed();
+	for (int i = 0; i < temp.size()-1; i++)
+	{
+		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+	}
+	m_fileoutputed << "\n------------------------------------------\n";
+
+	temp = m_gui.returnLogStr();
+	m_fileoutputed << "Average Strength";
+	for (int i = 0; i < temp.size()-1; i++)
+	{
+		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+	}
+	m_fileoutputed << "\n------------------------------------------\n";
+
+	temp = m_gui.returnLogInt();
+	m_fileoutputed << "Average intelligence";
+	for (int i = 0; i < temp.size()-1; i++)
+	{
+		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+	}
+	m_fileoutputed << "\n------------------------------------------\n";
+
+	temp = m_gui.returnLogSize();
+	m_fileoutputed << "Average Size";
+	for (int i = 0; i < temp.size()-1; i++)
+	{
+		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+	}
+	m_fileoutputed << "\n------------------------------------------\n\n";
+
+	tempTotalpop = m_gui.returnLogTotalPOP();
+	m_fileoutputed << "Total population";
+	for (int i = 0; i < temp.size(); i++)
+	{
+		m_fileoutputed << " " + std::to_string(static_cast<int>(tempTotalpop[i]));
+	}
+	m_fileoutputed << "\n------------------------------------------\n\n";
+
+
+	// Close the file
+	m_fileoutputed.close();
 }
 
 /// <summary>
@@ -955,8 +1031,7 @@ void System::setUpGuiStates()
 void System::reset()
 {
 	m_npcs.clear();
-
-	//m_gui.SetUpLineGraph(m_ArialBlackfont);
+	m_gui.reset();
 
 	for (int i = 0; i < STARTER_AMOUNT; i++) { m_npcs.push_back(new NPC(m_window, m_ArialBlackfont)); }
 	for (int i = 0; i < STARTER_AMOUNT / 2; i++) { m_npcs[i]->setGender(1); }
@@ -971,6 +1046,7 @@ void System::reset()
 
 	m_highestPopulation = STARTER_AMOUNT;
 	m_StartTimeEvent = std::chrono::steady_clock::now();
+	m_totalItarationsRunning++;
 }
 
 void System::GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo)

@@ -12,6 +12,7 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
+#include <filesystem> 
 
 enum STATES { m_startingScreen, m_mainScreen};
 
@@ -28,7 +29,6 @@ public:
 	void run();
 
 private:
-	tinyxml2::XMLDocument m_fileoutputed;
 
 
 	int WIDTH = 1920;
@@ -44,6 +44,7 @@ private:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
+	void makefile();
 	
 	//++++++++++FUNCTION++++++++++
 	int randomNumber(int t_max, int t_min);
@@ -110,6 +111,8 @@ private:
 	std::chrono::duration<double> m_elapsedtimeEvent;
 	int m_randomEvent = 0;
 
+	int m_totalItarationsRunning = 0;
+	int m_totalItarations = 8;
 
 	//++++++++++vars for singe reproduction+++++++
 	int m_reproductionCountdown = REPRODUCTION_TIME;

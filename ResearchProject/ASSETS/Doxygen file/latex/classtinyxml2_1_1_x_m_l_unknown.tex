@@ -1,0 +1,188 @@
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown}{}\doxysection{tinyxml2\+::X\+M\+L\+Unknown Class Reference}
+\label{classtinyxml2_1_1_x_m_l_unknown}\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+
+
+{\ttfamily \#include $<$tinyxml2.\+h$>$}
+
+Inheritance diagram for tinyxml2\+::X\+M\+L\+Unknown\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtinyxml2_1_1_x_m_l_unknown}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{X\+M\+L\+Unknown}} $\ast$ \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_af4374856421921cad578c8affae872b6}{To\+Unknown}} ()
+\begin{DoxyCompactList}\small\item\em Safely cast to an Unknown, or null. \end{DoxyCompactList}\item 
+virtual const \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{X\+M\+L\+Unknown}} $\ast$ \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a61b342b4f295cded1dc2f4402e97f07e}{To\+Unknown}} () const
+\item 
+virtual bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a8a06b8c82117ca969a432e17a46830fc}{Accept}} (\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{X\+M\+L\+Visitor}} $\ast$visitor) const
+\item 
+virtual \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{X\+M\+L\+Node}} $\ast$ \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_ab73b48b819aa4b2ef3815dc2d7d20d5f}{Shallow\+Clone}} (\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}} $\ast$document) const
+\item 
+virtual bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_ac46767cd721d666e690a6231dfb618d1}{Shallow\+Equal}} (const \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{X\+M\+L\+Node}} $\ast$compare) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a9391eb679598d50baba424e6f1aa367b}{X\+M\+L\+Unknown}} (\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}} $\ast$doc)
+\item 
+virtual \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a86fcd722ca173a7f385bafafa879f26e}{$\sim$\+X\+M\+L\+Unknown}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_aefc332cc1e6e25736f364d1e5eeb31fe}{Parse\+Deep}} (char $\ast$p, \mbox{\hyperlink{classtinyxml2_1_1_str_pair}{Str\+Pair}} $\ast$parent\+End\+Tag, int $\ast$cur\+Line\+Num\+Ptr)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a4eee3bda60c60a30e4e8cd4ea91c4c6e}{X\+M\+L\+Document}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Any tag that Tiny\+X\+M\+L-\/2 doesn\textquotesingle{}t recognize is saved as an unknown. It is a tag of text, but should not be modified. It will be written back to the X\+ML, unchanged, when the file is saved. D\+TD tags get thrown into X\+M\+L\+Unknowns. 
+
+Definition at line 1069 of file tinyxml2.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_a9391eb679598d50baba424e6f1aa367b}\label{classtinyxml2_1_1_x_m_l_unknown_a9391eb679598d50baba424e6f1aa367b}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!XMLUnknown@{XMLUnknown}}
+\index{XMLUnknown@{XMLUnknown}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{XMLUnknown()}{XMLUnknown()}}
+{\footnotesize\ttfamily tinyxml2\+::\+X\+M\+L\+Unknown\+::\+X\+M\+L\+Unknown (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}} $\ast$}]{doc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [protected]}}
+
+
+
+Definition at line 1331 of file tinyxml2.\+cpp.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_a86fcd722ca173a7f385bafafa879f26e}\label{classtinyxml2_1_1_x_m_l_unknown_a86fcd722ca173a7f385bafafa879f26e}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!````~XMLUnknown@{$\sim$XMLUnknown}}
+\index{````~XMLUnknown@{$\sim$XMLUnknown}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{$\sim$XMLUnknown()}{~XMLUnknown()}}
+{\footnotesize\ttfamily tinyxml2\+::\+X\+M\+L\+Unknown\+::$\sim$\+X\+M\+L\+Unknown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line 1336 of file tinyxml2.\+cpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_a8a06b8c82117ca969a432e17a46830fc}\label{classtinyxml2_1_1_x_m_l_unknown_a8a06b8c82117ca969a432e17a46830fc}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!Accept@{Accept}}
+\index{Accept@{Accept}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{Accept()}{Accept()}}
+{\footnotesize\ttfamily bool tinyxml2\+::\+X\+M\+L\+Unknown\+::\+Accept (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{X\+M\+L\+Visitor}} $\ast$}]{visitor }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Accept a hierarchical visit of the nodes in the Tiny\+X\+M\+L-\/2 D\+OM. Every node in the X\+ML tree will be conditionally visited and the host will be called back via the \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{X\+M\+L\+Visitor}} interface. This is essentially a S\+AX interface for Tiny\+X\+M\+L-\/2. (Note however it doesn\textquotesingle{}t re-\/parse the X\+ML for the callbacks, so the performance of Tiny\+X\+M\+L-\/2 is unchanged by using this interface versus any other.) The interface has been based on ideas from\+:
+\begin{DoxyItemize}
+\item \href{http://www.saxproject.org/}{\texttt{ http\+://www.\+saxproject.\+org/}}
+\item \href{http://c2.com/cgi/wiki?HierarchicalVisitorPattern}{\texttt{ http\+://c2.\+com/cgi/wiki?\+Hierarchical\+Visitor\+Pattern}} Which are both good references for \char`\"{}visiting\char`\"{}. An example of using \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown_a8a06b8c82117ca969a432e17a46830fc}{Accept()}}\+: \begin{DoxyVerb}XMLPrinter printer;
+tinyxmlDoc.Accept( &printer );
+const char* xmlcstr = printer.CStr();
+\end{DoxyVerb}
+ 
+\end{DoxyItemize}
+
+Implements \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a81e66df0a44c67a7af17f3b77a152785}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1370 of file tinyxml2.\+cpp.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_aefc332cc1e6e25736f364d1e5eeb31fe}\label{classtinyxml2_1_1_x_m_l_unknown_aefc332cc1e6e25736f364d1e5eeb31fe}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!ParseDeep@{ParseDeep}}
+\index{ParseDeep@{ParseDeep}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{ParseDeep()}{ParseDeep()}}
+{\footnotesize\ttfamily char $\ast$ tinyxml2\+::\+X\+M\+L\+Unknown\+::\+Parse\+Deep (\begin{DoxyParamCaption}\item[{char $\ast$}]{p,  }\item[{\mbox{\hyperlink{classtinyxml2_1_1_str_pair}{Str\+Pair}} $\ast$}]{parent\+End\+Tag,  }\item[{int $\ast$}]{cur\+Line\+Num\+Ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a916e498914baecbc9a1f012352ef7c69}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1341 of file tinyxml2.\+cpp.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_ab73b48b819aa4b2ef3815dc2d7d20d5f}\label{classtinyxml2_1_1_x_m_l_unknown_ab73b48b819aa4b2ef3815dc2d7d20d5f}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!ShallowClone@{ShallowClone}}
+\index{ShallowClone@{ShallowClone}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{ShallowClone()}{ShallowClone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{X\+M\+L\+Node}} $\ast$ tinyxml2\+::\+X\+M\+L\+Unknown\+::\+Shallow\+Clone (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}} $\ast$}]{document }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Make a copy of this node, but not its children. You may pass in a Document pointer that will be the owner of the new Node. If the \textquotesingle{}document\textquotesingle{} is null, then the node returned will be allocated from the current Document. (this-\/$>$\mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_af343d1ef0b45c0020e62d784d7e67a68}{Get\+Document()}}) Note\+: if called on a \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}}, this will return null. 
+
+Implements \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a8402cbd3129d20e9e6024bbcc0531283}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1352 of file tinyxml2.\+cpp.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_ac46767cd721d666e690a6231dfb618d1}\label{classtinyxml2_1_1_x_m_l_unknown_ac46767cd721d666e690a6231dfb618d1}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!ShallowEqual@{ShallowEqual}}
+\index{ShallowEqual@{ShallowEqual}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{ShallowEqual()}{ShallowEqual()}}
+{\footnotesize\ttfamily bool tinyxml2\+::\+X\+M\+L\+Unknown\+::\+Shallow\+Equal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node}{X\+M\+L\+Node}} $\ast$}]{compare }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Test if 2 nodes are the same, but don\textquotesingle{}t test children. The 2 nodes do not need to be in the same Document. Note\+: if called on a \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}}, this will return false. 
+
+Implements \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a7ce18b751c3ea09eac292dca264f9226}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1362 of file tinyxml2.\+cpp.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_af4374856421921cad578c8affae872b6}\label{classtinyxml2_1_1_x_m_l_unknown_af4374856421921cad578c8affae872b6}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!ToUnknown@{ToUnknown}}
+\index{ToUnknown@{ToUnknown}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{ToUnknown()}{ToUnknown()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{X\+M\+L\+Unknown}}$\ast$ tinyxml2\+::\+X\+M\+L\+Unknown\+::\+To\+Unknown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Safely cast to an Unknown, or null. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_a8675a74aa0ada6eccab0c77ef3e5b9bd}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1073 of file tinyxml2.\+h.
+
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_a61b342b4f295cded1dc2f4402e97f07e}\label{classtinyxml2_1_1_x_m_l_unknown_a61b342b4f295cded1dc2f4402e97f07e}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!ToUnknown@{ToUnknown}}
+\index{ToUnknown@{ToUnknown}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{ToUnknown()}{ToUnknown()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual const \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_unknown}{X\+M\+L\+Unknown}}$\ast$ tinyxml2\+::\+X\+M\+L\+Unknown\+::\+To\+Unknown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_node_af29ffd6cbe609b6fa04a705256150408}{tinyxml2\+::\+X\+M\+L\+Node}}.
+
+
+
+Definition at line 1076 of file tinyxml2.\+h.
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classtinyxml2_1_1_x_m_l_unknown_a4eee3bda60c60a30e4e8cd4ea91c4c6e}\label{classtinyxml2_1_1_x_m_l_unknown_a4eee3bda60c60a30e4e8cd4ea91c4c6e}} 
+\index{tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}!XMLDocument@{XMLDocument}}
+\index{XMLDocument@{XMLDocument}!tinyxml2::XMLUnknown@{tinyxml2::XMLUnknown}}
+\doxysubsubsection{\texorpdfstring{XMLDocument}{XMLDocument}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\+M\+L\+Document}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 1071 of file tinyxml2.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{tinyxml2_8h}{tinyxml2.\+h}}\item 
+\mbox{\hyperlink{tinyxml2_8cpp}{tinyxml2.\+cpp}}\end{DoxyCompactItemize}

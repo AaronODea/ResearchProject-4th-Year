@@ -117,7 +117,6 @@ void GUI::SetUpLineGraph(sf::Font& t_font)
 
 
 
-
 	m_linesSpeed[0].position =sf::Vector2f(WIDTH / 41.667f,(HEIGHT / 1.0344f));
 	m_linesStr[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
 	m_linesInt[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
@@ -223,6 +222,93 @@ void GUI::updateGraphSize(float t_AvgStatistic)
 		m_linesSize.append(sf::Vector2f(m_AverageGraphXSize - (WIDTH / 200), (HEIGHT / 1.0344f)));
 
 		m_currentAVG.setPosition(sf::Vector2f(m_AverageGraphXSize, (HEIGHT / 1.08f) - m_AverageGraphYSize));
+}
+
+std::vector<float> GUI::returnLogSpeed()
+{
+	return m_speedAvgLog;
+}
+
+std::vector<float> GUI::returnLogStr()
+{
+	return m_strAvgLog;
+}
+
+std::vector<float> GUI::returnLogInt()
+{
+	return m_intAvgLog;
+}
+
+std::vector<float> GUI::returnLogSize()
+{
+	return m_sizedAvgLog;
+}
+
+std::vector<int> GUI::returnLogTotalPOP()
+{
+	return m_totalPopulationLog;
+}
+
+void GUI::reset()
+{
+
+
+
+	m_speedAvgLog.clear();
+	m_strAvgLog.clear();
+	m_intAvgLog.clear();
+	m_sizedAvgLog.clear();
+
+	m_totalPopulationLog.clear();
+	
+	m_linesSpeed.clear();
+	m_linesStr.clear();
+	m_linesInt.clear();
+	m_linesSize.clear();
+
+	m_AverageGraphXSpeed = WIDTH / 50;
+	m_AverageGraphXStr = WIDTH / 50;
+	m_AverageGraphXInt = WIDTH / 50;
+	m_AverageGraphXSize = WIDTH / 50;
+
+	m_linesSpeed.append(sf::Vector2f(m_AverageGraphXSpeed, (HEIGHT / 1.0344f)));
+	m_linesSpeed.append(sf::Vector2f(m_AverageGraphXSpeed, (HEIGHT / 1.0344f)));
+	m_linesStr.append(sf::Vector2f(m_AverageGraphXStr, (HEIGHT / 1.0344f)));
+	m_linesStr.append(sf::Vector2f(m_AverageGraphXStr, (HEIGHT / 1.0344f)));
+	m_linesInt.append(sf::Vector2f(m_AverageGraphXInt, (HEIGHT / 1.0344f)));
+	m_linesInt.append(sf::Vector2f(m_AverageGraphXInt, (HEIGHT / 1.0344f)));
+	m_linesSize.append(sf::Vector2f(m_AverageGraphXSize, (HEIGHT / 1.0344f)));
+	m_linesSize.append(sf::Vector2f(m_AverageGraphXSize, (HEIGHT / 1.0344f)));
+
+
+	m_linesSpeed[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesStr[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesInt[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesSize[0].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+
+	m_linesSpeed[1].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesStr[1].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesInt[1].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+	m_linesSize[1].position = sf::Vector2f(WIDTH / 41.667f, (HEIGHT / 1.0344f));
+
+	m_currentGenerationHeld = -1;
+
+	m_AverageGraphXSpeed = WIDTH / 41.667f;
+	m_AverageGraphXStr = WIDTH / 41.667f;
+	m_AverageGraphXInt = WIDTH / 41.667f;
+	m_AverageGraphXSize = WIDTH / 41.667f;
+
+	updateGraphSpeed(m_AverageGraphXSpeed);
+	updateGraphStr(m_AverageGraphXStr);
+	updateGraphInt(m_AverageGraphXInt);
+	updateGraphSize(m_AverageGraphXSize);
+	
+
+	for (int i = 0; i < m_linesSpeed.getVertexCount(); i++) { m_linesSpeed[i].color = m_color[0]; }
+	for (int i = 0; i < m_linesStr.getVertexCount(); i++) { m_linesStr[i].color = m_color[1]; }
+	for (int i = 0; i < m_linesInt.getVertexCount(); i++) { m_linesInt[i].color = m_color[2]; }
+	for (int i = 0; i < m_linesSize.getVertexCount(); i++) { m_linesSize[i].color = m_color[3]; }
+
 }
 
 
