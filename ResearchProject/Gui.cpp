@@ -242,6 +242,7 @@ std::vector<float> GUI::returnLogInt()
 std::vector<float> GUI::returnLogSize()
 {
 	return m_sizedAvgLog;
+
 }
 
 std::vector<int> GUI::returnLogTotalPOP()

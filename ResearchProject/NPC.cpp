@@ -189,7 +189,7 @@ float NPC::GetSpeedStatistic()
 {return m_speed;}
 
 float NPC::GetStrStatistic()
-{return m_speed;}
+{return m_strength;}
 
 float NPC::GetIntStatistic()
 {return m_intelligence;}

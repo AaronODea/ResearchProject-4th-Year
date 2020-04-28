@@ -206,7 +206,6 @@ void System::processKeys(sf::Event t_event)
 			if (sf::Keyboard::Right == t_event.key.code) { REPRODUCTION_TIME += 1; }
 			if (REPRODUCTION_TIME > 200) { REPRODUCTION_TIME = 0; };
 			if (REPRODUCTION_TIME < 0) { REPRODUCTION_TIME = 200; };
-			m_reproductionCountdown = REPRODUCTION_TIME;
 			break;
 		case 13:
 			if (sf::Keyboard::Left == t_event.key.code) { STARTER_AMOUNT -= 1; }
@@ -365,7 +364,6 @@ void System::update(sf::Time t_deltaTime)
 
 
 
-
 		if (m_npcs.size() <= 0) {m_EndReached = true;}
 		if (m_heartSprite.size() >= 5) {m_heartSprite.pop_back();}
 
@@ -391,12 +389,16 @@ void System::update(sf::Time t_deltaTime)
 
 				break;
 			case 1:
-				if (m_reproductionCountdown <= 0)
+				m_CurrentTimeREPOHighest = std::chrono::steady_clock::now();
+				m_elapsedtimeREPOHighest = std::chrono::duration_cast<std::chrono::duration<double>>(m_CurrentTimeREPOHighest - m_StartTimeREPOHighest);
+
+
+
+				if (m_elapsedtimeREPOHighest.count() >= 1)
 				{
 					GAReproductionHighest();
-					m_reproductionCountdown = REPRODUCTION_TIME;
+					m_StartTimeREPOHighest = std::chrono::steady_clock::now();
 				}
-				else { m_reproductionCountdown--; }
 				break;
 			}
 		}
@@ -492,17 +494,77 @@ void System::update(sf::Time t_deltaTime)
 			break;
 		}
 
+
 		if (m_EndReached == true)
 		{
 			makefile();
 			reset();
 			m_EndReached = false;
 
-			std::cout << m_totalItarationsRunning;
-
 			if (m_totalItarationsRunning >= m_totalItarations)
 			{
-				system("pause");
+				std::ofstream m_fileoutputed("ASSETS\\FILES\\Settings.txt");
+
+				m_fileoutputed << "INFO \n";;
+				switch (m_ALGORYTHIM_CHOICE)
+				{
+				default:
+				case 0:
+					m_fileoutputed << "Algorithm: Wanted Statistic \n";
+					break;
+				case 1:
+					m_fileoutputed << "Algorithm: Highest Statistic \n";
+
+					break;
+				}				
+				switch (m_Mutation_CHOICE)
+				{
+				default:
+				case 0:
+					m_fileoutputed  << "Mutation type is average split \n";
+					break;
+				case 1:
+					m_fileoutputed << "Mutation type is 1/2 split \n";
+					break;
+				}
+				switch (ENDEING_TYPE)
+				{
+				default:
+				case 0:
+					m_fileoutputed << "Ending perameter : Generation \n";
+					m_fileoutputed << "Genertations ending at : " + std::to_string(ENDEING_NUMBER) << "\n";
+
+
+					break;
+				case 1:
+					m_fileoutputed << "Ending perameter : Total NPCs \n";
+					m_fileoutputed << "Peek Population ending at : " + std::to_string(ENDEING_NUMBER) << "\n";
+					break;
+				}
+
+				m_fileoutputed << "--------------------------------------------------------- \n";
+				m_fileoutputed << "Mutation Rates \n";
+				m_fileoutputed << "Speed " + std::to_string(m_mutationArray[0]) + "%" << "\n";
+				m_fileoutputed << "Strength " + std::to_string(m_mutationArray[1]) + "%" << "\n";
+				m_fileoutputed << "intelligence " + std::to_string(m_mutationArray[2]) + "%" << "\n";
+				m_fileoutputed << "Size " + std::to_string(m_mutationArray[3]) + "%" << "\n";
+				m_fileoutputed << "--------------------------------------------------------- \n";
+				m_fileoutputed << "Stat Wanted 1 = yes , 0 = no";
+				m_fileoutputed << "Speed " + std::to_string(m_wantedStatistics[0]) << "\n";
+				m_fileoutputed << "Strength " + std::to_string(m_wantedStatistics[1]) << "\n";
+				m_fileoutputed << "intelligence " + std::to_string(m_wantedStatistics[2]) << "\n";
+				m_fileoutputed << "Size " + std::to_string(m_wantedStatistics[3]) << "\n";
+				m_fileoutputed << "--------------------------------------------------------- \n";
+				m_fileoutputed << "Average age: " + AGE_CAP << "\n";
+				m_fileoutputed << "Reproduction Time: " + std::to_string(REPRODUCTION_TIME/10) << "\n";
+				m_fileoutputed << "Reproduction chance: " + std::to_string(REPRODUCTION_CHANCE_THRESHOLD) << "\n";
+				m_fileoutputed << "Breeding distance: " + std::to_string(BREEDING_DISTANCE) << "\n";
+				m_fileoutputed << "--------------------------------------------------------- \n";
+				m_fileoutputed << "Time per event: " + std::to_string(EVENT_COUNTDOWM) << "\n";
+				m_fileoutputed << "Starter amount: " + std::to_string(STARTER_AMOUNT) << "\n";
+				m_fileoutputed << "--------------------------------------------------------- \n";
+				m_fileoutputed.close();
+
 				m_window.close();
 			}
 		}
@@ -607,7 +669,6 @@ void System::makefile()
 
 	std::ofstream m_fileoutputed("ASSETS\\FILES\\FILE-" + VariableString + ".txt");;
 
-	std::cout << "hit ";
 
 	std::vector<float> temp;
 	std::vector<int> tempTotalpop;
@@ -615,45 +676,45 @@ void System::makefile()
 	// Write to the file
 	m_fileoutputed << "Iteration " + VariableString + "\n";
 
-	m_fileoutputed << "Average Speed \n";
+	m_fileoutputed << "Average Speed";
 	temp = m_gui.returnLogSpeed();
 	for (int i = 0; i < temp.size()-1; i++)
 	{
-		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+		m_fileoutputed << "," + std::to_string(static_cast<int>(temp[i]));
 	}
-	m_fileoutputed << "\n------------------------------------------\n";
+	m_fileoutputed << "\n";
 
 	temp = m_gui.returnLogStr();
-	m_fileoutputed << "Average Strength";
+	m_fileoutputed << "Average Strength ";
 	for (int i = 0; i < temp.size()-1; i++)
 	{
-		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+		m_fileoutputed << "," + std::to_string(static_cast<int>(temp[i]));
 	}
-	m_fileoutputed << "\n------------------------------------------\n";
+	m_fileoutputed << "\n";
 
 	temp = m_gui.returnLogInt();
-	m_fileoutputed << "Average intelligence";
+	m_fileoutputed << "Average intelligence ";
 	for (int i = 0; i < temp.size()-1; i++)
 	{
-		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+		m_fileoutputed << "," + std::to_string(static_cast<int>(temp[i]));
 	}
-	m_fileoutputed << "\n------------------------------------------\n";
+	m_fileoutputed << "\n";
 
 	temp = m_gui.returnLogSize();
-	m_fileoutputed << "Average Size";
+	m_fileoutputed << "Average Size ";
 	for (int i = 0; i < temp.size()-1; i++)
 	{
-		m_fileoutputed << " " + std::to_string(static_cast<int>(temp[i]));
+		m_fileoutputed << "," + std::to_string(static_cast<int>(temp[i]));
 	}
-	m_fileoutputed << "\n------------------------------------------\n\n";
+	m_fileoutputed << "\n";
 
 	tempTotalpop = m_gui.returnLogTotalPOP();
-	m_fileoutputed << "Total population";
+	m_fileoutputed << "Total population ";
 	for (int i = 0; i < temp.size(); i++)
 	{
-		m_fileoutputed << " " + std::to_string(static_cast<int>(tempTotalpop[i]));
+		m_fileoutputed << "," + std::to_string(static_cast<int>(tempTotalpop[i]));
 	}
-	m_fileoutputed << "\n------------------------------------------\n\n";
+	m_fileoutputed << "\n";
 
 
 	// Close the file
@@ -1025,12 +1086,14 @@ void System::setUpGuiStates()
 
 	
 	m_StartTimeEvent = std::chrono::steady_clock::now();
+	m_StartTimeREPOHighest = std::chrono::steady_clock::now();
 
 }
 
 void System::reset()
 {
 	m_npcs.clear();
+	std::cout << "npc size" + m_npcs.size();
 	m_gui.reset();
 
 	for (int i = 0; i < STARTER_AMOUNT; i++) { m_npcs.push_back(new NPC(m_window, m_ArialBlackfont)); }
@@ -1046,7 +1109,9 @@ void System::reset()
 
 	m_highestPopulation = STARTER_AMOUNT;
 	m_StartTimeEvent = std::chrono::steady_clock::now();
-	m_totalItarationsRunning++;
+	m_StartTimeREPOHighest = std::chrono::steady_clock::now();
+
+	m_totalItarationsRunning += 1;
 }
 
 void System::GAReproduceAVG(NPC* t_npcOne, NPC* t_npcTwo)
@@ -1238,7 +1303,7 @@ float System::GetAvgSpeed()
 float System::GetAvgStr()
 {
 	m_avgStatisticStr = 0;
-	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticStr += m_npcs[i]->GetSizeStatistic();}
+	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticStr += m_npcs[i]->GetStrStatistic();}
 	m_avgStatisticStr = m_avgStatisticStr / m_npcs.size();
 	return m_avgStatisticStr;
 }
@@ -1258,7 +1323,7 @@ float System::GetAvgInt()
 float System::GetAvgSize()
 {
 	m_avgStatisticSize = 0;
-	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticSize += m_npcs[i]->GetIntStatistic();}
+	for (int i = 0; i < m_npcs.size(); i++) { m_avgStatisticSize += m_npcs[i]->GetSizeStatistic();}
 	m_avgStatisticSize = m_avgStatisticSize / m_npcs.size();
 	return m_avgStatisticSize;
 }
@@ -1364,8 +1429,10 @@ void System::GAReproductionHighest()
 	{
 		if (m_npcs[i]->getAge() >= (AGE_CAP / 4) && m_npcs[i]->getAge() <= ((AGE_CAP / 4) * 3)) //check if the first npc is within the corect age range 
 		{
-			if (m_npcs[i]->getReproductionCooldown().count() <= REPRODUCTION_TIME)//check if the npc is able to bread 
-			{m_npcBreedingGroup.push_back(i);}
+			if (m_npcs[i]->getReproductionCooldown().count() >= REPRODUCTION_TIME)//check if the npc is able to bread 
+			{
+				m_npcBreedingGroup.push_back(i);
+			}
 		}
 	}
 

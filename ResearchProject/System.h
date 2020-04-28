@@ -12,7 +12,6 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
-#include <filesystem> 
 
 enum STATES { m_startingScreen, m_mainScreen};
 
@@ -105,6 +104,10 @@ private:
 	int REPRODUCTION_TIME = 10; // 1 = 1 years
 	int AGE_CAP = 50;  // 50 = 50 years 
 
+	std::chrono::steady_clock::time_point m_StartTimeREPOHighest;
+	std::chrono::steady_clock::time_point m_CurrentTimeREPOHighest;
+	std::chrono::duration<double> m_elapsedtimeREPOHighest;
+
 
     std::chrono::steady_clock::time_point m_StartTimeEvent;
 	std::chrono::steady_clock::time_point m_CurrentTimeEvent;
@@ -112,10 +115,9 @@ private:
 	int m_randomEvent = 0;
 
 	int m_totalItarationsRunning = 0;
-	int m_totalItarations = 8;
+	int m_totalItarations = 3;
 
 	//++++++++++vars for singe reproduction+++++++
-	int m_reproductionCountdown = REPRODUCTION_TIME;
 
 	std::array<float, 4> m_mutationArray = { 15,0,0,0 }; // mutation array for  the chance of mutation 
 	std::array<int, 4> m_wantedStatistics = { 1,0,0,0 }; // 1= yes 0 = no
