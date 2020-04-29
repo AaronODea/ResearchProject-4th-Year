@@ -1,0 +1,25 @@
+INFO 
+Algorithm: Wanted Statistic 
+Mutation type is average split 
+Ending perameter : Generation 
+Genertations ending at : 10
+--------------------------------------------------------- 
+Mutation Rates 
+Speed 15.000000%
+Strength 0.000000%
+intelligence 0.000000%
+Size 0.000000%
+--------------------------------------------------------- 
+Stat Wanted 1 = yes , 0 = noSpeed 1
+Strength 0
+intelligence 0
+Size 0
+--------------------------------------------------------- 
+on chance: 
+Reproduction Time: 1
+Reproduction chance: 20
+Breeding distance: 400
+--------------------------------------------------------- 
+Time per event: 1
+Starter amount: 10
+--------------------------------------------------------- 

@@ -185,6 +185,10 @@ private:
 	sf::Text m_mutationType;
 
 	sf::Text m_EventTypeText;
+	sf::Text m_EventTypeTextNext;
+	sf::Text m_percentageAffected;
+	int m_affectedEvent = 0;
+
 	sf::Text m_EventTypeTimeText;
 
 	
@@ -210,6 +214,12 @@ private:
 	std::vector< sf::Sprite> m_heartSprite;
 
 	sf::CircleShape m_highStatCircle;
+
+	std::vector<NPC*> m_trackedNPC;
+
+
+
+	std::vector<sf::CircleShape> m_eventaffected;
 
 	NPC* m_trackedOneNPC;
 	NPC* m_trackedTwoNPC;

@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['open_177',['OPEN',['../classtinyxml2_1_1_x_m_l_element.html#ab5f90e2493c35702175235127e2935b4a78cf277c55b4655c86458dfecb11d349',1,'tinyxml2::XMLElement']]],
+  ['openelement_178',['OpenElement',['../classtinyxml2_1_1_x_m_l_printer.html#a20fb06c83bd13e5140d7dd13af06c010',1,'tinyxml2::XMLPrinter']]],
+  ['operator_3c_3c_179',['operator&lt;&lt;',['../classsfe_1_1_rich_text.html#adaf2ea1b478a2e431f3752ac5b89b686',1,'sfe::RichText::operator&lt;&lt;(const TextStroke &amp;stroke)'],['../classsfe_1_1_rich_text.html#ab6507a78903bdc5d04e9fdaddd17d093',1,'sfe::RichText::operator&lt;&lt;(const Outline &amp;outline)'],['../classsfe_1_1_rich_text.html#a95732ef39c38fcdb77e4291fb03fb556',1,'sfe::RichText::operator&lt;&lt;(const sf::Color &amp;color)'],['../classsfe_1_1_rich_text.html#a1fa708689133e2a7d2f938112f1cc6b9',1,'sfe::RichText::operator&lt;&lt;(sf::Text::Style style)'],['../classsfe_1_1_rich_text.html#a9285def7afe7919cb1213aaa170587c8',1,'sfe::RichText::operator&lt;&lt;(const sf::String &amp;string)']]],
+  ['operator_3d_180',['operator=',['../classtinyxml2_1_1_x_m_l_handle.html#a75b908322bb4b83be3281b6845252b20',1,'tinyxml2::XMLHandle::operator=()'],['../classtinyxml2_1_1_x_m_l_const_handle.html#a2d74c91df1ff9aa5f9b57e3dceddbf94',1,'tinyxml2::XMLConstHandle::operator=()']]],
+  ['operator_5b_5d_181',['operator[]',['../classtinyxml2_1_1_dyn_array.html#a756cf4e7464c711aa720e2b17a251daa',1,'tinyxml2::DynArray::operator[](int i)'],['../classtinyxml2_1_1_dyn_array.html#a474a5cd9bc97ea32b3dcef4c773125e1',1,'tinyxml2::DynArray::operator[](int i) const']]],
+  ['outline_182',['Outline',['../structsfe_1_1_outline.html',1,'sfe::Outline'],['../structsfe_1_1_text_stroke.html#a8e1753dc6d7780685ad9ab181383e297',1,'sfe::TextStroke::outline()'],['../structsfe_1_1_outline.html#ac891e40621156438f73e30b7af4dcb41',1,'sfe::Outline::outline()']]]
+];

@@ -41,6 +41,8 @@ System::System() :
 	m_highStatCircle.setOutlineColor(sf::Color(0,0,0,200));
 	m_highStatCircle.setOutlineThickness(WIDTH/1000);
 
+
+	
 	if (!m_backgroundTextureMainMenu.loadFromFile("ASSETS\\IMAGES\\backGroundMainMenu.png")) { std::cout << "problem loading background main menu Texture" << std::endl; }
 	m_backgroundSpriteMainMenu.setTexture(m_backgroundTextureMainMenu);
 	m_backgroundSpriteMainMenu.setScale(WIDTH/1920, HEIGHT/1080);
@@ -416,16 +418,16 @@ void System::update(sf::Time t_deltaTime)
 			{
 			default:
 			case 0:
-				m_staisticTrackedname.setString("Current Event : Speed ");
+				m_staisticTrackedname.setString("Statistic tracked: Speed");
 				break;
 			case 1:	
-				m_staisticTrackedname.setString("Current Event : Strength ");
+				m_staisticTrackedname.setString("Statistic tracked: Strength ");
 				break;
 			case 2:
-				m_staisticTrackedname.setString("Current Event : Intelligence ");
+				m_staisticTrackedname.setString("Statistic tracked: Intelligence ");
 				break;
 			case 3:
-				m_staisticTrackedname.setString("Current Event : Size ");
+				m_staisticTrackedname.setString("Statistic tracked: Size ");
 				break;
 			}//tracked statistic 
 
@@ -575,14 +577,35 @@ void System::update(sf::Time t_deltaTime)
 
 		//================================event timer==================
 		if (m_elapsedtimeEvent.count() >= EVENT_COUNTDOWM)
-		{EventCall();}
+		{
+		 EventCall();
+
+		if (m_affectedEvent > 0)
+		{m_percentageAffected.setString("Percentage affected:" + std::to_string((static_cast<float>(m_affectedEvent) / static_cast<float>(m_npcs.size())) * 100) + "%");}
+		else if (m_affectedEvent > m_npcs.size())
+		{m_percentageAffected.setString("Percentage affected: 100%");}
+		else{m_percentageAffected.setString("Percentage affected: >100%");}
+
+		m_affectedEvent = 0;
+		}
 
 		if((EVENT_COUNTDOWM - m_elapsedtimeEvent.count()) > (EVENT_COUNTDOWM/4)*3) {m_EventTypeTimeText.setFillColor(sf::Color::Green);}
 		else { m_EventTypeTimeText.setFillColor(sf::Color::Yellow); }
 		if ((EVENT_COUNTDOWM - m_elapsedtimeEvent.count()) < (EVENT_COUNTDOWM / 4) * 2) { m_EventTypeTimeText.setFillColor(sf::Color::Red); }
 		m_EventTypeTimeText.setString("Seconds left till next event : " + std::to_string(EVENT_COUNTDOWM - m_elapsedtimeEvent.count()));
 
-		//
+
+
+		for (int i = 0; i < m_eventaffected.size(); i++)
+		{
+			m_eventaffected[i].setFillColor(sf::Color(200, 0, 0,50));
+			m_eventaffected[i].setOutlineColor(sf::Color(100, 100, 100, 200));
+			m_eventaffected[i].setOutlineThickness(WIDTH / 500);
+			m_eventaffected[i].setPosition(sf::Vector2f(m_trackedNPC[i]->getPos().x - (m_trackedNPC[i]->getSize() * 0.3f),
+											 m_trackedNPC[i]->getPos().y - (m_trackedNPC[i]->getSize() * 0.3f)));
+			m_eventaffected[i].setRadius((m_trackedNPC[i]->getSize() * 0.5f));
+		}
+
 	break;
 	}
 }
@@ -620,6 +643,8 @@ void System::render()
 		   {m_window.draw(m_heartSprite[0]);
 			m_window.draw(m_heartSprite[1]);}
 
+
+
 		m_window.draw(m_totalNPC);
 		m_window.draw(m_totalNPCAlltime);
 		m_window.draw(m_maleCountText);
@@ -643,7 +668,9 @@ void System::render()
 		m_window.draw(m_mutationType);
 
 		m_window.draw(m_EventTypeText);
+		m_window.draw(m_EventTypeTextNext);
 		m_window.draw(m_EventTypeTimeText);
+		m_window.draw(m_percentageAffected);
 
 		if(m_trackedOneNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME && m_trackedTwoNPC->getReproductionCooldown().count() <= REPRODUCTION_TIME)
 		{m_heartSprite[0].setPosition(sf::Vector2f((m_trackedOneNPC->getPos().x) + (m_trackedOneNPC->getSizeTexture().x/2) , (m_trackedOneNPC->getPos().y) - (m_trackedOneNPC->getSizeTexture().y * 2)));
@@ -652,6 +679,10 @@ void System::render()
 		m_window.draw(m_foregroundSprite);
 	
 		m_window.draw(m_highStatCircle);
+
+		for (int i = 0; i < m_eventaffected.size(); i++)
+		{m_window.draw(m_eventaffected[i]);}
+
 		m_gui.Draw();
 
 		break;
@@ -742,28 +773,54 @@ std::stringstream System::setMutation(float t_mutation)
 void System::EventCall()
 {
 	m_StartTimeEvent = std::chrono::steady_clock::now();
+	m_eventaffected.clear();
+	m_trackedNPC.clear();
+
+	switch (m_randomEvent)
+	{
+	default:
+	case 0:
+
+		m_EventTypeText.setString("Current Event: Speed ");
+		SpeedEvent();
+		break;
+	case 1:
+		m_EventTypeText.setString("Current Event: Strength");
+		StrEvent();
+		break;
+	case 2:
+		m_EventTypeText.setString("Current Event: Intelligence");
+		intEvent();
+		break;
+	case 3:
+		m_EventTypeText.setString("Current Event: Size");
+		SizeEvent();
+		break;
+	}
 	m_randomEvent = randomNumber(3, 0);
 	switch (m_randomEvent)
 	{
 	default:
 	case 0:
-		
-		m_EventTypeText.setString("Statistic tracked: Speed");
+
+		m_EventTypeTextNext.setString("Next Event: Speed ");
 		SpeedEvent();
 		break;
 	case 1:
-		m_EventTypeText.setString("Statistic tracked: Strength");
+		m_EventTypeTextNext.setString("Next Event: Strength");
 		StrEvent();
 		break;
 	case 2:
-		m_EventTypeText.setString("Statistic tracked: Intelligence");
+		m_EventTypeTextNext.setString("Next Event: Intelligence");
 		intEvent();
 		break;
 	case 3:
-		m_EventTypeText.setString("Statistic tracked: Size");
+		m_EventTypeTextNext.setString("Next Event: Size");
 		SizeEvent();
 		break;
 	}
+
+
 }
 void System::SpeedEvent()
 {
@@ -775,6 +832,10 @@ void System::SpeedEvent()
 			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetSpeedStatistic()), 0);
 			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
 			m_npcs[i]->takeHealth(hpHit/2);
+			m_affectedEvent += 1;
+			m_trackedNPC.push_back(m_npcs[i]);
+			m_eventaffected.push_back(sf::CircleShape());
+
 		}
 	}
 
@@ -789,6 +850,9 @@ void System::StrEvent()
 			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetStrStatistic()), 0);
 			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
 			m_npcs[i]->takeHealth(hpHit/2);
+			m_affectedEvent += 1;
+			m_trackedNPC.push_back(m_npcs[i]);
+			m_eventaffected.push_back(sf::CircleShape());
 		}
 	}
 
@@ -804,6 +868,10 @@ void System::intEvent()
 			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()), 0);
 			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
 			m_npcs[i]->takeHealth(hpHit/2);
+			m_affectedEvent += 1;
+			m_trackedNPC.push_back(m_npcs[i]);
+			m_eventaffected.push_back(sf::CircleShape());
+
 		}
 	}
 
@@ -818,6 +886,9 @@ void System::SizeEvent()
 			hpHit = randomNumber(static_cast<int>(m_npcs[i]->GetSizeStatistic()), 0);
 			hpHit -= randomNumber(static_cast<int>(m_npcs[i]->GetIntStatistic()/2), 0);
 			m_npcs[i]->takeHealth(hpHit/2);
+			m_affectedEvent += 1;
+			m_trackedNPC.push_back(m_npcs[i]);
+			m_eventaffected.push_back(sf::CircleShape());
 		}
 	}
 
@@ -906,12 +977,36 @@ void System::setupFontAndText()
 	m_buttonOutline.setPosition(m_menuButtonTEXT[m_menuButton].getPosition());
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
-	m_EventTypeText.setString("Statistic tracked: ");
+	m_EventTypeText.setString("Current Event: ");
 
 	m_YesNo.push_back("YES");
 	m_YesNo.push_back("NO");
 	m_YesNo.push_back("NO");
 	m_YesNo.push_back("NO");
+
+	m_randomEvent = randomNumber(3, 0);
+	switch (m_randomEvent)
+	{
+	default:
+	case 0:
+
+		m_EventTypeTextNext.setString("Next Event: Speed ");
+		SpeedEvent();
+		break;
+	case 1:
+		m_EventTypeTextNext.setString("Next Event: Strength");
+		StrEvent();
+		break;
+	case 2:
+		m_EventTypeTextNext.setString("Next Event: Intelligence");
+		intEvent();
+		break;
+	case 3:
+		m_EventTypeTextNext.setString("Next Event: Size");
+		SizeEvent();
+		break;
+	}
+	m_percentageAffected.setString("Percentage affected:");
 
 }
 
@@ -1071,6 +1166,10 @@ void System::setUpGuiStates()
 		break;}
 
 
+	m_EventTypeTextNext.setFont(m_ArialBlackfont);
+	m_EventTypeTextNext.setFillColor(sf::Color(150, 50, 50));
+	m_EventTypeTextNext.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 2.1f));
+	m_EventTypeTextNext.setCharacterSize(WIDTH / 100);
 
 	m_EventTypeText.setFont(m_ArialBlackfont);
 	m_EventTypeText.setFillColor(sf::Color(150, 50, 50));
@@ -1081,6 +1180,11 @@ void System::setUpGuiStates()
 	m_EventTypeTimeText.setFillColor(sf::Color::Black);
 	m_EventTypeTimeText.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 1.94f));
 	m_EventTypeTimeText.setCharacterSize(WIDTH / 100);
+
+	m_percentageAffected.setFont(m_ArialBlackfont);
+	m_percentageAffected.setFillColor(sf::Color::Black);
+	m_percentageAffected.setPosition(sf::Vector2f(WIDTH / 1.219f, HEIGHT / 1.74f));
+	m_percentageAffected.setCharacterSize(WIDTH / 100);
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 
@@ -1092,6 +1196,8 @@ void System::setUpGuiStates()
 
 void System::reset()
 {
+	m_randomEvent = randomNumber(3, 0);
+	m_eventaffected.clear();
 	m_npcs.clear();
 	std::cout << "npc size" + m_npcs.size();
 	m_gui.reset();

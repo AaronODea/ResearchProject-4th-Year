@@ -1,0 +1,6 @@
+Iteration 0
+Average Speed,49,47,48,48,53,56,35,33
+Average Strength ,52,43,40,31,30,22,26,47
+Average intelligence ,56,53,56,63,63,59,53,61
+Average Size ,59,60,59,62,55,68,67,64
+Total population ,10,8,7,6,5,4,2,1,0

@@ -1,0 +1,211 @@
+\hypertarget{classsfe_1_1_rich_text}{}\doxysection{sfe\+::Rich\+Text Class Reference}
+\label{classsfe_1_1_rich_text}\index{sfe::RichText@{sfe::RichText}}
+
+
+{\ttfamily \#include $<$Rich\+Text.\+h$>$}
+
+Inheritance diagram for sfe\+::Rich\+Text\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classsfe_1_1_rich_text}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classsfe_1_1_rich_text_1_1_line}{Line}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text_a2b1f017d5bf4e080ad1a36f60a0ff0e6}{Rich\+Text}} ()
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text_ab837e0edfc11186c3c65f59abe60c569}{Rich\+Text}} (const sf\+::\+Font \&font)
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& \mbox{\hyperlink{classsfe_1_1_rich_text_adaf2ea1b478a2e431f3752ac5b89b686}{operator$<$$<$}} (const \mbox{\hyperlink{structsfe_1_1_text_stroke}{Text\+Stroke}} \&stroke)
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& \mbox{\hyperlink{classsfe_1_1_rich_text_ab6507a78903bdc5d04e9fdaddd17d093}{operator$<$$<$}} (const \mbox{\hyperlink{structsfe_1_1_outline}{Outline}} \&outline)
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& \mbox{\hyperlink{classsfe_1_1_rich_text_a95732ef39c38fcdb77e4291fb03fb556}{operator$<$$<$}} (const sf\+::\+Color \&color)
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& \mbox{\hyperlink{classsfe_1_1_rich_text_a1fa708689133e2a7d2f938112f1cc6b9}{operator$<$$<$}} (sf\+::\+Text\+::\+Style style)
+\item 
+\mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& \mbox{\hyperlink{classsfe_1_1_rich_text_a9285def7afe7919cb1213aaa170587c8}{operator$<$$<$}} (const sf\+::\+String \&string)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a00ec17d05a50def4300153c795da2261}{set\+Character\+Color}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos, sf\+::\+Color color)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a3d8c681d09eb3f5f855c9911d652dc6d}{set\+Character\+Style}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos, sf\+::\+Text\+::\+Style style)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a779a26549fffa29ab0329d2fc71e43bb}{set\+Character}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos, sf\+::\+Uint32 character)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a06297b2e2c31b7f14e29b4854376bc9b}{set\+Character\+Size}} (unsigned int size)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a284f1104949a6de78785a68234abf92e}{set\+Font}} (const sf\+::\+Font \&font)
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a3e72a27564ba2b657a9f19f4ee51c3b3}{clear}} ()
+\item 
+sf\+::\+Color \mbox{\hyperlink{classsfe_1_1_rich_text_aa28291aa242824862facf9f72a638672}{get\+Character\+Color}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos) const
+\item 
+sf\+::\+Uint32 \mbox{\hyperlink{classsfe_1_1_rich_text_a7f82d0df6e37fa0099db25d965a43c63}{get\+Character\+Style}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos) const
+\item 
+sf\+::\+Uint32 \mbox{\hyperlink{classsfe_1_1_rich_text_aad9f6cd609b84899971df8b6936d65ea}{get\+Character}} (std\+::size\+\_\+t line, std\+::size\+\_\+t pos) const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classsfe_1_1_rich_text_1_1_line}{Line}} $>$ \& \mbox{\hyperlink{classsfe_1_1_rich_text_a3122a57c287a01790422f26183f3a149}{get\+Lines}} () const
+\item 
+unsigned int \mbox{\hyperlink{classsfe_1_1_rich_text_abdc1848525e5e61c42a3a7aa1e8c0ede}{get\+Character\+Size}} () const
+\item 
+const sf\+::\+Font $\ast$ \mbox{\hyperlink{classsfe_1_1_rich_text_a7fdac8fe4d0024adcbec217644fa93fe}{get\+Font}} () const
+\item 
+\mbox{\hyperlink{namespacesf_aed4e58f586b2eed2621c0365d0b7554e}{sf\+::\+Float\+Rect}} \mbox{\hyperlink{classsfe_1_1_rich_text_ac70fcf0838f772c054dc45ab7d305d0e}{get\+Local\+Bounds}} () const
+\item 
+\mbox{\hyperlink{namespacesf_aed4e58f586b2eed2621c0365d0b7554e}{sf\+::\+Float\+Rect}} \mbox{\hyperlink{classsfe_1_1_rich_text_a1e635b6a35854d103ce6ddfafe2808f2}{get\+Global\+Bounds}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classsfe_1_1_rich_text_a9be998595b568de3d47d4c3910417368}{draw}} (sf\+::\+Render\+Target \&target, sf\+::\+Render\+States states) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a2b1f017d5bf4e080ad1a36f60a0ff0e6}\label{classsfe_1_1_rich_text_a2b1f017d5bf4e080ad1a36f60a0ff0e6}} 
+\index{sfe::RichText@{sfe::RichText}!RichText@{RichText}}
+\index{RichText@{RichText}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{RichText()}{RichText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily sfe\+::\+Rich\+Text\+::\+Rich\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_ab837e0edfc11186c3c65f59abe60c569}\label{classsfe_1_1_rich_text_ab837e0edfc11186c3c65f59abe60c569}} 
+\index{sfe::RichText@{sfe::RichText}!RichText@{RichText}}
+\index{RichText@{RichText}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{RichText()}{RichText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily sfe\+::\+Rich\+Text\+::\+Rich\+Text (\begin{DoxyParamCaption}\item[{const sf\+::\+Font \&}]{font }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a3e72a27564ba2b657a9f19f4ee51c3b3}\label{classsfe_1_1_rich_text_a3e72a27564ba2b657a9f19f4ee51c3b3}} 
+\index{sfe::RichText@{sfe::RichText}!clear@{clear}}
+\index{clear@{clear}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a9be998595b568de3d47d4c3910417368}\label{classsfe_1_1_rich_text_a9be998595b568de3d47d4c3910417368}} 
+\index{sfe::RichText@{sfe::RichText}!draw@{draw}}
+\index{draw@{draw}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::draw (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Target \&}]{target,  }\item[{sf\+::\+Render\+States}]{states }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_aad9f6cd609b84899971df8b6936d65ea}\label{classsfe_1_1_rich_text_aad9f6cd609b84899971df8b6936d65ea}} 
+\index{sfe::RichText@{sfe::RichText}!getCharacter@{getCharacter}}
+\index{getCharacter@{getCharacter}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getCharacter()}{getCharacter()}}
+{\footnotesize\ttfamily sf\+::\+Uint32 sfe\+::\+Rich\+Text\+::get\+Character (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_aa28291aa242824862facf9f72a638672}\label{classsfe_1_1_rich_text_aa28291aa242824862facf9f72a638672}} 
+\index{sfe::RichText@{sfe::RichText}!getCharacterColor@{getCharacterColor}}
+\index{getCharacterColor@{getCharacterColor}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getCharacterColor()}{getCharacterColor()}}
+{\footnotesize\ttfamily sf\+::\+Color sfe\+::\+Rich\+Text\+::get\+Character\+Color (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_abdc1848525e5e61c42a3a7aa1e8c0ede}\label{classsfe_1_1_rich_text_abdc1848525e5e61c42a3a7aa1e8c0ede}} 
+\index{sfe::RichText@{sfe::RichText}!getCharacterSize@{getCharacterSize}}
+\index{getCharacterSize@{getCharacterSize}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getCharacterSize()}{getCharacterSize()}}
+{\footnotesize\ttfamily unsigned int sfe\+::\+Rich\+Text\+::get\+Character\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a7f82d0df6e37fa0099db25d965a43c63}\label{classsfe_1_1_rich_text_a7f82d0df6e37fa0099db25d965a43c63}} 
+\index{sfe::RichText@{sfe::RichText}!getCharacterStyle@{getCharacterStyle}}
+\index{getCharacterStyle@{getCharacterStyle}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getCharacterStyle()}{getCharacterStyle()}}
+{\footnotesize\ttfamily sf\+::\+Uint32 sfe\+::\+Rich\+Text\+::get\+Character\+Style (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a7fdac8fe4d0024adcbec217644fa93fe}\label{classsfe_1_1_rich_text_a7fdac8fe4d0024adcbec217644fa93fe}} 
+\index{sfe::RichText@{sfe::RichText}!getFont@{getFont}}
+\index{getFont@{getFont}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getFont()}{getFont()}}
+{\footnotesize\ttfamily const sf\+::\+Font $\ast$ sfe\+::\+Rich\+Text\+::get\+Font (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a1e635b6a35854d103ce6ddfafe2808f2}\label{classsfe_1_1_rich_text_a1e635b6a35854d103ce6ddfafe2808f2}} 
+\index{sfe::RichText@{sfe::RichText}!getGlobalBounds@{getGlobalBounds}}
+\index{getGlobalBounds@{getGlobalBounds}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getGlobalBounds()}{getGlobalBounds()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacesf_aed4e58f586b2eed2621c0365d0b7554e}{sf\+::\+Float\+Rect}} sfe\+::\+Rich\+Text\+::get\+Global\+Bounds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a3122a57c287a01790422f26183f3a149}\label{classsfe_1_1_rich_text_a3122a57c287a01790422f26183f3a149}} 
+\index{sfe::RichText@{sfe::RichText}!getLines@{getLines}}
+\index{getLines@{getLines}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getLines()}{getLines()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{classsfe_1_1_rich_text_1_1_line}{Rich\+Text\+::\+Line}} $>$ \& sfe\+::\+Rich\+Text\+::get\+Lines (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_ac70fcf0838f772c054dc45ab7d305d0e}\label{classsfe_1_1_rich_text_ac70fcf0838f772c054dc45ab7d305d0e}} 
+\index{sfe::RichText@{sfe::RichText}!getLocalBounds@{getLocalBounds}}
+\index{getLocalBounds@{getLocalBounds}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{getLocalBounds()}{getLocalBounds()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacesf_aed4e58f586b2eed2621c0365d0b7554e}{sf\+::\+Float\+Rect}} sfe\+::\+Rich\+Text\+::get\+Local\+Bounds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_ab6507a78903bdc5d04e9fdaddd17d093}\label{classsfe_1_1_rich_text_ab6507a78903bdc5d04e9fdaddd17d093}} 
+\index{sfe::RichText@{sfe::RichText}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& sfe\+::\+Rich\+Text\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structsfe_1_1_outline}{Outline}} \&}]{outline }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a95732ef39c38fcdb77e4291fb03fb556}\label{classsfe_1_1_rich_text_a95732ef39c38fcdb77e4291fb03fb556}} 
+\index{sfe::RichText@{sfe::RichText}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& sfe\+::\+Rich\+Text\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const sf\+::\+Color \&}]{color }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a9285def7afe7919cb1213aaa170587c8}\label{classsfe_1_1_rich_text_a9285def7afe7919cb1213aaa170587c8}} 
+\index{sfe::RichText@{sfe::RichText}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& sfe\+::\+Rich\+Text\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const sf\+::\+String \&}]{string }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_adaf2ea1b478a2e431f3752ac5b89b686}\label{classsfe_1_1_rich_text_adaf2ea1b478a2e431f3752ac5b89b686}} 
+\index{sfe::RichText@{sfe::RichText}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& sfe\+::\+Rich\+Text\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structsfe_1_1_text_stroke}{Text\+Stroke}} \&}]{stroke }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a1fa708689133e2a7d2f938112f1cc6b9}\label{classsfe_1_1_rich_text_a1fa708689133e2a7d2f938112f1cc6b9}} 
+\index{sfe::RichText@{sfe::RichText}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsfe_1_1_rich_text}{Rich\+Text}} \& sfe\+::\+Rich\+Text\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{sf\+::\+Text\+::\+Style}]{style }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a779a26549fffa29ab0329d2fc71e43bb}\label{classsfe_1_1_rich_text_a779a26549fffa29ab0329d2fc71e43bb}} 
+\index{sfe::RichText@{sfe::RichText}!setCharacter@{setCharacter}}
+\index{setCharacter@{setCharacter}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{setCharacter()}{setCharacter()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::set\+Character (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos,  }\item[{sf\+::\+Uint32}]{character }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a00ec17d05a50def4300153c795da2261}\label{classsfe_1_1_rich_text_a00ec17d05a50def4300153c795da2261}} 
+\index{sfe::RichText@{sfe::RichText}!setCharacterColor@{setCharacterColor}}
+\index{setCharacterColor@{setCharacterColor}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{setCharacterColor()}{setCharacterColor()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::set\+Character\+Color (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos,  }\item[{sf\+::\+Color}]{color }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a06297b2e2c31b7f14e29b4854376bc9b}\label{classsfe_1_1_rich_text_a06297b2e2c31b7f14e29b4854376bc9b}} 
+\index{sfe::RichText@{sfe::RichText}!setCharacterSize@{setCharacterSize}}
+\index{setCharacterSize@{setCharacterSize}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{setCharacterSize()}{setCharacterSize()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::set\+Character\+Size (\begin{DoxyParamCaption}\item[{unsigned int}]{size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a3d8c681d09eb3f5f855c9911d652dc6d}\label{classsfe_1_1_rich_text_a3d8c681d09eb3f5f855c9911d652dc6d}} 
+\index{sfe::RichText@{sfe::RichText}!setCharacterStyle@{setCharacterStyle}}
+\index{setCharacterStyle@{setCharacterStyle}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{setCharacterStyle()}{setCharacterStyle()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::set\+Character\+Style (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{line,  }\item[{std\+::size\+\_\+t}]{pos,  }\item[{sf\+::\+Text\+::\+Style}]{style }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsfe_1_1_rich_text_a284f1104949a6de78785a68234abf92e}\label{classsfe_1_1_rich_text_a284f1104949a6de78785a68234abf92e}} 
+\index{sfe::RichText@{sfe::RichText}!setFont@{setFont}}
+\index{setFont@{setFont}!sfe::RichText@{sfe::RichText}}
+\doxysubsubsection{\texorpdfstring{setFont()}{setFont()}}
+{\footnotesize\ttfamily void sfe\+::\+Rich\+Text\+::set\+Font (\begin{DoxyParamCaption}\item[{const sf\+::\+Font \&}]{font }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_rich_text_8h}{Rich\+Text.\+h}}\item 
+\mbox{\hyperlink{_rich_text_8cpp}{Rich\+Text.\+cpp}}\end{DoxyCompactItemize}
