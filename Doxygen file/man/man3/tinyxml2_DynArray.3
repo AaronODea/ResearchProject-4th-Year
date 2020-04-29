@@ -1,0 +1,143 @@
+.TH "tinyxml2::DynArray< T, INITIAL_SIZE >" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::DynArray< T, INITIAL_SIZE >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDynArray\fP ()"
+.br
+.ti -1c
+.RI "\fB~DynArray\fP ()"
+.br
+.ti -1c
+.RI "void \fBClear\fP ()"
+.br
+.ti -1c
+.RI "void \fBPush\fP (T t)"
+.br
+.ti -1c
+.RI "T * \fBPushArr\fP (int count)"
+.br
+.ti -1c
+.RI "T \fBPop\fP ()"
+.br
+.ti -1c
+.RI "void \fBPopArr\fP (int count)"
+.br
+.ti -1c
+.RI "bool \fBEmpty\fP () const"
+.br
+.ti -1c
+.RI "T & \fBoperator[]\fP (int i)"
+.br
+.ti -1c
+.RI "const T & \fBoperator[]\fP (int i) const"
+.br
+.ti -1c
+.RI "const T & \fBPeekTop\fP () const"
+.br
+.ti -1c
+.RI "int \fBSize\fP () const"
+.br
+.ti -1c
+.RI "int \fBCapacity\fP () const"
+.br
+.ti -1c
+.RI "void \fBSwapRemove\fP (int i)"
+.br
+.ti -1c
+.RI "const T * \fBMem\fP () const"
+.br
+.ti -1c
+.RI "T * \fBMem\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<class T, int INITIAL_SIZE>
+.br
+class tinyxml2::DynArray< T, INITIAL_SIZE >"
+
+.PP
+Definition at line 198 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<class T , int INITIAL_SIZE> \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::\fBDynArray\fP ()\fC [inline]\fP"
+
+.PP
+Definition at line 201 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::~\fBDynArray\fP ()\fC [inline]\fP"
+
+.PP
+Definition at line 208 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<class T , int INITIAL_SIZE> int \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Capacity () const\fC [inline]\fP"
+
+.PP
+Definition at line 269 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> void \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Clear ()\fC [inline]\fP"
+
+.PP
+Definition at line 214 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> bool \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Empty () const\fC [inline]\fP"
+
+.PP
+Definition at line 245 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> T* \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Mem ()\fC [inline]\fP"
+
+.PP
+Definition at line 286 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> const T* \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Mem () const\fC [inline]\fP"
+
+.PP
+Definition at line 281 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> T& \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::operator[] (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 249 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> const T& \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::operator[] (int i) const\fC [inline]\fP"
+
+.PP
+Definition at line 254 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> const T& \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::PeekTop () const\fC [inline]\fP"
+
+.PP
+Definition at line 259 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> T \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Pop ()\fC [inline]\fP"
+
+.PP
+Definition at line 234 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> void \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::PopArr (int count)\fC [inline]\fP"
+
+.PP
+Definition at line 240 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> void \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Push (T t)\fC [inline]\fP"
+
+.PP
+Definition at line 218 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> T* \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::PushArr (int count)\fC [inline]\fP"
+
+.PP
+Definition at line 225 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> int \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::Size () const\fC [inline]\fP"
+
+.PP
+Definition at line 264 of file tinyxml2\&.h\&.
+.SS "template<class T , int INITIAL_SIZE> void \fBtinyxml2::DynArray\fP< T, INITIAL_SIZE >::SwapRemove (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 274 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

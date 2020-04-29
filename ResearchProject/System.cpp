@@ -436,9 +436,6 @@ void System::update(sf::Time t_deltaTime)
 				GetAvgInt();
 				GetAvgSize(); 
 
-		
-
-			
 
 		m_highestCurrentStatNumber = 0;  
 
@@ -497,13 +494,13 @@ void System::update(sf::Time t_deltaTime)
 		}
 
 
-		if (m_EndReached == true)
+		if (m_EndReached == true)// end the run
 		{
-			makefile();
-			reset();
+			makefile();//makes the output file
+			reset();//resets the run
 			m_EndReached = false;
 
-			if (m_totalItarationsRunning >= m_totalItarations)
+			if (m_totalItarationsRunning >= m_totalItarations)// end the run after an amount of iterations
 			{
 				std::ofstream m_fileoutputed("ASSETS\\FILES\\Settings.txt");
 
@@ -571,21 +568,17 @@ void System::update(sf::Time t_deltaTime)
 			}
 		}
 
-	
-
-
 
 		//================================event timer==================
 		if (m_elapsedtimeEvent.count() >= EVENT_COUNTDOWM)
 		{
-		 EventCall();
+		 EventCall();// calls the event
 
-		if (m_affectedEvent > 0)
+		if (m_affectedEvent > 0)//if there are no affected npcs do nothing
 		{m_percentageAffected.setString("Percentage affected:" + std::to_string((static_cast<float>(m_affectedEvent) / static_cast<float>(m_npcs.size())) * 100) + "%");}
-		else if (m_affectedEvent > m_npcs.size())
+		else if (m_affectedEvent > m_npcs.size())//set the percetnage string
 		{m_percentageAffected.setString("Percentage affected: 100%");}
 		else{m_percentageAffected.setString("Percentage affected: >100%");}
-
 		m_affectedEvent = 0;
 		}
 
@@ -596,7 +589,7 @@ void System::update(sf::Time t_deltaTime)
 
 
 
-		for (int i = 0; i < m_eventaffected.size(); i++)
+		for (int i = 0; i < m_eventaffected.size(); i++)// addes the circle around the npcs that are affected by the events 
 		{
 			m_eventaffected[i].setFillColor(sf::Color(200, 0, 0,50));
 			m_eventaffected[i].setOutlineColor(sf::Color(100, 100, 100, 200));
@@ -629,12 +622,13 @@ void System::render()
 		break;
 	case m_mainScreen:
 
-		m_window.draw(m_backgroundSprite);
-		if(m_npcs.size() <= 200) {for (int i = 0; i < m_npcs.size(); i++) { m_npcs[i]->Draw(); }}
+		m_window.draw(m_backgroundSprite);//renders background 
+
+		if(m_npcs.size() <= 200) {for (int i = 0; i < m_npcs.size(); i++) { m_npcs[i]->Draw(); }} // renders npcs up to 200 
 		else { for (int i = 0; i < 200; i++) { m_npcs[i]->Draw(); } }
 		
 
-		if (m_npcs.size() <= 10)
+		if (m_npcs.size() <= 10)//renders the statistics for the 1st 10 npcs 
 			{for (int i = 0; i < m_npcs.size(); i++) {m_npcs[i]->DrawStatistics();}}
 		else{for (int i = m_npcs.size(); i > (m_npcs.size()-10); i--) { m_npcs[i-1]->DrawStatistics(); }}
 
@@ -680,7 +674,7 @@ void System::render()
 	
 		m_window.draw(m_highStatCircle);
 
-		for (int i = 0; i < m_eventaffected.size(); i++)
+		for (int i = 0; i < m_eventaffected.size(); i++)//draws circles for affected npcs
 		{m_window.draw(m_eventaffected[i]);}
 
 		m_gui.Draw();
@@ -690,7 +684,9 @@ void System::render()
 
 	m_window.display();
 }
-
+/// <summary>
+/// Function to make a file for the data to be outputed too
+/// </summary>
 void System::makefile()
 {	
 
@@ -763,6 +759,10 @@ int System::randomNumber(int t_max, int t_min)
 
 	return dist(rng);
 }
+
+/// <summary>
+/// setting mutation for text fields 
+/// </summary>
 std::stringstream System::setMutation(float t_mutation)
 {
 	std::stringstream MutationStream;
@@ -772,7 +772,7 @@ std::stringstream System::setMutation(float t_mutation)
 }
 void System::EventCall()
 {
-	m_StartTimeEvent = std::chrono::steady_clock::now();
+	m_StartTimeEvent = std::chrono::steady_clock::now();//reset event timer
 	m_eventaffected.clear();
 	m_trackedNPC.clear();
 
@@ -796,8 +796,8 @@ void System::EventCall()
 		m_EventTypeText.setString("Current Event: Size");
 		SizeEvent();
 		break;
-	}
-	m_randomEvent = randomNumber(3, 0);
+	}//sets text for current event
+	m_randomEvent = randomNumber(3, 0); // chooses event at random
 	switch (m_randomEvent)
 	{
 	default:
@@ -818,10 +818,13 @@ void System::EventCall()
 		m_EventTypeTextNext.setString("Next Event: Size");
 		SizeEvent();
 		break;
-	}
+	}//sets text for next event
 
 
 }
+/// <summary>
+/// equation which affects the speed event
+/// </summary>
 void System::SpeedEvent()
 {
 	for (int i = 0; i < m_npcs.size(); i++)
@@ -840,6 +843,9 @@ void System::SpeedEvent()
 	}
 
 }
+/// <summary>
+/// equation which affects the str event
+/// </summary>
 void System::StrEvent()
 {			
 	for (int i = 0; i < m_npcs.size(); i++)
@@ -857,6 +863,9 @@ void System::StrEvent()
 	}
 
 }
+/// <summary>
+/// equation which affects the int event
+/// </summary>
 void System::intEvent()
 {
 	for (int i = 0; i < m_npcs.size(); i++)
@@ -876,6 +885,9 @@ void System::intEvent()
 	}
 
 }
+/// <summary>
+/// equation which affects the size event
+/// </summary>
 void System::SizeEvent()
 {
 	for (int i = 0; i < m_npcs.size(); i++)
@@ -896,6 +908,10 @@ void System::SizeEvent()
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
+
+
+
+
 void System::setupFontAndText()
 {
 	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf")) {std::cout << "problem loading arial black font" << std::endl;}
@@ -1009,7 +1025,9 @@ void System::setupFontAndText()
 	m_percentageAffected.setString("Percentage affected:");
 
 }
-
+/// <summary>
+/// sets up the gui statistics
+/// </summary>
 void System::setUpGuiStates()
 {
 	//++++++++++Statistics STRINGS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1193,7 +1211,9 @@ void System::setUpGuiStates()
 	m_StartTimeREPOHighest = std::chrono::steady_clock::now();
 
 }
-
+/// <summary>
+/// rest function for multiple runs
+/// </summary>
 void System::reset()
 {
 	m_randomEvent = randomNumber(3, 0);
@@ -1434,7 +1454,9 @@ float System::GetAvgSize()
 	return m_avgStatisticSize;
 }
 
-
+/// <summary>
+///Start up for the genetic algorythims
+/// </summary>
 void System::GAStartUp()
 {
 	m_npcs.reserve(100);
@@ -1449,7 +1471,9 @@ void System::GAStartUp()
 	m_trackedOneNPC = m_npcs[0];
 	m_trackedTwoNPC = m_npcs[1];
 }
-
+/// <summary>
+/// reproduction for wanted statistics 
+/// </summary>
 void System::GAReproductionWanted()
 {
 	for (int i = 0; i < m_npcs.size(); i++)
@@ -1519,7 +1543,9 @@ void System::GAReproductionWanted()
 
 
 }
-
+/// <summary>
+/// reproduction for highest algorythim
+/// </summary>
 void System::GAReproductionHighest()
 {
 

@@ -1,0 +1,146 @@
+.TH "tinyxml2::XMLConstHandle" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLConstHandle
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXMLConstHandle\fP (const \fBXMLNode\fP *node)"
+.br
+.ti -1c
+.RI "\fBXMLConstHandle\fP (const \fBXMLNode\fP &node)"
+.br
+.ti -1c
+.RI "\fBXMLConstHandle\fP (const \fBXMLConstHandle\fP &ref)"
+.br
+.ti -1c
+.RI "\fBXMLConstHandle\fP & \fBoperator=\fP (const \fBXMLConstHandle\fP &ref)"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBFirstChild\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBFirstChildElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBLastChild\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBLastChildElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBPreviousSibling\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBPreviousSiblingElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBNextSibling\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLConstHandle\fP \fBNextSiblingElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBToNode\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLElement\fP * \fBToElement\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLText\fP * \fBToText\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLUnknown\fP * \fBToUnknown\fP () const"
+.br
+.ti -1c
+.RI "const \fBXMLDeclaration\fP * \fBToDeclaration\fP () const"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A variant of the \fBXMLHandle\fP class for working with const XMLNodes and Documents\&. It is the same in all regards, except for the 'const' qualifiers\&. See \fBXMLHandle\fP for API\&. 
+.PP
+Definition at line 2057 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::XMLConstHandle::XMLConstHandle (const \fBXMLNode\fP * node)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line 2060 of file tinyxml2\&.h\&.
+.SS "tinyxml2::XMLConstHandle::XMLConstHandle (const \fBXMLNode\fP & node)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line 2062 of file tinyxml2\&.h\&.
+.SS "tinyxml2::XMLConstHandle::XMLConstHandle (const \fBXMLConstHandle\fP & ref)\fC [inline]\fP"
+
+.PP
+Definition at line 2064 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::FirstChild () const\fC [inline]\fP"
+
+.PP
+Definition at line 2072 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::FirstChildElement (const char * name = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Definition at line 2075 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::LastChild () const\fC [inline]\fP"
+
+.PP
+Definition at line 2078 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::LastChildElement (const char * name = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Definition at line 2081 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::NextSibling () const\fC [inline]\fP"
+
+.PP
+Definition at line 2090 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::NextSiblingElement (const char * name = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Definition at line 2093 of file tinyxml2\&.h\&.
+.SS "\fBXMLConstHandle\fP& tinyxml2::XMLConstHandle::operator= (const \fBXMLConstHandle\fP & ref)\fC [inline]\fP"
+
+.PP
+Definition at line 2067 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::PreviousSibling () const\fC [inline]\fP"
+
+.PP
+Definition at line 2084 of file tinyxml2\&.h\&.
+.SS "const \fBXMLConstHandle\fP tinyxml2::XMLConstHandle::PreviousSiblingElement (const char * name = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Definition at line 2087 of file tinyxml2\&.h\&.
+.SS "const \fBXMLDeclaration\fP* tinyxml2::XMLConstHandle::ToDeclaration () const\fC [inline]\fP"
+
+.PP
+Definition at line 2110 of file tinyxml2\&.h\&.
+.SS "const \fBXMLElement\fP* tinyxml2::XMLConstHandle::ToElement () const\fC [inline]\fP"
+
+.PP
+Definition at line 2101 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLConstHandle::ToNode () const\fC [inline]\fP"
+
+.PP
+Definition at line 2098 of file tinyxml2\&.h\&.
+.SS "const \fBXMLText\fP* tinyxml2::XMLConstHandle::ToText () const\fC [inline]\fP"
+
+.PP
+Definition at line 2104 of file tinyxml2\&.h\&.
+.SS "const \fBXMLUnknown\fP* tinyxml2::XMLConstHandle::ToUnknown () const\fC [inline]\fP"
+
+.PP
+Definition at line 2107 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

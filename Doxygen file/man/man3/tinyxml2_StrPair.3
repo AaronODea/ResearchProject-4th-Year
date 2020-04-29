@@ -1,0 +1,136 @@
+.TH "tinyxml2::StrPair" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::StrPair
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBNEEDS_ENTITY_PROCESSING\fP = 0x01, \fBNEEDS_NEWLINE_NORMALIZATION\fP = 0x02, \fBNEEDS_WHITESPACE_COLLAPSING\fP = 0x04, \fBTEXT_ELEMENT\fP = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION, \fBTEXT_ELEMENT_LEAVE_ENTITIES\fP = NEEDS_NEWLINE_NORMALIZATION, \fBATTRIBUTE_NAME\fP = 0, \fBATTRIBUTE_VALUE\fP = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION, \fBATTRIBUTE_VALUE_LEAVE_ENTITIES\fP = NEEDS_NEWLINE_NORMALIZATION, \fBCOMMENT\fP = NEEDS_NEWLINE_NORMALIZATION }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStrPair\fP ()"
+.br
+.ti -1c
+.RI "\fB~StrPair\fP ()"
+.br
+.ti -1c
+.RI "void \fBSet\fP (char *start, char *end, int flags)"
+.br
+.ti -1c
+.RI "const char * \fBGetStr\fP ()"
+.br
+.ti -1c
+.RI "bool \fBEmpty\fP () const"
+.br
+.ti -1c
+.RI "void \fBSetInternedStr\fP (const char *str)"
+.br
+.ti -1c
+.RI "void \fBSetStr\fP (const char *str, int flags=0)"
+.br
+.ti -1c
+.RI "char * \fBParseText\fP (char *in, const char *endTag, int strFlags, int *curLineNumPtr)"
+.br
+.ti -1c
+.RI "char * \fBParseName\fP (char *in)"
+.br
+.ti -1c
+.RI "void \fBTransferTo\fP (\fBStrPair\fP *other)"
+.br
+.ti -1c
+.RI "void \fBReset\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 128 of file tinyxml2\&.h\&.
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINEEDS_ENTITY_PROCESSING \fP\fP
+.TP
+\fB\fINEEDS_NEWLINE_NORMALIZATION \fP\fP
+.TP
+\fB\fINEEDS_WHITESPACE_COLLAPSING \fP\fP
+.TP
+\fB\fITEXT_ELEMENT \fP\fP
+.TP
+\fB\fITEXT_ELEMENT_LEAVE_ENTITIES \fP\fP
+.TP
+\fB\fIATTRIBUTE_NAME \fP\fP
+.TP
+\fB\fIATTRIBUTE_VALUE \fP\fP
+.TP
+\fB\fIATTRIBUTE_VALUE_LEAVE_ENTITIES \fP\fP
+.TP
+\fB\fICOMMENT \fP\fP
+.PP
+Definition at line 131 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::StrPair::StrPair ()\fC [inline]\fP"
+
+.PP
+Definition at line 144 of file tinyxml2\&.h\&.
+.SS "tinyxml2::StrPair::~StrPair ()"
+
+.PP
+Definition at line 147 of file tinyxml2\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool tinyxml2::StrPair::Empty () const\fC [inline]\fP"
+
+.PP
+Definition at line 158 of file tinyxml2\&.h\&.
+.SS "const char * tinyxml2::StrPair::GetStr ()"
+
+.PP
+Definition at line 277 of file tinyxml2\&.cpp\&.
+.SS "char * tinyxml2::StrPair::ParseName (char * in)"
+
+.PP
+Definition at line 228 of file tinyxml2\&.cpp\&.
+.SS "char * tinyxml2::StrPair::ParseText (char * in, const char * endTag, int strFlags, int * curLineNumPtr)"
+
+.PP
+Definition at line 202 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::StrPair::Reset ()"
+
+.PP
+Definition at line 178 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::StrPair::Set (char * start, char * end, int flags)\fC [inline]\fP"
+
+.PP
+Definition at line 147 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::StrPair::SetInternedStr (const char * str)\fC [inline]\fP"
+
+.PP
+Definition at line 162 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::StrPair::SetStr (const char * str, int flags = \fC0\fP)"
+
+.PP
+Definition at line 189 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::StrPair::TransferTo (\fBStrPair\fP * other)"
+
+.PP
+Definition at line 153 of file tinyxml2\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

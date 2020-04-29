@@ -1,0 +1,160 @@
+.TH "tinyxml2::XMLText" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLText
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.PP
+Inherits \fBtinyxml2::XMLNode\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBXMLVisitor\fP *visitor) const"
+.br
+.ti -1c
+.RI "virtual \fBXMLText\fP * \fBToText\fP ()"
+.br
+.RI "Safely cast to Text, or null\&. "
+.ti -1c
+.RI "virtual const \fBXMLText\fP * \fBToText\fP () const"
+.br
+.ti -1c
+.RI "void \fBSetCData\fP (bool isCData)"
+.br
+.RI "Declare whether this should be CDATA or standard text\&. "
+.ti -1c
+.RI "bool \fBCData\fP () const"
+.br
+.RI "Returns true if this is a CDATA text element\&. "
+.ti -1c
+.RI "virtual \fBXMLNode\fP * \fBShallowClone\fP (\fBXMLDocument\fP *document) const"
+.br
+.ti -1c
+.RI "virtual bool \fBShallowEqual\fP (const \fBXMLNode\fP *compare) const"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXMLText\fP (\fBXMLDocument\fP *doc)"
+.br
+.ti -1c
+.RI "virtual \fB~XMLText\fP ()"
+.br
+.ti -1c
+.RI "char * \fBParseDeep\fP (char *p, \fBStrPair\fP *parentEndTag, int *curLineNumPtr)"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBXMLDocument\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+XML text\&. Note that a text node can have child element nodes, for example: 
+.PP
+.nf
+<root>This is <b>bold</b></root>
+
+.fi
+.PP
+ A text node can have 2 ways to output the next\&. 'normal' output and CDATA\&. It will default to the mode it was parsed from the XML file and you generally want to leave it alone, but you can change the output mode with \fBSetCData()\fP and query it with \fBCData()\fP\&. 
+.PP
+Definition at line 958 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::XMLText::XMLText (\fBXMLDocument\fP * doc)\fC [inline]\fP, \fC [explicit]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line 984 of file tinyxml2\&.h\&.
+.SS "virtual tinyxml2::XMLText::~XMLText ()\fC [inline]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line 985 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool tinyxml2::XMLText::Accept (\fBXMLVisitor\fP * visitor) const\fC [virtual]\fP"
+Accept a hierarchical visit of the nodes in the TinyXML-2 DOM\&. Every node in the XML tree will be conditionally visited and the host will be called back via the \fBXMLVisitor\fP interface\&. This is essentially a SAX interface for TinyXML-2\&. (Note however it doesn't re-parse the XML for the callbacks, so the performance of TinyXML-2 is unchanged by using this interface versus any other\&.) The interface has been based on ideas from:
+.IP "\(bu" 2
+http://www.saxproject.org/
+.IP "\(bu" 2
+http://c2.com/cgi/wiki?HierarchicalVisitorPattern Which are both good references for 'visiting'\&. An example of using \fBAccept()\fP: 
+.PP
+.nf
+XMLPrinter printer;
+tinyxmlDoc.Accept( &printer );
+const char* xmlcstr = printer.CStr();
+
+.fi
+.PP
+ 
+.PP
+
+.PP
+Implements \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 1225 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLText::CData () const\fC [inline]\fP"
+
+.PP
+Returns true if this is a CDATA text element\&. 
+.PP
+Definition at line 976 of file tinyxml2\&.h\&.
+.SS "char * tinyxml2::XMLText::ParseDeep (char * p, \fBStrPair\fP * parentEndTag, int * curLineNumPtr)\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented from \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 1179 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLText::SetCData (bool isCData)\fC [inline]\fP"
+
+.PP
+Declare whether this should be CDATA or standard text\&. 
+.PP
+Definition at line 972 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP * tinyxml2::XMLText::ShallowClone (\fBXMLDocument\fP * document) const\fC [virtual]\fP"
+Make a copy of this node, but not its children\&. You may pass in a Document pointer that will be the owner of the new Node\&. If the 'document' is null, then the node returned will be allocated from the current Document\&. (this->\fBGetDocument()\fP) Note: if called on a \fBXMLDocument\fP, this will return null\&. 
+.PP
+Implements \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 1206 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLText::ShallowEqual (const \fBXMLNode\fP * compare) const\fC [virtual]\fP"
+Test if 2 nodes are the same, but don't test children\&. The 2 nodes do not need to be in the same Document\&. Note: if called on a \fBXMLDocument\fP, this will return false\&. 
+.PP
+Implements \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 1217 of file tinyxml2\&.cpp\&.
+.SS "virtual \fBXMLText\fP* tinyxml2::XMLText::ToText ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to Text, or null\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 964 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLText\fP* tinyxml2::XMLText::ToText () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented from \fBtinyxml2::XMLNode\fP\&.
+.PP
+Definition at line 967 of file tinyxml2\&.h\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "friend class \fBXMLDocument\fP\fC [friend]\fP"
+
+.PP
+Definition at line 960 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

@@ -115,7 +115,7 @@ private:
 	int m_randomEvent = 0;
 
 	int m_totalItarationsRunning = 0;
-	int m_totalItarations = 3;
+	int m_totalItarations = 1;
 
 	//++++++++++vars for singe reproduction+++++++
 

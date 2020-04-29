@@ -1,0 +1,69 @@
+.TH "tinyxml2::MemPool" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::MemPool
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.PP
+Inherited by \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLAttribute) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLComment) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLElement) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLText) >\fP, and \fBtinyxml2::MemPoolT< ITEM_SIZE >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMemPool\fP ()"
+.br
+.ti -1c
+.RI "virtual \fB~MemPool\fP ()"
+.br
+.ti -1c
+.RI "virtual int \fBItemSize\fP () const =0"
+.br
+.ti -1c
+.RI "virtual void * \fBAlloc\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBFree\fP (void *)=0"
+.br
+.ti -1c
+.RI "virtual void \fBSetTracked\fP ()=0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 322 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::MemPool::MemPool ()\fC [inline]\fP"
+
+.PP
+Definition at line 325 of file tinyxml2\&.h\&.
+.SS "virtual tinyxml2::MemPool::~MemPool ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line 326 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void* tinyxml2::MemPool::Alloc ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBtinyxml2::MemPoolT< ITEM_SIZE >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLComment) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLText) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLAttribute) >\fP, and \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLElement) >\fP\&.
+.SS "virtual void tinyxml2::MemPool::Free (void *)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBtinyxml2::MemPoolT< ITEM_SIZE >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLComment) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLText) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLAttribute) >\fP, and \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLElement) >\fP\&.
+.SS "virtual int tinyxml2::MemPool::ItemSize () const\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBtinyxml2::MemPoolT< ITEM_SIZE >\fP\&.
+.SS "virtual void tinyxml2::MemPool::SetTracked ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBtinyxml2::MemPoolT< ITEM_SIZE >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLComment) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLText) >\fP, \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLAttribute) >\fP, and \fBtinyxml2::MemPoolT< sizeof(tinyxml2::XMLElement) >\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

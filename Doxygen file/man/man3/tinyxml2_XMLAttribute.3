@@ -1,0 +1,293 @@
+.TH "tinyxml2::XMLAttribute" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLAttribute
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBName\fP () const"
+.br
+.RI "The name of the attribute\&. "
+.ti -1c
+.RI "const char * \fBValue\fP () const"
+.br
+.RI "The value of the attribute\&. "
+.ti -1c
+.RI "int \fBGetLineNum\fP () const"
+.br
+.RI "Gets the line number the attribute is in, if the document was parsed from a file\&. "
+.ti -1c
+.RI "const \fBXMLAttribute\fP * \fBNext\fP () const"
+.br
+.RI "The next attribute in the list\&. "
+.ti -1c
+.RI "int \fBIntValue\fP () const"
+.br
+.ti -1c
+.RI "int64_t \fBInt64Value\fP () const"
+.br
+.ti -1c
+.RI "uint64_t \fBUnsigned64Value\fP () const"
+.br
+.ti -1c
+.RI "unsigned \fBUnsignedValue\fP () const"
+.br
+.RI "Query as an unsigned integer\&. See \fBIntValue()\fP "
+.ti -1c
+.RI "bool \fBBoolValue\fP () const"
+.br
+.RI "Query as a boolean\&. See \fBIntValue()\fP "
+.ti -1c
+.RI "double \fBDoubleValue\fP () const"
+.br
+.RI "Query as a double\&. See \fBIntValue()\fP "
+.ti -1c
+.RI "float \fBFloatValue\fP () const"
+.br
+.RI "Query as a float\&. See \fBIntValue()\fP "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryIntValue\fP (int *value) const"
+.br
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryUnsignedValue\fP (unsigned int *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryInt64Value\fP (int64_t *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryUnsigned64Value\fP (uint64_t *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryBoolValue\fP (bool *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryDoubleValue\fP (double *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "\fBXMLError\fP \fBQueryFloatValue\fP (float *value) const"
+.br
+.RI "See QueryIntValue\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (const char *value)"
+.br
+.RI "Set the attribute to a string value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (int value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (unsigned value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (int64_t value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (uint64_t value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (bool value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (double value)"
+.br
+.RI "Set the attribute to value\&. "
+.ti -1c
+.RI "void \fBSetAttribute\fP (float value)"
+.br
+.RI "Set the attribute to value\&. "
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBXMLElement\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+An attribute is a name-value pair\&. Elements have an arbitrary number of attributes, each with a unique name\&. 
+.PP
+\fBNote\fP
+.RS 4
+The attributes are not XMLNodes\&. You may only query the \fBNext()\fP attribute in a list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1103 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool tinyxml2::XMLAttribute::BoolValue () const\fC [inline]\fP"
+
+.PP
+Query as a boolean\&. See \fBIntValue()\fP 
+.PP
+Definition at line 1150 of file tinyxml2\&.h\&.
+.SS "double tinyxml2::XMLAttribute::DoubleValue () const\fC [inline]\fP"
+
+.PP
+Query as a double\&. See \fBIntValue()\fP 
+.PP
+Definition at line 1156 of file tinyxml2\&.h\&.
+.SS "float tinyxml2::XMLAttribute::FloatValue () const\fC [inline]\fP"
+
+.PP
+Query as a float\&. See \fBIntValue()\fP 
+.PP
+Definition at line 1162 of file tinyxml2\&.h\&.
+.SS "int tinyxml2::XMLAttribute::GetLineNum () const\fC [inline]\fP"
+
+.PP
+Gets the line number the attribute is in, if the document was parsed from a file\&. 
+.PP
+Definition at line 1114 of file tinyxml2\&.h\&.
+.SS "int64_t tinyxml2::XMLAttribute::Int64Value () const\fC [inline]\fP"
+
+.PP
+Definition at line 1131 of file tinyxml2\&.h\&.
+.SS "int tinyxml2::XMLAttribute::IntValue () const\fC [inline]\fP"
+IntValue interprets the attribute as an integer, and returns the value\&. If the value isn't an integer, 0 will be returned\&. There is no error checking; use \fBQueryIntValue()\fP if you need error checking\&. 
+.PP
+Definition at line 1125 of file tinyxml2\&.h\&.
+.SS "const char * tinyxml2::XMLAttribute::Name () const"
+
+.PP
+The name of the attribute\&. 
+.PP
+Definition at line 1378 of file tinyxml2\&.cpp\&.
+.SS "const \fBXMLAttribute\fP* tinyxml2::XMLAttribute::Next () const\fC [inline]\fP"
+
+.PP
+The next attribute in the list\&. 
+.PP
+Definition at line 1117 of file tinyxml2\&.h\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryBoolValue (bool * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1458 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryDoubleValue (double * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1476 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryFloatValue (float * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1467 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryInt64Value (int64_t * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1440 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryIntValue (int * value) const"
+QueryIntValue interprets the attribute as an integer, and returns the value in the provided parameter\&. The function will return XML_SUCCESS on success, and XML_WRONG_ATTRIBUTE_TYPE if the conversion is not successful\&. 
+.PP
+Definition at line 1422 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryUnsigned64Value (uint64_t * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1449 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLError\fP tinyxml2::XMLAttribute::QueryUnsignedValue (unsigned int * value) const"
+
+.PP
+See QueryIntValue\&. 
+.PP
+Definition at line 1431 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (bool value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1522 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (const char * value)"
+
+.PP
+Set the attribute to a string value\&. 
+.PP
+Definition at line 1485 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (double value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1529 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (float value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1536 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (int value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1491 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (int64_t value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1507 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (uint64_t value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1514 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLAttribute::SetAttribute (unsigned value)"
+
+.PP
+Set the attribute to value\&. 
+.PP
+Definition at line 1499 of file tinyxml2\&.cpp\&.
+.SS "uint64_t tinyxml2::XMLAttribute::Unsigned64Value () const\fC [inline]\fP"
+
+.PP
+Definition at line 1137 of file tinyxml2\&.h\&.
+.SS "unsigned tinyxml2::XMLAttribute::UnsignedValue () const\fC [inline]\fP"
+
+.PP
+Query as an unsigned integer\&. See \fBIntValue()\fP 
+.PP
+Definition at line 1144 of file tinyxml2\&.h\&.
+.SS "const char * tinyxml2::XMLAttribute::Value () const"
+
+.PP
+The value of the attribute\&. 
+.PP
+Definition at line 1383 of file tinyxml2\&.cpp\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "friend class \fBXMLElement\fP\fC [friend]\fP"
+
+.PP
+Definition at line 1105 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

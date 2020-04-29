@@ -1,0 +1,448 @@
+.TH "tinyxml2::XMLPrinter" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLPrinter
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.PP
+Inherits \fBtinyxml2::XMLVisitor\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXMLPrinter\fP (FILE *file=0, bool compact=false, int depth=0)"
+.br
+.ti -1c
+.RI "virtual \fB~XMLPrinter\fP ()"
+.br
+.ti -1c
+.RI "void \fBPushHeader\fP (bool writeBOM, bool writeDeclaration)"
+.br
+.ti -1c
+.RI "void \fBOpenElement\fP (const char *name, bool compactMode=false)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, const char *value)"
+.br
+.RI "If streaming, add an attribute to an open element\&. "
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, int value)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, unsigned value)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, int64_t value)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, uint64_t value)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, bool value)"
+.br
+.ti -1c
+.RI "void \fBPushAttribute\fP (const char *name, double value)"
+.br
+.ti -1c
+.RI "virtual void \fBCloseElement\fP (bool compactMode=false)"
+.br
+.RI "If streaming, close the Element\&. "
+.ti -1c
+.RI "void \fBPushText\fP (const char *text, bool cdata=false)"
+.br
+.RI "Add a text node\&. "
+.ti -1c
+.RI "void \fBPushText\fP (int value)"
+.br
+.RI "Add a text node from an integer\&. "
+.ti -1c
+.RI "void \fBPushText\fP (unsigned value)"
+.br
+.RI "Add a text node from an unsigned\&. "
+.ti -1c
+.RI "void \fBPushText\fP (int64_t value)"
+.br
+.RI "Add a text node from a signed 64bit integer\&. "
+.ti -1c
+.RI "void \fBPushText\fP (uint64_t value)"
+.br
+.RI "Add a text node from an unsigned 64bit integer\&. "
+.ti -1c
+.RI "void \fBPushText\fP (bool value)"
+.br
+.RI "Add a text node from a bool\&. "
+.ti -1c
+.RI "void \fBPushText\fP (float value)"
+.br
+.RI "Add a text node from a float\&. "
+.ti -1c
+.RI "void \fBPushText\fP (double value)"
+.br
+.RI "Add a text node from a double\&. "
+.ti -1c
+.RI "void \fBPushComment\fP (const char *comment)"
+.br
+.RI "Add a comment\&. "
+.ti -1c
+.RI "void \fBPushDeclaration\fP (const char *value)"
+.br
+.ti -1c
+.RI "void \fBPushUnknown\fP (const char *value)"
+.br
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBXMLDocument\fP &)"
+.br
+.RI "Visit a document\&. "
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBXMLDocument\fP &)"
+.br
+.RI "Visit a document\&. "
+.ti -1c
+.RI "virtual bool \fBVisitEnter\fP (const \fBXMLElement\fP &element, const \fBXMLAttribute\fP *attribute)"
+.br
+.RI "Visit an element\&. "
+.ti -1c
+.RI "virtual bool \fBVisitExit\fP (const \fBXMLElement\fP &element)"
+.br
+.RI "Visit an element\&. "
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBXMLText\fP &text)"
+.br
+.RI "Visit a text node\&. "
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBXMLComment\fP &comment)"
+.br
+.RI "Visit a comment node\&. "
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBXMLDeclaration\fP &declaration)"
+.br
+.RI "Visit a declaration\&. "
+.ti -1c
+.RI "virtual bool \fBVisit\fP (const \fBXMLUnknown\fP &unknown)"
+.br
+.RI "Visit an unknown node\&. "
+.ti -1c
+.RI "const char * \fBCStr\fP () const"
+.br
+.ti -1c
+.RI "int \fBCStrSize\fP () const"
+.br
+.ti -1c
+.RI "void \fBClearBuffer\fP (bool resetToFirstElement=true)"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual bool \fBCompactMode\fP (const \fBXMLElement\fP &)"
+.br
+.ti -1c
+.RI "virtual void \fBPrintSpace\fP (int depth)"
+.br
+.ti -1c
+.RI "void \fBPrint\fP (const char *format,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "void \fBWrite\fP (const char *data, size_t size)"
+.br
+.ti -1c
+.RI "void \fBWrite\fP (const char *data)"
+.br
+.ti -1c
+.RI "void \fBPutc\fP (char ch)"
+.br
+.ti -1c
+.RI "void \fBSealElementIfJustOpened\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "bool \fB_elementJustOpened\fP"
+.br
+.ti -1c
+.RI "\fBDynArray\fP< const char *, 10 > \fB_stack\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Printing functionality\&. The \fBXMLPrinter\fP gives you more options than the \fBXMLDocument::Print()\fP method\&. It can:
+.IP "1." 4
+Print to memory\&.
+.IP "2." 4
+Print to a file you provide\&.
+.IP "3." 4
+Print XML without a \fBXMLDocument\fP\&. Print to Memory 
+.PP
+.nf
+XMLPrinter printer;
+doc.Print( &printer );
+SomeFunction( printer.CStr() );
+
+.fi
+.PP
+ Print to a File You provide the file pointer\&. 
+.PP
+.nf
+XMLPrinter printer( fp );
+doc.Print( &printer );
+
+.fi
+.PP
+ Print without a \fBXMLDocument\fP When loading, an XML parser is very useful\&. However, sometimes when saving, it just gets in the way\&. The code is often set up for streaming, and constructing the DOM is just overhead\&. The Printer supports the streaming case\&. The following code prints out a trivially simple XML file without ever creating an XML document\&. 
+.PP
+.nf
+XMLPrinter printer( fp );
+printer.OpenElement( "foo" );
+printer.PushAttribute( "foo", "bar" );
+printer.CloseElement();
+
+.fi
+.PP
+ 
+.PP
+
+.PP
+Definition at line 2152 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::XMLPrinter::XMLPrinter (FILE * file = \fC0\fP, bool compact = \fCfalse\fP, int depth = \fC0\fP)"
+Construct the printer\&. If the FILE* is specified, this will print to the FILE\&. Else it will print to memory, and the result is available in \fBCStr()\fP\&. If 'compact' is set to true, then output is created with only required whitespace and newlines\&. 
+.PP
+Definition at line 2508 of file tinyxml2\&.cpp\&.
+.SS "virtual tinyxml2::XMLPrinter::~XMLPrinter ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line 2162 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void tinyxml2::XMLPrinter::ClearBuffer (bool resetToFirstElement = \fCtrue\fP)\fC [inline]\fP"
+If in print to memory mode, reset the buffer to the beginning\&. 
+.PP
+Definition at line 2236 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::XMLPrinter::CloseElement (bool compactMode = \fCfalse\fP)\fC [virtual]\fP"
+
+.PP
+If streaming, close the Element\&. 
+.PP
+Definition at line 2737 of file tinyxml2\&.cpp\&.
+.SS "virtual bool tinyxml2::XMLPrinter::CompactMode (const \fBXMLElement\fP &)\fC [inline]\fP, \fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line 2243 of file tinyxml2\&.h\&.
+.SS "const char* tinyxml2::XMLPrinter::CStr () const\fC [inline]\fP"
+If in print to memory mode, return a pointer to the XML file in memory\&. 
+.PP
+Definition at line 2221 of file tinyxml2\&.h\&.
+.SS "int tinyxml2::XMLPrinter::CStrSize () const\fC [inline]\fP"
+If in print to memory mode, return the size of the XML file in memory\&. (Note the size returned includes the terminating null\&.) 
+.PP
+Definition at line 2229 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::XMLPrinter::OpenElement (const char * name, bool compactMode = \fCfalse\fP)"
+If streaming, start writing an element\&. The element must be closed with \fBCloseElement()\fP 
+.PP
+Definition at line 2659 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::Print (const char * format,  \&.\&.\&.)\fC [protected]\fP"
+
+.PP
+Definition at line 2536 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PrintSpace (int depth)\fC [protected]\fP, \fC [virtual]\fP"
+Prints out the space before an element\&. You may override to change the space and tabs used\&. A \fBPrintSpace()\fP override should call \fBPrint()\fP\&. 
+.PP
+Definition at line 2584 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, bool value)"
+
+.PP
+Definition at line 2721 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, const char * value)"
+
+.PP
+If streaming, add an attribute to an open element\&. 
+.PP
+Definition at line 2678 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, double value)"
+
+.PP
+Definition at line 2729 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, int value)"
+
+.PP
+Definition at line 2689 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, int64_t value)"
+
+.PP
+Definition at line 2705 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, uint64_t value)"
+
+.PP
+Definition at line 2713 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushAttribute (const char * name, unsigned value)"
+
+.PP
+Definition at line 2697 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushComment (const char * comment)"
+
+.PP
+Add a comment\&. 
+.PP
+Definition at line 2847 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushDeclaration (const char * value)"
+
+.PP
+Definition at line 2862 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushHeader (bool writeBOM, bool writeDeclaration)"
+If streaming, write the BOM and declaration\&. 
+.PP
+Definition at line 2647 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (bool value)"
+
+.PP
+Add a text node from a bool\&. 
+.PP
+Definition at line 2823 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (const char * text, bool cdata = \fCfalse\fP)"
+
+.PP
+Add a text node\&. 
+.PP
+Definition at line 2775 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (double value)"
+
+.PP
+Add a text node from a double\&. 
+.PP
+Definition at line 2839 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (float value)"
+
+.PP
+Add a text node from a float\&. 
+.PP
+Definition at line 2831 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (int value)"
+
+.PP
+Add a text node from an integer\&. 
+.PP
+Definition at line 2807 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (int64_t value)"
+
+.PP
+Add a text node from a signed 64bit integer\&. 
+.PP
+Definition at line 2791 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (uint64_t value)"
+
+.PP
+Add a text node from an unsigned 64bit integer\&. 
+.PP
+Definition at line 2799 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushText (unsigned value)"
+
+.PP
+Add a text node from an unsigned\&. 
+.PP
+Definition at line 2815 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::PushUnknown (const char * value)"
+
+.PP
+Definition at line 2877 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::Putc (char ch)\fC [protected]\fP"
+
+.PP
+Definition at line 2571 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::SealElementIfJustOpened ()\fC [protected]\fP"
+
+.PP
+Definition at line 2765 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::Visit (const \fBXMLComment\fP &)\fC [virtual]\fP"
+
+.PP
+Visit a comment node\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2932 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::Visit (const \fBXMLDeclaration\fP &)\fC [virtual]\fP"
+
+.PP
+Visit a declaration\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2938 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::Visit (const \fBXMLText\fP &)\fC [virtual]\fP"
+
+.PP
+Visit a text node\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2925 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::Visit (const \fBXMLUnknown\fP &)\fC [virtual]\fP"
+
+.PP
+Visit an unknown node\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2945 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::VisitEnter (const \fBXMLDocument\fP &)\fC [virtual]\fP"
+
+.PP
+Visit a document\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2892 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLPrinter::VisitEnter (const \fBXMLElement\fP &, const \fBXMLAttribute\fP *)\fC [virtual]\fP"
+
+.PP
+Visit an element\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2902 of file tinyxml2\&.cpp\&.
+.SS "virtual bool tinyxml2::XMLPrinter::VisitExit (const \fBXMLDocument\fP &)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Visit a document\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2205 of file tinyxml2\&.h\&.
+.SS "bool tinyxml2::XMLPrinter::VisitExit (const \fBXMLElement\fP &)\fC [virtual]\fP"
+
+.PP
+Visit an element\&. 
+.PP
+Reimplemented from \fBtinyxml2::XMLVisitor\fP\&.
+.PP
+Definition at line 2918 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLPrinter::Write (const char * data)\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line 2251 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::XMLPrinter::Write (const char * data, size_t size)\fC [protected]\fP"
+
+.PP
+Definition at line 2558 of file tinyxml2\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "bool tinyxml2::XMLPrinter::_elementJustOpened\fC [protected]\fP"
+
+.PP
+Definition at line 2255 of file tinyxml2\&.h\&.
+.SS "\fBDynArray\fP< const char*, 10 > tinyxml2::XMLPrinter::_stack\fC [protected]\fP"
+
+.PP
+Definition at line 2256 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

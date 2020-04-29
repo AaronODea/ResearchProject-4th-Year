@@ -1,0 +1,166 @@
+.TH "GUI" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+GUI
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Gui\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBGUI\fP (sf::RenderWindow &t_window)"
+.br
+.ti -1c
+.RI "\fB~GUI\fP ()"
+.br
+.ti -1c
+.RI "void \fBDraw\fP ()"
+.br
+.ti -1c
+.RI "void \fBupdate\fP (float t_speedAVG, float t_strAVG, float t_intAVG, float t_sizeAVG, int t_highestGen, int t_currentStat)"
+.br
+.RI "update for graph "
+.ti -1c
+.RI "void \fBSetUpLineGraph\fP (sf::Font &t_font)"
+.br
+.RI "set up graph lines "
+.ti -1c
+.RI "void \fBupdateGraphSpeed\fP (float t_AvgStatistic)"
+.br
+.RI "update speed graph "
+.ti -1c
+.RI "void \fBupdateGraphStr\fP (float t_AvgStatistic)"
+.br
+.RI "update str graph "
+.ti -1c
+.RI "void \fBupdateGraphInt\fP (float t_AvgStatistic)"
+.br
+.RI "update int graph "
+.ti -1c
+.RI "void \fBupdateGraphSize\fP (float t_AvgStatistic)"
+.br
+.RI "update size graph "
+.ti -1c
+.RI "std::vector< float > \fBreturnLogSpeed\fP ()"
+.br
+.RI "return speed logs "
+.ti -1c
+.RI "std::vector< float > \fBreturnLogStr\fP ()"
+.br
+.RI "return str logs "
+.ti -1c
+.RI "std::vector< float > \fBreturnLogInt\fP ()"
+.br
+.RI "return int logs "
+.ti -1c
+.RI "std::vector< float > \fBreturnLogSize\fP ()"
+.br
+.RI "return size logs "
+.ti -1c
+.RI "std::vector< int > \fBreturnLogTotalPOP\fP ()"
+.br
+.RI "return total population logs "
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.RI "reset for \fBGUI\fP graphs "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 7 of file Gui\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "GUI::GUI (sf::RenderWindow & t_window)"
+
+.PP
+Definition at line 3 of file Gui\&.cpp\&.
+.SS "GUI::~GUI ()"
+
+.PP
+Definition at line 22 of file Gui\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void GUI::Draw ()"
+
+.PP
+Definition at line 26 of file Gui\&.cpp\&.
+.SS "void GUI::reset ()"
+
+.PP
+reset for \fBGUI\fP graphs 
+.PP
+Definition at line 283 of file Gui\&.cpp\&.
+.SS "std::vector< float > GUI::returnLogInt ()"
+
+.PP
+return int logs 
+.PP
+Definition at line 260 of file Gui\&.cpp\&.
+.SS "std::vector< float > GUI::returnLogSize ()"
+
+.PP
+return size logs 
+.PP
+Definition at line 267 of file Gui\&.cpp\&.
+.SS "std::vector< float > GUI::returnLogSpeed ()"
+
+.PP
+return speed logs 
+.PP
+Definition at line 246 of file Gui\&.cpp\&.
+.SS "std::vector< float > GUI::returnLogStr ()"
+
+.PP
+return str logs 
+.PP
+Definition at line 253 of file Gui\&.cpp\&.
+.SS "std::vector< int > GUI::returnLogTotalPOP ()"
+
+.PP
+return total population logs 
+.PP
+Definition at line 275 of file Gui\&.cpp\&.
+.SS "void GUI::SetUpLineGraph (sf::Font & t_font)"
+
+.PP
+set up graph lines 
+.PP
+Definition at line 105 of file Gui\&.cpp\&.
+.SS "void GUI::update (float t_speedAVG, float t_strAVG, float t_intAVG, float t_sizeAVG, int t_highestGen, int t_currentStat)"
+
+.PP
+update for graph 
+.PP
+Definition at line 55 of file Gui\&.cpp\&.
+.SS "void GUI::updateGraphInt (float t_AvgStatistic)"
+
+.PP
+update int graph 
+.PP
+Definition at line 203 of file Gui\&.cpp\&.
+.SS "void GUI::updateGraphSize (float t_AvgStatistic)"
+
+.PP
+update size graph 
+.PP
+Definition at line 225 of file Gui\&.cpp\&.
+.SS "void GUI::updateGraphSpeed (float t_AvgStatistic)"
+
+.PP
+update speed graph 
+.PP
+Definition at line 159 of file Gui\&.cpp\&.
+.SS "void GUI::updateGraphStr (float t_AvgStatistic)"
+
+.PP
+update str graph 
+.PP
+Definition at line 180 of file Gui\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

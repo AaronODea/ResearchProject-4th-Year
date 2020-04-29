@@ -49,6 +49,9 @@ void GUI::Draw()
 	m_window.draw(m_currentAVG);
 }
 
+/// <summary>
+/// update for graph
+/// </summary>
 void GUI::update(float t_speedAVG, float t_strAVG, float t_intAVG, float t_sizeAVG, int t_highestGen, int t_currentStat) 
 {
 		m_currentStat = t_currentStat;
@@ -96,6 +99,9 @@ void GUI::update(float t_speedAVG, float t_strAVG, float t_intAVG, float t_sizeA
 		}
 }
 
+/// <summary>
+/// set up graph lines
+/// </summary>
 void GUI::SetUpLineGraph(sf::Font& t_font)
 {
 
@@ -147,7 +153,9 @@ void GUI::SetUpLineGraph(sf::Font& t_font)
 
 
 }
-
+/// <summary>
+/// update speed graph
+/// </summary>
 void GUI::updateGraphSpeed(float t_AvgStatistic)
 {
 		m_AverageGraphYSpeed = (t_AvgStatistic * 2);
@@ -166,6 +174,9 @@ void GUI::updateGraphSpeed(float t_AvgStatistic)
 
 		m_currentAVG.setPosition(sf::Vector2f(m_AverageGraphXSpeed, (HEIGHT / 1.08f) - m_AverageGraphYSpeed));
 }
+/// <summary>
+/// update str graph
+/// </summary>
 void GUI::updateGraphStr(float t_AvgStatistic)
 {
 
@@ -186,6 +197,9 @@ void GUI::updateGraphStr(float t_AvgStatistic)
 	m_currentAVG.setPosition(sf::Vector2f(m_AverageGraphXStr, (HEIGHT / 1.08f) - m_AverageGraphYStr));
 
 }
+/// <summary>
+/// update int graph
+/// </summary>
 void GUI::updateGraphInt(float t_AvgStatistic)
 {
 		m_AverageGraphYInt = (t_AvgStatistic * 2);
@@ -205,6 +219,9 @@ void GUI::updateGraphInt(float t_AvgStatistic)
 
 		m_currentAVG.setPosition(sf::Vector2f(m_AverageGraphXInt, (HEIGHT / 1.08f) - m_AverageGraphYInt));
 }
+/// <summary>
+/// update size graph
+/// </summary>
 void GUI::updateGraphSize(float t_AvgStatistic)
 {
 		m_AverageGraphYSize = (t_AvgStatistic * 2);
@@ -223,37 +240,48 @@ void GUI::updateGraphSize(float t_AvgStatistic)
 
 		m_currentAVG.setPosition(sf::Vector2f(m_AverageGraphXSize, (HEIGHT / 1.08f) - m_AverageGraphYSize));
 }
-
+/// <summary>
+/// return speed logs
+/// </summary>
 std::vector<float> GUI::returnLogSpeed()
 {
 	return m_speedAvgLog;
 }
-
+/// <summary>
+/// return str logs
+/// </summary>
 std::vector<float> GUI::returnLogStr()
 {
 	return m_strAvgLog;
 }
-
+/// <summary>
+/// return int logs
+/// </summary>
 std::vector<float> GUI::returnLogInt()
 {
 	return m_intAvgLog;
 }
-
+/// <summary>
+/// return size logs
+/// </summary>
 std::vector<float> GUI::returnLogSize()
 {
 	return m_sizedAvgLog;
 
 }
-
+/// <summary>
+/// return total population logs
+/// </summary>
 std::vector<int> GUI::returnLogTotalPOP()
 {
 	return m_totalPopulationLog;
 }
 
+/// <summary>
+/// reset for GUI graphs
+/// </summary>
 void GUI::reset()
 {
-
-
 
 	m_speedAvgLog.clear();
 	m_strAvgLog.clear();

@@ -1,0 +1,604 @@
+.TH "tinyxml2::XMLNode" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLNode
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.PP
+Inherited by \fBtinyxml2::XMLComment\fP, \fBtinyxml2::XMLDeclaration\fP, \fBtinyxml2::XMLDocument\fP, \fBtinyxml2::XMLElement\fP, \fBtinyxml2::XMLText\fP, and \fBtinyxml2::XMLUnknown\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "const \fBXMLDocument\fP * \fBGetDocument\fP () const"
+.br
+.RI "Get the \fBXMLDocument\fP that owns this \fBXMLNode\fP\&. "
+.ti -1c
+.RI "\fBXMLDocument\fP * \fBGetDocument\fP ()"
+.br
+.RI "Get the \fBXMLDocument\fP that owns this \fBXMLNode\fP\&. "
+.ti -1c
+.RI "virtual \fBXMLElement\fP * \fBToElement\fP ()"
+.br
+.RI "Safely cast to an Element, or null\&. "
+.ti -1c
+.RI "virtual \fBXMLText\fP * \fBToText\fP ()"
+.br
+.RI "Safely cast to Text, or null\&. "
+.ti -1c
+.RI "virtual \fBXMLComment\fP * \fBToComment\fP ()"
+.br
+.RI "Safely cast to a Comment, or null\&. "
+.ti -1c
+.RI "virtual \fBXMLDocument\fP * \fBToDocument\fP ()"
+.br
+.RI "Safely cast to a Document, or null\&. "
+.ti -1c
+.RI "virtual \fBXMLDeclaration\fP * \fBToDeclaration\fP ()"
+.br
+.RI "Safely cast to a Declaration, or null\&. "
+.ti -1c
+.RI "virtual \fBXMLUnknown\fP * \fBToUnknown\fP ()"
+.br
+.RI "Safely cast to an Unknown, or null\&. "
+.ti -1c
+.RI "virtual const \fBXMLElement\fP * \fBToElement\fP () const"
+.br
+.ti -1c
+.RI "virtual const \fBXMLText\fP * \fBToText\fP () const"
+.br
+.ti -1c
+.RI "virtual const \fBXMLComment\fP * \fBToComment\fP () const"
+.br
+.ti -1c
+.RI "virtual const \fBXMLDocument\fP * \fBToDocument\fP () const"
+.br
+.ti -1c
+.RI "virtual const \fBXMLDeclaration\fP * \fBToDeclaration\fP () const"
+.br
+.ti -1c
+.RI "virtual const \fBXMLUnknown\fP * \fBToUnknown\fP () const"
+.br
+.ti -1c
+.RI "const char * \fBValue\fP () const"
+.br
+.ti -1c
+.RI "void \fBSetValue\fP (const char *val, bool staticMem=false)"
+.br
+.ti -1c
+.RI "int \fBGetLineNum\fP () const"
+.br
+.RI "Gets the line number the node is in, if the document was parsed from a file\&. "
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBParent\fP () const"
+.br
+.RI "Get the parent of this node on the DOM\&. "
+.ti -1c
+.RI "\fBXMLNode\fP * \fBParent\fP ()"
+.br
+.ti -1c
+.RI "bool \fBNoChildren\fP () const"
+.br
+.RI "Returns true if this node has no children\&. "
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBFirstChild\fP () const"
+.br
+.RI "Get the first child node, or null if none exists\&. "
+.ti -1c
+.RI "\fBXMLNode\fP * \fBFirstChild\fP ()"
+.br
+.ti -1c
+.RI "const \fBXMLElement\fP * \fBFirstChildElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "\fBXMLElement\fP * \fBFirstChildElement\fP (const char *name=0)"
+.br
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBLastChild\fP () const"
+.br
+.RI "Get the last child node, or null if none exists\&. "
+.ti -1c
+.RI "\fBXMLNode\fP * \fBLastChild\fP ()"
+.br
+.ti -1c
+.RI "const \fBXMLElement\fP * \fBLastChildElement\fP (const char *name=0) const"
+.br
+.ti -1c
+.RI "\fBXMLElement\fP * \fBLastChildElement\fP (const char *name=0)"
+.br
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBPreviousSibling\fP () const"
+.br
+.RI "Get the previous (left) sibling node of this node\&. "
+.ti -1c
+.RI "\fBXMLNode\fP * \fBPreviousSibling\fP ()"
+.br
+.ti -1c
+.RI "const \fBXMLElement\fP * \fBPreviousSiblingElement\fP (const char *name=0) const"
+.br
+.RI "Get the previous (left) sibling element of this node, with an optionally supplied name\&. "
+.ti -1c
+.RI "\fBXMLElement\fP * \fBPreviousSiblingElement\fP (const char *name=0)"
+.br
+.ti -1c
+.RI "const \fBXMLNode\fP * \fBNextSibling\fP () const"
+.br
+.RI "Get the next (right) sibling node of this node\&. "
+.ti -1c
+.RI "\fBXMLNode\fP * \fBNextSibling\fP ()"
+.br
+.ti -1c
+.RI "const \fBXMLElement\fP * \fBNextSiblingElement\fP (const char *name=0) const"
+.br
+.RI "Get the next (right) sibling element of this node, with an optionally supplied name\&. "
+.ti -1c
+.RI "\fBXMLElement\fP * \fBNextSiblingElement\fP (const char *name=0)"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fBInsertEndChild\fP (\fBXMLNode\fP *addThis)"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fBLinkEndChild\fP (\fBXMLNode\fP *addThis)"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fBInsertFirstChild\fP (\fBXMLNode\fP *addThis)"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fBInsertAfterChild\fP (\fBXMLNode\fP *afterThis, \fBXMLNode\fP *addThis)"
+.br
+.ti -1c
+.RI "void \fBDeleteChildren\fP ()"
+.br
+.ti -1c
+.RI "void \fBDeleteChild\fP (\fBXMLNode\fP *node)"
+.br
+.ti -1c
+.RI "virtual \fBXMLNode\fP * \fBShallowClone\fP (\fBXMLDocument\fP *document) const =0"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fBDeepClone\fP (\fBXMLDocument\fP *target) const"
+.br
+.ti -1c
+.RI "virtual bool \fBShallowEqual\fP (const \fBXMLNode\fP *compare) const =0"
+.br
+.ti -1c
+.RI "virtual bool \fBAccept\fP (\fBXMLVisitor\fP *visitor) const =0"
+.br
+.ti -1c
+.RI "void \fBSetUserData\fP (void *userData)"
+.br
+.ti -1c
+.RI "void * \fBGetUserData\fP () const"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXMLNode\fP (\fBXMLDocument\fP *)"
+.br
+.ti -1c
+.RI "virtual \fB~XMLNode\fP ()"
+.br
+.ti -1c
+.RI "virtual char * \fBParseDeep\fP (char *p, \fBStrPair\fP *parentEndTag, int *curLineNumPtr)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBXMLDocument\fP * \fB_document\fP"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fB_parent\fP"
+.br
+.ti -1c
+.RI "\fBStrPair\fP \fB_value\fP"
+.br
+.ti -1c
+.RI "int \fB_parseLineNum\fP"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fB_firstChild\fP"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fB_lastChild\fP"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fB_prev\fP"
+.br
+.ti -1c
+.RI "\fBXMLNode\fP * \fB_next\fP"
+.br
+.ti -1c
+.RI "void * \fB_userData\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBXMLDocument\fP"
+.br
+.ti -1c
+.RI "class \fBXMLElement\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBXMLNode\fP is a base class for every object that is in the XML Document Object Model (DOM), except XMLAttributes\&. Nodes have siblings, a parent, and children which can be navigated\&. A node is always in a \fBXMLDocument\fP\&. The type of a \fBXMLNode\fP can be queried, and it can be cast to its more defined type\&. A \fBXMLDocument\fP allocates memory for all its Nodes\&. When the \fBXMLDocument\fP gets deleted, all its Nodes will also be deleted\&. 
+.PP
+.nf
+A Document can contain: Element (container or leaf)
+                        Comment (leaf)
+                        Unknown (leaf)
+                        Declaration( leaf )
+An Element can contain: Element (container or leaf)
+                        Text    (leaf)
+                        Attributes (not on tree)
+                        Comment (leaf)
+                        Unknown (leaf)
+
+.fi
+.PP
+ 
+.PP
+Definition at line 652 of file tinyxml2\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "tinyxml2::XMLNode::XMLNode (\fBXMLDocument\fP * doc)\fC [explicit]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line 774 of file tinyxml2\&.cpp\&.
+.SS "tinyxml2::XMLNode::~XMLNode ()\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line 787 of file tinyxml2\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual bool tinyxml2::XMLNode::Accept (\fBXMLVisitor\fP * visitor) const\fC [pure virtual]\fP"
+Accept a hierarchical visit of the nodes in the TinyXML-2 DOM\&. Every node in the XML tree will be conditionally visited and the host will be called back via the \fBXMLVisitor\fP interface\&. This is essentially a SAX interface for TinyXML-2\&. (Note however it doesn't re-parse the XML for the callbacks, so the performance of TinyXML-2 is unchanged by using this interface versus any other\&.) The interface has been based on ideas from:
+.IP "\(bu" 2
+http://www.saxproject.org/
+.IP "\(bu" 2
+http://c2.com/cgi/wiki?HierarchicalVisitorPattern Which are both good references for 'visiting'\&. An example of using \fBAccept()\fP: 
+.PP
+.nf
+XMLPrinter printer;
+tinyxmlDoc.Accept( &printer );
+const char* xmlcstr = printer.CStr();
+
+.fi
+.PP
+ 
+.PP
+
+.PP
+Implemented in \fBtinyxml2::XMLDocument\fP, \fBtinyxml2::XMLElement\fP, \fBtinyxml2::XMLUnknown\fP, \fBtinyxml2::XMLDeclaration\fP, \fBtinyxml2::XMLComment\fP, and \fBtinyxml2::XMLText\fP\&.
+.SS "\fBXMLNode\fP * tinyxml2::XMLNode::DeepClone (\fBXMLDocument\fP * target) const"
+Make a copy of this node and all its children\&. If the 'target' is null, then the nodes will be allocated in the current document\&. If 'target' is specified, the memory will be allocated is the specified \fBXMLDocument\fP\&. NOTE: This is probably not the correct tool to copy a document, since XMLDocuments can have multiple top level XMLNodes\&. You probably want to use \fBXMLDocument::DeepCopy()\fP 
+.PP
+Definition at line 813 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLNode::DeleteChild (\fBXMLNode\fP * node)"
+Delete a child of this node\&. 
+.PP
+Definition at line 860 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLNode::DeleteChildren ()"
+Delete all the children of this node\&. 
+.PP
+Definition at line 826 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::FirstChild ()\fC [inline]\fP"
+
+.PP
+Definition at line 751 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLNode::FirstChild () const\fC [inline]\fP"
+
+.PP
+Get the first child node, or null if none exists\&. 
+.PP
+Definition at line 747 of file tinyxml2\&.h\&.
+.SS "\fBXMLElement\fP* tinyxml2::XMLNode::FirstChildElement (const char * name = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Definition at line 760 of file tinyxml2\&.h\&.
+.SS "const \fBXMLElement\fP * tinyxml2::XMLNode::FirstChildElement (const char * name = \fC0\fP) const"
+Get the first child element, or optionally the first child element with the specified name\&. 
+.PP
+Definition at line 972 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLDocument\fP* tinyxml2::XMLNode::GetDocument ()\fC [inline]\fP"
+
+.PP
+Get the \fBXMLDocument\fP that owns this \fBXMLNode\fP\&. 
+.PP
+Definition at line 664 of file tinyxml2\&.h\&.
+.SS "const \fBXMLDocument\fP* tinyxml2::XMLNode::GetDocument () const\fC [inline]\fP"
+
+.PP
+Get the \fBXMLDocument\fP that owns this \fBXMLNode\fP\&. 
+.PP
+Definition at line 659 of file tinyxml2\&.h\&.
+.SS "int tinyxml2::XMLNode::GetLineNum () const\fC [inline]\fP"
+
+.PP
+Gets the line number the node is in, if the document was parsed from a file\&. 
+.PP
+Definition at line 730 of file tinyxml2\&.h\&.
+.SS "void* tinyxml2::XMLNode::GetUserData () const\fC [inline]\fP"
+Get user data set into the \fBXMLNode\fP\&. TinyXML-2 in no way processes or interprets user data\&. It is initially 0\&. 
+.PP
+Definition at line 915 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP * tinyxml2::XMLNode::InsertAfterChild (\fBXMLNode\fP * afterThis, \fBXMLNode\fP * addThis)"
+Add a node after the specified child node\&. If the child node is already part of the document, it is moved from its old location to the new location\&. Returns the addThis argument or 0 if the afterThis node is not a child of this node, or if the node does not belong to the same document\&. 
+.PP
+Definition at line 934 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP * tinyxml2::XMLNode::InsertEndChild (\fBXMLNode\fP * addThis)"
+Add a child node as the last (right) child\&. If the child node is already part of the document, it is moved from its old location to the new location\&. Returns the addThis argument or 0 if the node does not belong to the same document\&. 
+.PP
+Definition at line 873 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP * tinyxml2::XMLNode::InsertFirstChild (\fBXMLNode\fP * addThis)"
+Add a child node as the first (left) child\&. If the child node is already part of the document, it is moved from its old location to the new location\&. Returns the addThis argument or 0 if the node does not belong to the same document\&. 
+.PP
+Definition at line 903 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::LastChild ()\fC [inline]\fP"
+
+.PP
+Definition at line 769 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLNode::LastChild () const\fC [inline]\fP"
+
+.PP
+Get the last child node, or null if none exists\&. 
+.PP
+Definition at line 765 of file tinyxml2\&.h\&.
+.SS "\fBXMLElement\fP* tinyxml2::XMLNode::LastChildElement (const char * name = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Definition at line 778 of file tinyxml2\&.h\&.
+.SS "const \fBXMLElement\fP * tinyxml2::XMLNode::LastChildElement (const char * name = \fC0\fP) const"
+Get the last child element or optionally the last child element with the specified name\&. 
+.PP
+Definition at line 984 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::LinkEndChild (\fBXMLNode\fP * addThis)\fC [inline]\fP"
+
+.PP
+Definition at line 823 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::NextSibling ()\fC [inline]\fP"
+
+.PP
+Definition at line 803 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLNode::NextSibling () const\fC [inline]\fP"
+
+.PP
+Get the next (right) sibling node of this node\&. 
+.PP
+Definition at line 799 of file tinyxml2\&.h\&.
+.SS "\fBXMLElement\fP* tinyxml2::XMLNode::NextSiblingElement (const char * name = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Definition at line 810 of file tinyxml2\&.h\&.
+.SS "const \fBXMLElement\fP * tinyxml2::XMLNode::NextSiblingElement (const char * name = \fC0\fP) const"
+
+.PP
+Get the next (right) sibling element of this node, with an optionally supplied name\&. 
+.PP
+Definition at line 996 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLNode::NoChildren () const\fC [inline]\fP"
+
+.PP
+Returns true if this node has no children\&. 
+.PP
+Definition at line 742 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::Parent ()\fC [inline]\fP"
+
+.PP
+Definition at line 737 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLNode::Parent () const\fC [inline]\fP"
+
+.PP
+Get the parent of this node on the DOM\&. 
+.PP
+Definition at line 733 of file tinyxml2\&.h\&.
+.SS "char * tinyxml2::XMLNode::ParseDeep (char * p, \fBStrPair\fP * parentEndTag, int * curLineNumPtr)\fC [protected]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLElement\fP, \fBtinyxml2::XMLUnknown\fP, \fBtinyxml2::XMLDeclaration\fP, \fBtinyxml2::XMLComment\fP, and \fBtinyxml2::XMLText\fP\&.
+.PP
+Definition at line 1020 of file tinyxml2\&.cpp\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::PreviousSibling ()\fC [inline]\fP"
+
+.PP
+Definition at line 787 of file tinyxml2\&.h\&.
+.SS "const \fBXMLNode\fP* tinyxml2::XMLNode::PreviousSibling () const\fC [inline]\fP"
+
+.PP
+Get the previous (left) sibling node of this node\&. 
+.PP
+Definition at line 783 of file tinyxml2\&.h\&.
+.SS "\fBXMLElement\fP* tinyxml2::XMLNode::PreviousSiblingElement (const char * name = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Definition at line 794 of file tinyxml2\&.h\&.
+.SS "const \fBXMLElement\fP * tinyxml2::XMLNode::PreviousSiblingElement (const char * name = \fC0\fP) const"
+
+.PP
+Get the previous (left) sibling element of this node, with an optionally supplied name\&. 
+.PP
+Definition at line 1008 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLNode::SetUserData (void * userData)\fC [inline]\fP"
+Set user data into the \fBXMLNode\fP\&. TinyXML-2 in no way processes or interprets user data\&. It is initially 0\&. 
+.PP
+Definition at line 908 of file tinyxml2\&.h\&.
+.SS "void tinyxml2::XMLNode::SetValue (const char * val, bool staticMem = \fCfalse\fP)"
+Set the Value of an XML node\&. 
+.PP
+\fBSee also\fP
+.RS 4
+\fBValue()\fP 
+.RE
+.PP
+
+.PP
+Definition at line 803 of file tinyxml2\&.cpp\&.
+.SS "virtual \fBXMLNode\fP* tinyxml2::XMLNode::ShallowClone (\fBXMLDocument\fP * document) const\fC [pure virtual]\fP"
+Make a copy of this node, but not its children\&. You may pass in a Document pointer that will be the owner of the new Node\&. If the 'document' is null, then the node returned will be allocated from the current Document\&. (this->\fBGetDocument()\fP) Note: if called on a \fBXMLDocument\fP, this will return null\&. 
+.PP
+Implemented in \fBtinyxml2::XMLElement\fP, \fBtinyxml2::XMLUnknown\fP, \fBtinyxml2::XMLDeclaration\fP, \fBtinyxml2::XMLComment\fP, \fBtinyxml2::XMLText\fP, and \fBtinyxml2::XMLDocument\fP\&.
+.SS "virtual bool tinyxml2::XMLNode::ShallowEqual (const \fBXMLNode\fP * compare) const\fC [pure virtual]\fP"
+Test if 2 nodes are the same, but don't test children\&. The 2 nodes do not need to be in the same Document\&. Note: if called on a \fBXMLDocument\fP, this will return false\&. 
+.PP
+Implemented in \fBtinyxml2::XMLElement\fP, \fBtinyxml2::XMLUnknown\fP, \fBtinyxml2::XMLDeclaration\fP, \fBtinyxml2::XMLComment\fP, \fBtinyxml2::XMLText\fP, and \fBtinyxml2::XMLDocument\fP\&.
+.SS "virtual \fBXMLComment\fP* tinyxml2::XMLNode::ToComment ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to a Comment, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLComment\fP\&.
+.PP
+Definition at line 678 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLComment\fP* tinyxml2::XMLNode::ToComment () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLComment\fP\&.
+.PP
+Definition at line 700 of file tinyxml2\&.h\&.
+.SS "virtual \fBXMLDeclaration\fP* tinyxml2::XMLNode::ToDeclaration ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to a Declaration, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLDeclaration\fP\&.
+.PP
+Definition at line 686 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLDeclaration\fP* tinyxml2::XMLNode::ToDeclaration () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLDeclaration\fP\&.
+.PP
+Definition at line 706 of file tinyxml2\&.h\&.
+.SS "virtual \fBXMLDocument\fP* tinyxml2::XMLNode::ToDocument ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to a Document, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLDocument\fP\&.
+.PP
+Definition at line 682 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLDocument\fP* tinyxml2::XMLNode::ToDocument () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLDocument\fP\&.
+.PP
+Definition at line 703 of file tinyxml2\&.h\&.
+.SS "virtual \fBXMLElement\fP* tinyxml2::XMLNode::ToElement ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to an Element, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLElement\fP\&.
+.PP
+Definition at line 670 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLElement\fP* tinyxml2::XMLNode::ToElement () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLElement\fP\&.
+.PP
+Definition at line 694 of file tinyxml2\&.h\&.
+.SS "virtual \fBXMLText\fP* tinyxml2::XMLNode::ToText ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to Text, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLText\fP\&.
+.PP
+Definition at line 674 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLText\fP* tinyxml2::XMLNode::ToText () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLText\fP\&.
+.PP
+Definition at line 697 of file tinyxml2\&.h\&.
+.SS "virtual \fBXMLUnknown\fP* tinyxml2::XMLNode::ToUnknown ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Safely cast to an Unknown, or null\&. 
+.PP
+Reimplemented in \fBtinyxml2::XMLUnknown\fP\&.
+.PP
+Definition at line 690 of file tinyxml2\&.h\&.
+.SS "virtual const \fBXMLUnknown\fP* tinyxml2::XMLNode::ToUnknown () const\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented in \fBtinyxml2::XMLUnknown\fP\&.
+.PP
+Definition at line 709 of file tinyxml2\&.h\&.
+.SS "const char * tinyxml2::XMLNode::Value () const"
+The meaning of 'value' changes for the specific type\&. 
+.PP
+.nf
+Document:   empty (NULL is returned, not an empty string)
+Element:    name of the element
+Comment:    the comment text
+Unknown:    the tag contents
+Text:       the text string
+
+.fi
+.PP
+ 
+.PP
+Definition at line 795 of file tinyxml2\&.cpp\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "friend class \fBXMLDocument\fP\fC [friend]\fP"
+
+.PP
+Definition at line 654 of file tinyxml2\&.h\&.
+.SS "friend class \fBXMLElement\fP\fC [friend]\fP"
+
+.PP
+Definition at line 655 of file tinyxml2\&.h\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBXMLDocument\fP* tinyxml2::XMLNode::_document\fC [protected]\fP"
+
+.PP
+Definition at line 923 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::_firstChild\fC [protected]\fP"
+
+.PP
+Definition at line 928 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::_lastChild\fC [protected]\fP"
+
+.PP
+Definition at line 929 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::_next\fC [protected]\fP"
+
+.PP
+Definition at line 932 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::_parent\fC [protected]\fP"
+
+.PP
+Definition at line 924 of file tinyxml2\&.h\&.
+.SS "int tinyxml2::XMLNode::_parseLineNum\fC [protected]\fP"
+
+.PP
+Definition at line 926 of file tinyxml2\&.h\&.
+.SS "\fBXMLNode\fP* tinyxml2::XMLNode::_prev\fC [protected]\fP"
+
+.PP
+Definition at line 931 of file tinyxml2\&.h\&.
+.SS "void* tinyxml2::XMLNode::_userData\fC [protected]\fP"
+
+.PP
+Definition at line 934 of file tinyxml2\&.h\&.
+.SS "\fBStrPair\fP tinyxml2::XMLNode::_value\fC [mutable]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line 925 of file tinyxml2\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

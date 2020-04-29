@@ -1,0 +1,198 @@
+.TH "tinyxml2::XMLUtil" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+tinyxml2::XMLUtil
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tinyxml2\&.h>\fP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBSkipWhiteSpace\fP (const char *p, int *curLineNumPtr)"
+.br
+.ti -1c
+.RI "static char * \fBSkipWhiteSpace\fP (char *const p, int *curLineNumPtr)"
+.br
+.ti -1c
+.RI "static bool \fBIsWhiteSpace\fP (char p)"
+.br
+.ti -1c
+.RI "static bool \fBIsNameStartChar\fP (unsigned char ch)"
+.br
+.ti -1c
+.RI "static bool \fBIsNameChar\fP (unsigned char ch)"
+.br
+.ti -1c
+.RI "static bool \fBStringEqual\fP (const char *p, const char *q, int nChar=INT_MAX)"
+.br
+.ti -1c
+.RI "static bool \fBIsUTF8Continuation\fP (const char p)"
+.br
+.ti -1c
+.RI "static const char * \fBReadBOM\fP (const char *p, bool *hasBOM)"
+.br
+.ti -1c
+.RI "static const char * \fBGetCharacterRef\fP (const char *p, char *value, int *length)"
+.br
+.ti -1c
+.RI "static void \fBConvertUTF32ToUTF8\fP (unsigned long input, char *output, int *length)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (int v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (unsigned v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (bool v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (float v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (double v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (int64_t v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static void \fBToStr\fP (uint64_t v, char *buffer, int bufferSize)"
+.br
+.ti -1c
+.RI "static bool \fBToInt\fP (const char *str, int *value)"
+.br
+.ti -1c
+.RI "static bool \fBToUnsigned\fP (const char *str, unsigned *value)"
+.br
+.ti -1c
+.RI "static bool \fBToBool\fP (const char *str, bool *value)"
+.br
+.ti -1c
+.RI "static bool \fBToFloat\fP (const char *str, float *value)"
+.br
+.ti -1c
+.RI "static bool \fBToDouble\fP (const char *str, double *value)"
+.br
+.ti -1c
+.RI "static bool \fBToInt64\fP (const char *str, int64_t *value)"
+.br
+.ti -1c
+.RI "static bool \fBToUnsigned64\fP (const char *str, uint64_t *value)"
+.br
+.ti -1c
+.RI "static void \fBSetBoolSerialization\fP (const char *writeTrue, const char *writeFalse)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 538 of file tinyxml2\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void tinyxml2::XMLUtil::ConvertUTF32ToUTF8 (unsigned long input, char * output, int * length)\fC [static]\fP"
+
+.PP
+Definition at line 413 of file tinyxml2\&.cpp\&.
+.SS "const char * tinyxml2::XMLUtil::GetCharacterRef (const char * p, char * value, int * length)\fC [static]\fP"
+
+.PP
+Definition at line 466 of file tinyxml2\&.cpp\&.
+.SS "static bool tinyxml2::XMLUtil::IsNameChar (unsigned char ch)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 574 of file tinyxml2\&.h\&.
+.SS "static bool tinyxml2::XMLUtil::IsNameStartChar (unsigned char ch)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 563 of file tinyxml2\&.h\&.
+.SS "static bool tinyxml2::XMLUtil::IsUTF8Continuation (const char p)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 591 of file tinyxml2\&.h\&.
+.SS "static bool tinyxml2::XMLUtil::IsWhiteSpace (char p)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 559 of file tinyxml2\&.h\&.
+.SS "const char * tinyxml2::XMLUtil::ReadBOM (const char * p, bool * hasBOM)\fC [static]\fP"
+
+.PP
+Definition at line 395 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::SetBoolSerialization (const char * writeTrue, const char * writeFalse)\fC [static]\fP"
+
+.PP
+Definition at line 385 of file tinyxml2\&.cpp\&.
+.SS "static char* tinyxml2::XMLUtil::SkipWhiteSpace (char *const p, int * curLineNumPtr)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 553 of file tinyxml2\&.h\&.
+.SS "static const char* tinyxml2::XMLUtil::SkipWhiteSpace (const char * p, int * curLineNumPtr)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 541 of file tinyxml2\&.h\&.
+.SS "static bool tinyxml2::XMLUtil::StringEqual (const char * p, const char * q, int nChar = \fCINT_MAX\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Definition at line 581 of file tinyxml2\&.h\&.
+.SS "bool tinyxml2::XMLUtil::ToBool (const char * str, bool * value)\fC [static]\fP"
+
+.PP
+Definition at line 623 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToDouble (const char * str, double * value)\fC [static]\fP"
+
+.PP
+Definition at line 658 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToFloat (const char * str, float * value)\fC [static]\fP"
+
+.PP
+Definition at line 649 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToInt (const char * str, int * value)\fC [static]\fP"
+
+.PP
+Definition at line 607 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToInt64 (const char * str, int64_t * value)\fC [static]\fP"
+
+.PP
+Definition at line 667 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (bool v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 574 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (double v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 589 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (float v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 583 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (int v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 562 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (int64_t v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 595 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (uint64_t v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 601 of file tinyxml2\&.cpp\&.
+.SS "void tinyxml2::XMLUtil::ToStr (unsigned v, char * buffer, int bufferSize)\fC [static]\fP"
+
+.PP
+Definition at line 568 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToUnsigned (const char * str, unsigned * value)\fC [static]\fP"
+
+.PP
+Definition at line 615 of file tinyxml2\&.cpp\&.
+.SS "bool tinyxml2::XMLUtil::ToUnsigned64 (const char * str, uint64_t * value)\fC [static]\fP"
+
+.PP
+Definition at line 678 of file tinyxml2\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

@@ -1,0 +1,192 @@
+.TH "sfe::RichText" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+sfe::RichText
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <RichText\&.h>\fP
+.PP
+Inherits Drawable, and Transformable\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBLine\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRichText\fP ()"
+.br
+.ti -1c
+.RI "\fBRichText\fP (const sf::Font &font)"
+.br
+.ti -1c
+.RI "\fBRichText\fP & \fBoperator<<\fP (const \fBTextStroke\fP &stroke)"
+.br
+.ti -1c
+.RI "\fBRichText\fP & \fBoperator<<\fP (const \fBOutline\fP &outline)"
+.br
+.ti -1c
+.RI "\fBRichText\fP & \fBoperator<<\fP (const sf::Color &color)"
+.br
+.ti -1c
+.RI "\fBRichText\fP & \fBoperator<<\fP (sf::Text::Style style)"
+.br
+.ti -1c
+.RI "\fBRichText\fP & \fBoperator<<\fP (const sf::String &string)"
+.br
+.ti -1c
+.RI "void \fBsetCharacterColor\fP (std::size_t line, std::size_t pos, sf::Color color)"
+.br
+.ti -1c
+.RI "void \fBsetCharacterStyle\fP (std::size_t line, std::size_t pos, sf::Text::Style style)"
+.br
+.ti -1c
+.RI "void \fBsetCharacter\fP (std::size_t line, std::size_t pos, sf::Uint32 character)"
+.br
+.ti -1c
+.RI "void \fBsetCharacterSize\fP (unsigned int size)"
+.br
+.ti -1c
+.RI "void \fBsetFont\fP (const sf::Font &font)"
+.br
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.ti -1c
+.RI "sf::Color \fBgetCharacterColor\fP (std::size_t line, std::size_t pos) const"
+.br
+.ti -1c
+.RI "sf::Uint32 \fBgetCharacterStyle\fP (std::size_t line, std::size_t pos) const"
+.br
+.ti -1c
+.RI "sf::Uint32 \fBgetCharacter\fP (std::size_t line, std::size_t pos) const"
+.br
+.ti -1c
+.RI "const std::vector< \fBLine\fP > & \fBgetLines\fP () const"
+.br
+.ti -1c
+.RI "unsigned int \fBgetCharacterSize\fP () const"
+.br
+.ti -1c
+.RI "const sf::Font * \fBgetFont\fP () const"
+.br
+.ti -1c
+.RI "\fBsf::FloatRect\fP \fBgetLocalBounds\fP () const"
+.br
+.ti -1c
+.RI "\fBsf::FloatRect\fP \fBgetGlobalBounds\fP () const"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBdraw\fP (sf::RenderTarget &target, sf::RenderStates states) const override"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 39 of file RichText\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "sfe::RichText::RichText ()"
+
+.PP
+Definition at line 210 of file RichText\&.cpp\&.
+.SS "sfe::RichText::RichText (const sf::Font & font)"
+
+.PP
+Definition at line 218 of file RichText\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void sfe::RichText::clear ()"
+
+.PP
+Definition at line 393 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::draw (sf::RenderTarget & target, sf::RenderStates states) const\fC [override]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line 463 of file RichText\&.cpp\&.
+.SS "sf::Uint32 sfe::RichText::getCharacter (std::size_t line, std::size_t pos) const"
+
+.PP
+Definition at line 420 of file RichText\&.cpp\&.
+.SS "sf::Color sfe::RichText::getCharacterColor (std::size_t line, std::size_t pos) const"
+
+.PP
+Definition at line 404 of file RichText\&.cpp\&.
+.SS "unsigned int sfe::RichText::getCharacterSize () const"
+
+.PP
+Definition at line 435 of file RichText\&.cpp\&.
+.SS "sf::Uint32 sfe::RichText::getCharacterStyle (std::size_t line, std::size_t pos) const"
+
+.PP
+Definition at line 412 of file RichText\&.cpp\&.
+.SS "const sf::Font * sfe::RichText::getFont () const"
+
+.PP
+Definition at line 442 of file RichText\&.cpp\&.
+.SS "\fBsf::FloatRect\fP sfe::RichText::getGlobalBounds () const"
+
+.PP
+Definition at line 456 of file RichText\&.cpp\&.
+.SS "const std::vector< \fBRichText::Line\fP > & sfe::RichText::getLines () const"
+
+.PP
+Definition at line 428 of file RichText\&.cpp\&.
+.SS "\fBsf::FloatRect\fP sfe::RichText::getLocalBounds () const"
+
+.PP
+Definition at line 449 of file RichText\&.cpp\&.
+.SS "\fBRichText\fP & sfe::RichText::operator<< (const \fBOutline\fP & outline)"
+
+.PP
+Definition at line 231 of file RichText\&.cpp\&.
+.SS "\fBRichText\fP & sfe::RichText::operator<< (const sf::Color & color)"
+
+.PP
+Definition at line 239 of file RichText\&.cpp\&.
+.SS "\fBRichText\fP & sfe::RichText::operator<< (const sf::String & string)"
+
+.PP
+Definition at line 285 of file RichText\&.cpp\&.
+.SS "\fBRichText\fP & sfe::RichText::operator<< (const \fBTextStroke\fP & stroke)"
+
+.PP
+Definition at line 225 of file RichText\&.cpp\&.
+.SS "\fBRichText\fP & sfe::RichText::operator<< (sf::Text::Style style)"
+
+.PP
+Definition at line 247 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::setCharacter (std::size_t line, std::size_t pos, sf::Uint32 character)"
+
+.PP
+Definition at line 349 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::setCharacterColor (std::size_t line, std::size_t pos, sf::Color color)"
+
+.PP
+Definition at line 331 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::setCharacterSize (unsigned int size)"
+
+.PP
+Definition at line 357 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::setCharacterStyle (std::size_t line, std::size_t pos, sf::Text::Style style)"
+
+.PP
+Definition at line 340 of file RichText\&.cpp\&.
+.SS "void sfe::RichText::setFont (const sf::Font & font)"
+
+.PP
+Definition at line 375 of file RichText\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.

@@ -1,0 +1,311 @@
+.TH "NPC" 3 "Wed Apr 29 2020" "Version 1" "Research Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NPC
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <NPC\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNPC\fP (sf::RenderWindow &t_window, sf::Font &t_font)"
+.br
+.ti -1c
+.RI "\fB~NPC\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetUpNpcStart\fP (int t_ID)"
+.br
+.ti -1c
+.RI "void \fBsetUpNpc\fP (int t_ID)"
+.br
+.ti -1c
+.RI "void \fBsetUpGAvar\fP (int t_RT, int t_Age)"
+.br
+.ti -1c
+.RI "sf::Vector2f \fBgetPos\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetID\fP ()"
+.br
+.ti -1c
+.RI "float \fBgetSize\fP ()"
+.br
+.ti -1c
+.RI "sf::Vector2f \fBgetSizeTexture\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetGender\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetAge\fP ()"
+.br
+.ti -1c
+.RI "int \fBgetGenertaion\fP ()"
+.br
+.ti -1c
+.RI "std::chrono::duration< double > \fBgetReproductionCooldown\fP ()"
+.br
+.ti -1c
+.RI "std::array< float, 4 > \fBgetDNA\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisAlive\fP ()"
+.br
+.ti -1c
+.RI "float \fBGetSpeedStatistic\fP ()"
+.br
+.ti -1c
+.RI "float \fBGetStrStatistic\fP ()"
+.br
+.ti -1c
+.RI "float \fBGetIntStatistic\fP ()"
+.br
+.ti -1c
+.RI "float \fBGetSizeStatistic\fP ()"
+.br
+.ti -1c
+.RI "void \fBtakeHealth\fP (int t_reduction)"
+.br
+.ti -1c
+.RI "void \fBsetPosition\fP (sf::Vector2f t_pos)"
+.br
+.ti -1c
+.RI "void \fBsetEndPosition\fP (sf::Vector2f t_pos)"
+.br
+.ti -1c
+.RI "void \fBsetDNA\fP (std::array< float, 4 > t_DNA)"
+.br
+.ti -1c
+.RI "void \fBsetGenertaion\fP (int t_gen)"
+.br
+.ti -1c
+.RI "void \fBsetGender\fP (int t_gender)"
+.br
+.ti -1c
+.RI "void \fBDraw\fP ()"
+.br
+.ti -1c
+.RI "void \fBDrawStatistics\fP ()"
+.br
+.ti -1c
+.RI "void \fBUpdate\fP ()"
+.br
+.ti -1c
+.RI "int \fBrandomNumber\fP (int t_max, int t_min)"
+.br
+.ti -1c
+.RI "void \fBresetReproductionTimer\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBWIDTH\fP = 1920"
+.br
+.ti -1c
+.RI "int \fBHEIGHT\fP = 1080"
+.br
+.ti -1c
+.RI "int \fBREPRODUCTION_TIME\fP"
+.br
+.ti -1c
+.RI "int \fBAGE_CAP\fP"
+.br
+.ti -1c
+.RI "std::chrono::steady_clock::time_point \fBm_StartTimeReproduction\fP"
+.br
+.ti -1c
+.RI "std::chrono::steady_clock::time_point \fBm_CurrentTimeReproduction\fP"
+.br
+.ti -1c
+.RI "std::chrono::duration< double > \fBm_elapsedtimeReproduction\fP"
+.br
+.ti -1c
+.RI "std::chrono::steady_clock::time_point \fBm_StartTimeAGE\fP"
+.br
+.ti -1c
+.RI "std::chrono::steady_clock::time_point \fBm_CurrentTimeAGE\fP"
+.br
+.ti -1c
+.RI "std::chrono::duration< double > \fBm_elapsedtimeAGE\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 18 of file NPC\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "NPC::NPC (sf::RenderWindow & t_window, sf::Font & t_font)"
+
+.PP
+Definition at line 4 of file NPC\&.cpp\&.
+.SS "NPC::~NPC ()"
+
+.PP
+Definition at line 17 of file NPC\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void NPC::Draw ()"
+
+.PP
+Definition at line 21 of file NPC\&.cpp\&.
+.SS "void NPC::DrawStatistics ()"
+
+.PP
+Definition at line 28 of file NPC\&.cpp\&.
+.SS "int NPC::getAge ()"
+
+.PP
+Definition at line 108 of file NPC\&.cpp\&.
+.SS "std::array< float, 4 > NPC::getDNA ()"
+
+.PP
+Definition at line 123 of file NPC\&.cpp\&.
+.SS "int NPC::getGender ()"
+
+.PP
+Definition at line 104 of file NPC\&.cpp\&.
+.SS "int NPC::getGenertaion ()"
+
+.PP
+Definition at line 112 of file NPC\&.cpp\&.
+.SS "int NPC::getID ()"
+
+.PP
+Definition at line 92 of file NPC\&.cpp\&.
+.SS "float NPC::GetIntStatistic ()"
+
+.PP
+Definition at line 194 of file NPC\&.cpp\&.
+.SS "sf::Vector2f NPC::getPos ()"
+
+.PP
+Definition at line 88 of file NPC\&.cpp\&.
+.SS "std::chrono::duration< double > NPC::getReproductionCooldown ()"
+
+.PP
+Definition at line 117 of file NPC\&.cpp\&.
+.SS "float NPC::getSize ()"
+
+.PP
+Definition at line 96 of file NPC\&.cpp\&.
+.SS "float NPC::GetSizeStatistic ()"
+
+.PP
+Definition at line 197 of file NPC\&.cpp\&.
+.SS "sf::Vector2f NPC::getSizeTexture ()"
+
+.PP
+Definition at line 100 of file NPC\&.cpp\&.
+.SS "float NPC::GetSpeedStatistic ()"
+
+.PP
+Definition at line 188 of file NPC\&.cpp\&.
+.SS "float NPC::GetStrStatistic ()"
+
+.PP
+Definition at line 191 of file NPC\&.cpp\&.
+.SS "bool NPC::isAlive ()"
+
+.PP
+Definition at line 160 of file NPC\&.cpp\&.
+.SS "int NPC::randomNumber (int t_max, int t_min)"
+
+.PP
+Definition at line 179 of file NPC\&.cpp\&.
+.SS "void NPC::resetReproductionTimer ()"
+
+.PP
+Definition at line 155 of file NPC\&.cpp\&.
+.SS "void NPC::setDNA (std::array< float, 4 > t_DNA)"
+
+.PP
+Definition at line 130 of file NPC\&.cpp\&.
+.SS "void NPC::setEndPosition (sf::Vector2f t_pos)"
+
+.PP
+Definition at line 139 of file NPC\&.cpp\&.
+.SS "void NPC::setGender (int t_gender)"
+
+.PP
+Definition at line 147 of file NPC\&.cpp\&.
+.SS "void NPC::setGenertaion (int t_gen)"
+
+.PP
+Definition at line 143 of file NPC\&.cpp\&.
+.SS "void NPC::setPosition (sf::Vector2f t_pos)"
+
+.PP
+Definition at line 135 of file NPC\&.cpp\&.
+.SS "void NPC::setUpGAvar (int t_RT, int t_Age)"
+
+.PP
+Definition at line 440 of file NPC\&.cpp\&.
+.SS "void NPC::setUpNpc (int t_ID)"
+
+.PP
+Definition at line 332 of file NPC\&.cpp\&.
+.SS "void NPC::setUpNpcStart (int t_ID)"
+
+.PP
+Definition at line 211 of file NPC\&.cpp\&.
+.SS "void NPC::takeHealth (int t_reduction)"
+
+.PP
+Definition at line 200 of file NPC\&.cpp\&.
+.SS "void NPC::Update ()"
+
+.PP
+Definition at line 38 of file NPC\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "int NPC::AGE_CAP"
+
+.PP
+Definition at line 69 of file NPC\&.h\&.
+.SS "int NPC::HEIGHT = 1080"
+
+.PP
+Definition at line 25 of file NPC\&.h\&.
+.SS "std::chrono::steady_clock::time_point NPC::m_CurrentTimeAGE"
+
+.PP
+Definition at line 79 of file NPC\&.h\&.
+.SS "std::chrono::steady_clock::time_point NPC::m_CurrentTimeReproduction"
+
+.PP
+Definition at line 74 of file NPC\&.h\&.
+.SS "std::chrono::duration<double> NPC::m_elapsedtimeAGE"
+
+.PP
+Definition at line 80 of file NPC\&.h\&.
+.SS "std::chrono::duration<double> NPC::m_elapsedtimeReproduction"
+
+.PP
+Definition at line 75 of file NPC\&.h\&.
+.SS "std::chrono::steady_clock::time_point NPC::m_StartTimeAGE"
+
+.PP
+Definition at line 78 of file NPC\&.h\&.
+.SS "std::chrono::steady_clock::time_point NPC::m_StartTimeReproduction"
+
+.PP
+Definition at line 73 of file NPC\&.h\&.
+.SS "int NPC::REPRODUCTION_TIME"
+
+.PP
+Definition at line 68 of file NPC\&.h\&.
+.SS "int NPC::WIDTH = 1920"
+
+.PP
+Definition at line 24 of file NPC\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Research Project from the source code\&.
